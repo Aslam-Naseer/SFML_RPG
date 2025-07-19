@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "State.h"
 
 void Game::initWindow()
 {
