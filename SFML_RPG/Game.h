@@ -1,15 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <vector>
-#include <fstream>
-#include <sstream>
-
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
+#include "State.h"
 
 class Game
 {
@@ -20,7 +11,10 @@ private:
 	sf::Clock clock;
 	float dt;
 
+	std::stack<State*> states;
+
 	void initWindow();
+	void initStates();
 
 public:
 	

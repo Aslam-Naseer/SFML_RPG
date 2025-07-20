@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "State.h"
+#include "GameState.h"
 
 void Game::initWindow()
 {
@@ -24,13 +24,23 @@ void Game::initWindow()
 	window.setVerticalSyncEnabled(vertical_sync_enabled);
 }
 
+void Game::initStates()
+{
+	states.push(new GameState(&window));
+}
+
 Game::Game()
 {
 	initWindow();
+	initStates();
 }
 
 Game::~Game()
 {
+	while (!states.empty()) {
+		delete states.top();
+		states.pop();
+	}
 }
 
 void Game::updateSfmlEvents()
@@ -47,15 +57,17 @@ void Game::update()
 {
 	dt = clock.restart().asSeconds();
 
-	system("cls");
-	std::cout << "Delta Time: " << dt << std::endl;
-
+	if (!states.empty())
+		states.top()->update(dt);
 	updateSfmlEvents();
 }
 
 void Game::render()
 {
 	window.clear();
+
+	if(!states.empty())
+		states.top()->render();
 
 	window.display();
 }
