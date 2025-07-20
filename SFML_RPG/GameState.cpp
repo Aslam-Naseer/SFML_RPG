@@ -9,9 +9,19 @@ GameState::~GameState()
 {
 }
 
+void GameState::endState()
+{
+	std::cout << "Ending GameState" << std::endl;
+}
+
 void GameState::update(const float& dt)
 {
-	std::cout << "GameState Update: " << dt << std::endl; 
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A))
+	{
+		std::cout << "A key pressed!" << std::endl;
+	}
+
+	checkForQuit();
 }
 
 void GameState::render(sf::RenderTarget* target)

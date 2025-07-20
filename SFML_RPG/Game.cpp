@@ -1,6 +1,8 @@
 #include "Game.h"
 #include "GameState.h"
 
+// Initialisers
+
 void Game::initWindow()
 {
 	std::ifstream ifs("Config/window.ini");
@@ -29,6 +31,8 @@ void Game::initStates()
 	states.push(new GameState(&window));
 }
 
+// Constructors and Destructors
+
 Game::Game()
 {
 	initWindow();
@@ -42,6 +46,8 @@ Game::~Game()
 		states.pop();
 	}
 }
+
+// Functions
 
 void Game::updateSfmlEvents()
 {
@@ -58,7 +64,18 @@ void Game::update()
 	dt = clock.restart().asSeconds();
 
 	if (!states.empty())
+	{
 		states.top()->update(dt);
+		if(states.top()->getQuit())
+		{
+			states.top()->endState();
+			delete states.top();
+			states.pop();
+		}
+	}
+	else 
+		window.close();
+
 	updateSfmlEvents();
 }
 
