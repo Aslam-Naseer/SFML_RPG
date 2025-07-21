@@ -4,6 +4,9 @@
 class GameState :
     public State
 {
+private:
+	Entity player; // Example entity, can be removed or modified as needed
+
 public:
     GameState(sf::RenderWindow* window);
     virtual ~GameState();

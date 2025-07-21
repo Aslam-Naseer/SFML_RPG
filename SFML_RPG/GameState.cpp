@@ -16,14 +16,11 @@ void GameState::endState()
 
 void GameState::update(const float& dt)
 {
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A))
-	{
-		std::cout << "A key pressed!" << std::endl;
-	}
-
+	player.update(dt);
 	checkForQuit();
 }
 
 void GameState::render(sf::RenderTarget* target)
 {
+	player.render(window);
 }
