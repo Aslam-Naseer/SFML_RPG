@@ -12,8 +12,10 @@ private:
 	float dt;
 
 	std::stack<State*> states;
+	std::map<std::string, sf::Keyboard::Scancode> supportedKeys;
 
 	void initWindow();
+	void initKeys();
 	void initStates();
 
 public:

@@ -26,9 +26,17 @@ void Game::initWindow()
 	window.setVerticalSyncEnabled(vertical_sync_enabled);
 }
 
+void Game::initKeys()
+{
+	supportedKeys["A"] = sf::Keyboard::Scancode::A;
+	supportedKeys["S"] = sf::Keyboard::Scancode::S;
+	supportedKeys["W"] = sf::Keyboard::Scancode::W;
+	supportedKeys["D"] = sf::Keyboard::Scancode::D;
+}
+
 void Game::initStates()
 {
-	states.push(new GameState(&window));
+	states.push(new GameState(&window, supportedKeys));
 }
 
 // Constructors and Destructors
@@ -36,6 +44,7 @@ void Game::initStates()
 Game::Game()
 {
 	initWindow();
+	initKeys();
 	initStates();
 }
 

@@ -1,6 +1,7 @@
 #include "State.h"
 
-State::State(sf::RenderWindow *window) 
+State::State(sf::RenderWindow *window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys):
+	supportedKeys(supportedKeys)
 {
 	this->window = window;
 	quit = false;
