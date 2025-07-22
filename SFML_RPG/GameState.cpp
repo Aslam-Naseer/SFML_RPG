@@ -2,10 +2,15 @@
 
 void GameState::initKeybinds()
 {
-	keybinds["MOVE_LEFT"] = supportedKeys.at("A");
-	keybinds["MOVE_DOWN"] = supportedKeys.at("S");
-	keybinds["MOVE_UP"] = supportedKeys.at("W");
-	keybinds["MOVE_RIGHT"] = supportedKeys.at("D");
+	std::ifstream ifs("Config/gamestate_keybinds.ini");
+	
+	std::string key, key_code;
+	while (ifs >> key >> key_code)
+		keybinds[key] = supportedKeys.at(key_code);
+
+	//DEBUG
+	/*for (auto& item : keybinds)
+		std::cout << item.first << " " << (int)item.second << std::endl;*/
 }
 
 GameState::GameState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys):

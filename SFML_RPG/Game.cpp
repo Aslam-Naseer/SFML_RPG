@@ -28,10 +28,19 @@ void Game::initWindow()
 
 void Game::initKeys()
 {
-	supportedKeys["A"] = sf::Keyboard::Scancode::A;
-	supportedKeys["S"] = sf::Keyboard::Scancode::S;
-	supportedKeys["W"] = sf::Keyboard::Scancode::W;
-	supportedKeys["D"] = sf::Keyboard::Scancode::D;
+	std::ifstream ifs("Config/supported_keys.ini");
+
+	std::string key;
+	int key_code;
+
+	while (ifs >> key >> key_code) {
+		supportedKeys[key] = (sf::Keyboard::Scancode)key_code;
+	}
+
+
+	//DEBUG
+	/*for (auto &item : supportedKeys)
+		std::cout << item.first << " " << (int)item.second << std::endl;*/
 }
 
 void Game::initStates()

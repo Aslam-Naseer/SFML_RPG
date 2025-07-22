@@ -13,7 +13,7 @@ State::~State()
 
 void State::checkForQuit()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Escape))
+	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]))
 	{
 		quit = true;
 	}
