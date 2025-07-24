@@ -48,11 +48,19 @@ void Game::initStates()
 	//states.push(new GameState(&window, supportedKeys));
 }
 
+void Game::initFonts()
+{
+	if (!font.openFromFile("Fonts/Dosis-Light.ttf")) {
+		throw std::runtime_error("ERROR::GAME::FONT_NOT_AVAILABLE");
+	}
+}
+
 // Constructors and Destructors
 
 Game::Game()
 {
 	initWindow();
+	initFonts();
 	initKeys();
 	initStates();
 }
