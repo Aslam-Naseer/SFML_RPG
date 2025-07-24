@@ -55,6 +55,7 @@ void GameState::update(const float& dt)
 	/*player.update(dt);
 	checkForQuit();*/
 
+	updateMousePositions();
 	updateInput(dt);
 }
 
