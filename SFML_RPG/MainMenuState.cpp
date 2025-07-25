@@ -27,10 +27,14 @@ MainMenuState::MainMenuState(sf::RenderWindow* window, const std::map<std::strin
 
 	initKeybinds();
 	initFonts();
+
+	button = new Button(200.f, 200.f, 100.f, 50.f, "Play", font,
+		sf::Color(70,70,70,200), sf::Color(200,200,200,255), sf::Color(20,20,20,20));
 }
 
 MainMenuState::~MainMenuState()
 {
+	delete button;
 }
 
 void MainMenuState::endState()
@@ -49,6 +53,7 @@ void MainMenuState::update(const float& dt)
 	checkForQuit();*/
 
 	updateMousePositions();
+	button->update(mousePosView);
 	updateInput(dt);
 }
 
@@ -58,4 +63,5 @@ void MainMenuState::render(sf::RenderTarget* target)
 		target = window;
 
 	window->draw(background);
+	button->render(target);
 }

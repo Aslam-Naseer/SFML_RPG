@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.h"
+#include "Button.h"
 
 class MainMenuState :
     public State
@@ -7,6 +8,7 @@ class MainMenuState :
 private:
     sf::RectangleShape background;
 	sf::Font font;
+    Button* button;
 
     void initKeybinds();
     void initFonts();
