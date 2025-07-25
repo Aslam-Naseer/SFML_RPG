@@ -6,8 +6,10 @@ class MainMenuState :
 {
 private:
     sf::RectangleShape background;
+	sf::Font font;
 
     void initKeybinds();
+    void initFonts();
 
 public:
     MainMenuState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys);

@@ -11,6 +11,13 @@ void MainMenuState::initKeybinds()
 
 }
 
+void MainMenuState::initFonts()
+{
+	if (!font.openFromFile("Fonts/Dosis-Light.ttf")) {
+		throw std::runtime_error("ERROR::GAME::FONT_NOT_AVAILABLE");
+	}
+}
+
 MainMenuState::MainMenuState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys) :
 	State(window, supportedKeys)
 {
@@ -19,6 +26,7 @@ MainMenuState::MainMenuState(sf::RenderWindow* window, const std::map<std::strin
 	background.setPosition({ 150, 100 });
 
 	initKeybinds();
+	initFonts();
 }
 
 MainMenuState::~MainMenuState()
