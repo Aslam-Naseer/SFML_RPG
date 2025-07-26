@@ -8,7 +8,7 @@ Button::Button(float x, float y, float width, float height,const std::string& te
 	shape.setFillColor(idleColor);
 
 	text.setFillColor(sf::Color::Black);
-	text.setCharacterSize(24);
+	text.setCharacterSize(18);
 	text.setPosition(
 		{ shape.getPosition().x + shape.getSize().x / 2.f - text.getGlobalBounds().size.x / 2.f,
 		shape.getPosition().y + shape.getSize().y / 2.f - text.getGlobalBounds().size.y / 2.f }
@@ -19,6 +19,11 @@ Button::Button(float x, float y, float width, float height,const std::string& te
 
 Button::~Button()
 { }
+
+bool Button::isPressed() const
+{
+	return buttonState == ButtonState::ACTIVE;
+}
 
 void Button::update(const sf::Vector2f& mousePos)
 {

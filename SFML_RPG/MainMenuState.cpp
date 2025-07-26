@@ -18,6 +18,17 @@ void MainMenuState::initFonts()
 	}
 }
 
+void MainMenuState::initButtons()
+{
+
+	buttons["GAME_STATE"] = new Button(200.f, 200.f, 100.f, 50.f, "New Game", font,
+		sf::Color(70, 70, 70, 200), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200));
+
+
+	buttons["EXIT"] = new Button(200.f, 300.f, 100.f, 50.f, "Exit", font,
+		sf::Color(70, 70, 70, 200), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200));
+}
+
 MainMenuState::MainMenuState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys) :
 	State(window, supportedKeys)
 {
@@ -27,14 +38,35 @@ MainMenuState::MainMenuState(sf::RenderWindow* window, const std::map<std::strin
 
 	initKeybinds();
 	initFonts();
+	initButtons();
 
-	button = new Button(200.f, 200.f, 100.f, 50.f, "Play", font,
-		sf::Color(70,70,70,200), sf::Color(200,200,200,255), sf::Color(20,20,20,20));
 }
 
 MainMenuState::~MainMenuState()
 {
-	delete button;
+	for(auto& it : buttons)
+	{
+		delete it.second;
+	}
+}
+
+void MainMenuState::updateButtons()
+{
+	for(auto& it : buttons)
+	{
+		it.second->update(mousePosView);
+	}
+
+	if (buttons["GAME_STATE"]->isPressed())
+	{
+		std::cout << "Game State Button Pressed" << std::endl;
+	}
+
+	if (buttons["EXIT"]->isPressed())
+	{
+		std::cout << "Exit Button Pressed" << std::endl;
+		quit = true;
+	}
 }
 
 void MainMenuState::endState()
@@ -53,7 +85,7 @@ void MainMenuState::update(const float& dt)
 	checkForQuit();*/
 
 	updateMousePositions();
-	button->update(mousePosView);
+	updateButtons();
 	updateInput(dt);
 }
 
@@ -63,5 +95,9 @@ void MainMenuState::render(sf::RenderTarget* target)
 		target = window;
 
 	window->draw(background);
-	button->render(target);
+	
+	for(auto& it: buttons)
+	{
+		it.second->render(target);
+	}
 }

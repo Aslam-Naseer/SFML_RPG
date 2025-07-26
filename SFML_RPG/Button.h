@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <map>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -32,6 +33,8 @@ public:
 		const std::string &text, sf::Font &font,
 		sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor);
 	~Button();
+
+	bool isPressed() const;
 
 	void update(const sf::Vector2f& mousePos);
 	void render(sf::RenderTarget* target);
