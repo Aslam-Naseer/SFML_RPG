@@ -13,8 +13,8 @@ void GameState::initKeybinds()
 		std::cout << item.first << " " << (int)item.second << std::endl;*/
 }
 
-GameState::GameState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys):
-	State(window, supportedKeys)
+GameState::GameState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states):
+	State(window, supportedKeys, states)
 {
 	initKeybinds();
 }

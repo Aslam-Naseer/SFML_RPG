@@ -1,10 +1,10 @@
 #include "State.h"
 
-State::State(sf::RenderWindow *window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys):
-	supportedKeys(supportedKeys)
+
+State::State(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states) :
+	supportedKeys(supportedKeys), window(window), states(states), quit(false)
+
 {
-	this->window = window;
-	quit = false;
 }
 
 State::~State()

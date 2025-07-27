@@ -8,6 +8,7 @@ protected:
 	sf::RenderWindow* window;
 	const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys;
 	std::map<std::string, sf::Keyboard::Scancode> keybinds;
+	std::stack<State*>& states;
 
 	std::vector<sf::Texture> textures;                         
 	bool quit;
@@ -19,7 +20,7 @@ protected:
 	virtual void initKeybinds() = 0;
 
 public:
-	State(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys);
+	State(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states);
 	virtual ~State();
 
 	void checkForQuit();

@@ -29,8 +29,8 @@ void MainMenuState::initButtons()
 		sf::Color(70, 70, 70, 200), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200));
 }
 
-MainMenuState::MainMenuState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys) :
-	State(window, supportedKeys)
+MainMenuState::MainMenuState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states) :
+	State(window, supportedKeys, states)
 {
 	background.setFillColor(sf::Color::Cyan);
 	background.setSize({ window->getSize().x - 300.f, window->getSize().y - 200.f });
@@ -59,7 +59,7 @@ void MainMenuState::updateButtons()
 
 	if (buttons["GAME_STATE"]->isPressed())
 	{
-		std::cout << "Game State Button Pressed" << std::endl;
+		states.push(new GameState(window, supportedKeys, states));
 	}
 
 	if (buttons["EXIT"]->isPressed())
