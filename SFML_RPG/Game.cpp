@@ -5,22 +5,37 @@
 void Game::initWindow()
 {
 	std::ifstream ifs("Config/window.ini");
+	videoModes = sf::VideoMode::getFullscreenModes();
 
 	sf::VideoMode video_mode = sf::VideoMode::getDesktopMode();
 	std::string title = "None";
+	bool fullscreen = false;
 	unsigned int frame_rate_limit = 120;
 	bool vertical_sync_enabled = false;
+	int anti_aliasing_level = 0;
 
 	if (ifs.is_open()) {
 		std::getline(ifs, title);
 		ifs >> video_mode.size.x >> video_mode.size.y;
+		ifs >> fullscreen;
 		ifs >> frame_rate_limit;
 		ifs >> vertical_sync_enabled;
+		ifs >> anti_aliasing_level;
 	}
 
 	ifs.close();
 
-	window = sf::RenderWindow(video_mode, title);
+	sf::ContextSettings context_settings;
+	context_settings.antiAliasingLevel = anti_aliasing_level;
+
+	if (fullscreen)
+	{
+		window = sf::RenderWindow(video_mode, title, sf::State::Fullscreen, context_settings);
+	} else 
+	{
+		window = sf::RenderWindow(video_mode, title, sf::Style::Titlebar | sf::Style::Close , sf::State::Windowed, context_settings);
+	}
+
 	window.setFramerateLimit(frame_rate_limit);
 	window.setVerticalSyncEnabled(vertical_sync_enabled);
 }

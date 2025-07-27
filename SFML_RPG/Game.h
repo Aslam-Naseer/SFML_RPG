@@ -7,6 +7,7 @@ class Game
 private:
 
 	sf::RenderWindow window;
+	std::vector<sf::VideoMode> videoModes;
 
 	sf::Clock clock;
 	float dt;
