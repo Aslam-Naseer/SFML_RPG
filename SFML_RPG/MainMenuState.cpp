@@ -12,13 +12,6 @@ void MainMenuState::initBackground()
 
 void MainMenuState::initKeybinds()
 {
-	std::ifstream ifs("Config/gamestate_keybinds.ini");
-
-	std::string key, key_code;
-	while (ifs >> key >> key_code)
-		keybinds[key] = supportedKeys.at(key_code);
-
-
 }
 
 void MainMenuState::initFonts()
@@ -72,19 +65,12 @@ void MainMenuState::updateButtons()
 
 	if (buttons["EXIT"]->isPressed())
 	{
-		std::cout << "Exit Button Pressed" << std::endl;
-		quit = true;
+		endState();
 	}
-}
-
-void MainMenuState::endState()
-{
-	std::cout << "Ending MainMenuState" << std::endl;
 }
 
 void MainMenuState::updateInput(const float& dt)
 {
-	checkForQuit();
 }
 
 void MainMenuState::update(const float& dt)

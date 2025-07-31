@@ -11,12 +11,9 @@ State::~State()
 {
 }
 
-void State::checkForQuit()
+void State::endState()
 {
-	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]))
-	{
 		quit = true;
-	}
 }
 
 const bool& State::getQuit() const

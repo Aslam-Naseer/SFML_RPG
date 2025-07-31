@@ -23,11 +23,10 @@ public:
 	State(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states);
 	virtual ~State();
 
-	void checkForQuit();
+	void endState();
 	const bool& getQuit() const;
 	void updateMousePositions();
 
-	virtual void endState() = 0;
 	virtual void updateInput(const float& dt) = 0;
 	virtual void update(const float &dt) = 0;
 	virtual void render(sf::RenderTarget *target = nullptr) = 0;

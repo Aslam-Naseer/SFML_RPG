@@ -8,6 +8,8 @@ void GameState::initKeybinds()
 	while (ifs >> key >> key_code)
 		keybinds[key] = supportedKeys.at(key_code);
 
+	ifs.close();
+
 	//DEBUG
 	/*for (auto& item : keybinds)
 		std::cout << item.first << " " << (int)item.second << std::endl;*/
@@ -23,14 +25,8 @@ GameState::~GameState()
 {
 }
 
-void GameState::endState()
-{
-	std::cout << "Ending GameState" << std::endl;
-}
-
 void GameState::updateInput(const float& dt)
 {
-	checkForQuit();
 
 	if(sf::Keyboard::isKeyPressed(keybinds["MOVE_LEFT"]))
 	{
@@ -48,12 +44,15 @@ void GameState::updateInput(const float& dt)
 	{
 		player.move(dt, 0, 1);
 	}
+
+	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]))
+	{
+		endState();
+	}
 }
 
 void GameState::update(const float& dt)
 {
-	/*player.update(dt);
-	checkForQuit();*/
 
 	updateMousePositions();
 	updateInput(dt);

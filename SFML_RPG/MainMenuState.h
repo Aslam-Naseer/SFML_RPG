@@ -22,7 +22,6 @@ public:
 
 	void updateButtons();
 
-    void endState() override;
     void updateInput(const float& dt) override;
     void update(const float& dt) override;
 
