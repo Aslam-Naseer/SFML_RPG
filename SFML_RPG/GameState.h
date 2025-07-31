@@ -5,9 +5,11 @@ class GameState :
     public State
 {
 private:
-	Entity player; // Example entity, can be removed or modified as needed
+	Player* player; // Example entity, can be removed or modified as needed
 
     void initKeybinds();
+	void initTextures();
+    void initPlayers();
 
 public:
     GameState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states);

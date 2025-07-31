@@ -15,14 +15,30 @@ void GameState::initKeybinds()
 		std::cout << item.first << " " << (int)item.second << std::endl;*/
 }
 
+void GameState::initTextures()
+{
+	if (!textures["IDLE_PLAYER"].loadFromFile("Resources/Sprites/Player/test.png"))
+	{
+		std::cout << "ERROR::GAMESTATE::INITTEXTURES::Could not load texture IDLE_PLAYER" << std::endl;
+	}
+}
+
+void GameState::initPlayers()
+{
+	player = new Player(0, 0, &textures["IDLE_PLAYER"]);
+}
+
 GameState::GameState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states):
 	State(window, supportedKeys, states)
 {
 	initKeybinds();
+	initTextures();
+	initPlayers();
 }
 
 GameState::~GameState()
 {
+	delete player;
 }
 
 void GameState::updateInput(const float& dt)
@@ -30,19 +46,19 @@ void GameState::updateInput(const float& dt)
 
 	if(sf::Keyboard::isKeyPressed(keybinds["MOVE_LEFT"]))
 	{
-		player.move(dt, -1, 0);
+		player->move(dt, -1, 0);
 	}
 	if (sf::Keyboard::isKeyPressed(keybinds["MOVE_RIGHT"]))
 	{
-		player.move(dt, 1, 0);
+		player->move(dt, 1, 0);
 	}
 	if (sf::Keyboard::isKeyPressed(keybinds["MOVE_UP"]))
 			{
-		player.move(dt, 0, -1);
+		player->move(dt, 0, -1);
 	}
 	if (sf::Keyboard::isKeyPressed(keybinds["MOVE_DOWN"]))
 	{
-		player.move(dt, 0, 1);
+		player->move(dt, 0, 1);
 	}
 
 	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]))
@@ -63,5 +79,5 @@ void GameState::render(sf::RenderTarget* target)
 	if (!target)
 		target = window;
 
-	player.render(target);
+	player->render(target);
 }

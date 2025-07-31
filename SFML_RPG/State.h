@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entity.h"
+#include "Player.h"
 
 class State
 {
@@ -10,7 +10,7 @@ protected:
 	std::map<std::string, sf::Keyboard::Scancode> keybinds;
 	std::stack<State*>& states;
 
-	std::vector<sf::Texture> textures;                         
+	std::map<std::string, sf::Texture> textures;
 	bool quit;
 
 	sf::Vector2i mousePosWindow;
