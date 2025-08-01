@@ -6,6 +6,7 @@ class Player :
 {
 private:
 
+    void initComponents();
 
 public:
 
