@@ -8,16 +8,14 @@ private:
 	void initVariables();
 
 protected:
-	sf::Texture* texture;
-	sf::Sprite* sprite;
+	sf::Sprite sprite;
 
 	MovementComponent* movementComponent;
 
 public:
-	Entity();
+	Entity(sf::Texture &texture);
 	virtual ~Entity();
 
-	void createSprite(sf::Texture* texture);
 	void createMovementComponent(float maxVelocity);
 
 	virtual void setPosition(float x, float y);

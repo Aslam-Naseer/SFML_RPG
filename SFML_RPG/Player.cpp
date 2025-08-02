@@ -7,11 +7,11 @@ void Player::initComponents()
 	createMovementComponent(500.f);
 }
 
-Player::Player(float x, float y, sf::Texture *texture)
+Player::Player(float x, float y, sf::Texture& texture)
+	: Entity(texture)
 {
 	initComponents();
 
-	createSprite(texture);
 	setPosition(x, y);
 }
 
