@@ -24,12 +24,33 @@ void MainMenuState::initFonts()
 void MainMenuState::initButtons()
 {
 
-	buttons["GAME_STATE"] = new Button(230.f, 510.f, 100.f, 50.f, "New Game", font,
-		sf::Color(70, 70, 70, 200), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200));
+	buttons["GAME_STATE"] = new Button(
+		230.f, 440.f, 270.f, 100.f,
+		"New Game", font, 50,
+		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),
+		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
+	);
 
+	buttons["SETTINGS"] = new Button(
+		230.f, 550.f, 270.f, 100.f,
+		"Settings", font, 50,
+		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),
+		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
+	);
 
-	buttons["EXIT"] = new Button(230.f, 610.f, 100.f, 50.f, "Exit", font,
-		sf::Color(70, 70, 70, 200), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200));
+	buttons["EDITOR_STATE"] = new Button(
+		230.f, 660.f, 270.f, 100.f,
+		"Editor", font, 50,
+		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),
+		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
+	);
+
+	buttons["EXIT"] = new Button(
+		230.f, 850.f, 270.f, 100.f,
+		"Exit", font, 50,
+		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),
+		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
+	);
 }
 
 MainMenuState::MainMenuState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states) :
