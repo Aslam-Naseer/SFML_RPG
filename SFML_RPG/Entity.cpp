@@ -19,9 +19,9 @@ Entity::~Entity()
 	delete movementComponent;
 }
 
-void Entity::createMovementComponent(float maxVelocity)
+void Entity::createMovementComponent(float maxVelocity, float acceleration, float deceleration)
 {
-	movementComponent = new MovementComponent(sprite, maxVelocity);
+	movementComponent = new MovementComponent(sprite, maxVelocity, acceleration, deceleration);
 }
 
 // Functions
@@ -41,7 +41,10 @@ void Entity::move(const float& dt, int dir_x, int dir_y)
 
 void Entity::update(const float& dt)
 {
-	
+	if (!movementComponent)
+		return;
+
+	movementComponent->update(dt);
 }
 
 void Entity::render(sf::RenderTarget* target)

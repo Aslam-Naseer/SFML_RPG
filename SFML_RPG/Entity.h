@@ -16,7 +16,7 @@ public:
 	Entity(sf::Texture &texture);
 	virtual ~Entity();
 
-	void createMovementComponent(float maxVelocity);
+	void createMovementComponent(float maxVelocity, float acceleration, float deceleration);
 
 	virtual void setPosition(float x, float y);
 	virtual void move(const float& dt, int dir_x, int dir_y);

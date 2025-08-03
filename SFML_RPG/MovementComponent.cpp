@@ -1,7 +1,8 @@
 #include "MovementComponent.h"
 
-MovementComponent::MovementComponent(sf::Sprite& sprite, float maxVelocity)
-	: sprite(sprite), maxVelocity(maxVelocity), velocity(0.f, 0.f)
+MovementComponent::MovementComponent(sf::Sprite& sprite, float maxVelocity, float acceleration, float deceleration)
+	: maxVelocity(maxVelocity), acceleration(acceleration), deceleration(deceleration), 
+		velocity(0.f, 0.f), sprite(sprite)
 {
 }
 
@@ -16,8 +17,28 @@ const sf::Vector2f& MovementComponent::getVelocity() const
 
 void MovementComponent::move(const float& dt, const int dir_x, const int dir_y)
 {
-	velocity.x = maxVelocity * dir_x;
-	velocity.y = maxVelocity * dir_y;
+	// Accelerate
+
+	velocity.x += acceleration * dir_x;
+	velocity.y += acceleration * dir_y;
+
+	velocity.x = std::clamp(velocity.x, -maxVelocity, maxVelocity);
+	velocity.y = std::clamp(velocity.y, -maxVelocity, maxVelocity);
+}
+
+void MovementComponent::update(const float& dt)
+{
+	// Decelerate
+	
+	velocity.x -= deceleration * (velocity.x > 0 ? 1 : -1);
+	velocity.y -= deceleration * (velocity.y > 0 ? 1 : -1);
+
+	if (std::abs(velocity.x) < deceleration)
+		velocity.x = 0.f;
+	if (std::abs(velocity.y) < deceleration)
+		velocity.y = 0.f;
+
+	// Update
 
 	sprite.move(velocity * dt);
 }
