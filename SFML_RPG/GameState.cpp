@@ -17,15 +17,15 @@ void GameState::initKeybinds()
 
 void GameState::initTextures()
 {
-	if (!textures["IDLE_PLAYER"].loadFromFile("Resources/Sprites/Player/test.png"))
+	if (!textures["PLAYER_SHEET"].loadFromFile("Resources/Sprites/Player/PLAYER_SHEET.png"))
 	{
-		std::cout << "ERROR::GAMESTATE::INITTEXTURES::Could not load texture IDLE_PLAYER" << std::endl;
+		std::cout << "ERROR::GAMESTATE::INITTEXTURES::Could not load texture PLAYER_SHEET" << std::endl;
 	}
 }
 
 void GameState::initPlayers()
 {
-	player = new Player(0, 0, textures["IDLE_PLAYER"]);
+	player = new Player(0, 0, textures["PLAYER_SHEET"]);
 }
 
 GameState::GameState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states):

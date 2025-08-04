@@ -5,6 +5,7 @@
 void Entity::initVariables()
 {
 	movementComponent = NULL;
+	animationComponent = NULL;
 }
 
 
@@ -17,11 +18,17 @@ Entity::Entity(sf::Texture& texture) :
 Entity::~Entity()
 {
 	delete movementComponent;
+	delete animationComponent;
 }
 
 void Entity::createMovementComponent(float maxVelocity, float acceleration, float deceleration)
 {
 	movementComponent = new MovementComponent(sprite, maxVelocity, acceleration, deceleration);
+}
+
+void Entity::createAnimationComponent(sf::Texture& texture)
+{
+	animationComponent = new AnimationComponent(sprite, texture);
 }
 
 // Functions
@@ -41,10 +48,11 @@ void Entity::move(const float& dt, int dir_x, int dir_y)
 
 void Entity::update(const float& dt)
 {
-	if (!movementComponent)
-		return;
+	if (movementComponent != NULL)
+		movementComponent->update(dt);
 
-	movementComponent->update(dt);
+	if (animationComponent != NULL)
+		animationComponent->update(dt);
 }
 
 void Entity::render(sf::RenderTarget* target)
