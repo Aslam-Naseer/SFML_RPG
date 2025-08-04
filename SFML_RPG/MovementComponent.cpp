@@ -33,9 +33,9 @@ void MovementComponent::update(const float& dt)
 	velocity.x -= deceleration * (velocity.x > 0 ? 1 : -1);
 	velocity.y -= deceleration * (velocity.y > 0 ? 1 : -1);
 
-	if (std::abs(velocity.x) < deceleration)
+	if (std::abs(velocity.x) <= deceleration)
 		velocity.x = 0.f;
-	if (std::abs(velocity.y) < deceleration)
+	if (std::abs(velocity.y) <= deceleration)
 		velocity.y = 0.f;
 
 	// Update
