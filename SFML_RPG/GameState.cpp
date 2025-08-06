@@ -81,5 +81,5 @@ void GameState::render(sf::RenderTarget* target)
 	if (!target)
 		target = window;
 
-	player->render(target);
+	player->render(*target);
 }

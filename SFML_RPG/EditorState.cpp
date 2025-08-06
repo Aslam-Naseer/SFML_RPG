@@ -74,7 +74,7 @@ void EditorState::render(sf::RenderTarget* target)
 
 	for (auto& it : buttons)
 	{
-		it.second->render(target);
+		it.second->render(*target);
 	}
 
 }

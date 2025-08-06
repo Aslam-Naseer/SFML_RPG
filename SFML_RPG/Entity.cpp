@@ -62,10 +62,10 @@ void Entity::update(const float& dt)
 		animationComponent->update(dt);
 }
 
-void Entity::render(sf::RenderTarget* target)
+void Entity::render(sf::RenderTarget& target)
 {
-	target->draw(sprite);
+	target.draw(sprite);
 
 	if (hitboxComponent != NULL)
-		hitboxComponent->render(*target);
+		hitboxComponent->render(target);
 }

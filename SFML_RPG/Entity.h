@@ -28,6 +28,6 @@ public:
 	virtual void move(const float& dt, int dir_x, int dir_y);
 
 	virtual void update(const float& dt);
-	virtual void render(sf::RenderTarget* target);
+	virtual void render(sf::RenderTarget& target);
 };
 

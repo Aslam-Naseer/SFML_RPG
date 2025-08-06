@@ -118,7 +118,7 @@ void MainMenuState::render(sf::RenderTarget* target)
 	
 	for(auto& it: buttons)
 	{
-		it.second->render(target);
+		it.second->render(*target);
 	}
 
 	// DEBUG: REMOVE LATER
