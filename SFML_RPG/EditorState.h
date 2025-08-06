@@ -1,0 +1,28 @@
+#pragma once
+#include "State.h"
+#include "Button.h"
+
+class EditorState :
+    public State
+{
+private:
+
+    sf::Font font;
+    std::map<std::string, Button*> buttons;
+
+    void initKeybinds();
+    void initFonts();
+    void initButtons();
+
+public:
+    EditorState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states);
+    virtual ~EditorState();
+
+    void updateButtons();
+
+    void updateInput(const float& dt) override;
+    void update(const float& dt) override;
+
+    void render(sf::RenderTarget* target = nullptr) override;
+};
+

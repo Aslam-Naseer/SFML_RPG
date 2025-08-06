@@ -84,6 +84,11 @@ void MainMenuState::updateButtons()
 		states.push(new GameState(window, supportedKeys, states));
 	}
 
+	if (buttons["EDITOR_STATE"]->isPressed())
+	{
+		states.push(new EditorState(window, supportedKeys, states));
+	}
+
 	if (buttons["EXIT"]->isPressed())
 	{
 		endState();
