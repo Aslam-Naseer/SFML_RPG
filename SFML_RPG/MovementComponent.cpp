@@ -15,6 +15,26 @@ const sf::Vector2f& MovementComponent::getVelocity() const
 	return velocity;
 }
 
+
+const bool MovementComponent::getState(const movement_state state) const
+{
+	switch (state)
+	{
+	case movement_state::IDLE:
+		return velocity.x == 0.f && velocity.y == 0.f;
+	case movement_state::WALK_LEFT:
+		return velocity.x < 0.f;
+	case movement_state::WALK_RIGHT:
+		return velocity.x > 0.f;
+	case movement_state::WALK_UP:
+		return velocity.y < 0.f;
+	case movement_state::WALK_DOWN:
+		return velocity.y > 0.f;
+	default:
+		return false;
+	}
+}
+
 void MovementComponent::move(const float& dt, const int dir_x, const int dir_y)
 {
 	// Accelerate
