@@ -12,6 +12,7 @@ Player::Player(float x, float y, sf::Texture& texture)
 	//initComponents();
 	createMovementComponent(700.f, 25.f, 5.f);
 	createAnimationComponent(texture);
+	createHitboxComponent(85, 55, 75, 135);
 
 	setPosition(x, y);
 	animationComponent->addAnimation("IDLE", 192, 192, 14, 0, .5f);
@@ -33,4 +34,5 @@ void Player::update(const float& dt)
 		animationComponent->play("IDLE");
 
 	animationComponent->update(dt);
+	hitboxComponent->update();
 }
