@@ -45,6 +45,8 @@ public:
 	AnimationComponent(sf::Sprite& sprite, sf::Texture& textureSheet);
 	~AnimationComponent();
 
+	bool isPriority(std::string key) const { return priorityAnimationKey == key; }
+
 	void addAnimation(std::string key, int width, int height, int max_frames, int y_level, float max_time);
 	void play(std::string key, const bool priority = false);
 

@@ -26,6 +26,8 @@ void AnimationComponent::Animation::update(sf::Sprite& sprite, const float& dt)
 		sprite.setTextureRect(currentRect);
 		curTime -= maxTime;
 	}
+
+	//std::cout << currentFrame << " / " << maxFrames-1 << std::endl;
 }
 
 void AnimationComponent::Animation::reset()
@@ -73,33 +75,36 @@ void AnimationComponent::play(std::string key, const bool priority)
 		return;
 	}
 
-	if (currentAnimationKey != key)
-	{
-		currentAnimationKey = key;
-		animations[key]->reset();
-	}
-
 	if(priority && priorityAnimationKey != key)
 	{
 		priorityAnimationKey = key;
+	} 
+	
+	if(!priority && currentAnimationKey != key)
+	{
+		currentAnimationKey = key;
+		animations[key]->reset();
 	}
 	
 }
 
 void AnimationComponent::update(const float& dt)
 {
-	if (animations.find(currentAnimationKey) == animations.end())
-	{
-		std::cerr << "Animation with key '" << currentAnimationKey << "' does not exist!" << std::endl;
-		return;
-	}
+	
 
-	if (priorityAnimationKey != "") {
+	if (priorityAnimationKey != "" && animations.find(priorityAnimationKey) != animations.end()) {
 		animations[priorityAnimationKey]->update(sprite, dt);
 		if (animations[priorityAnimationKey]->isDone())
 			priorityAnimationKey = "";
 	}
 
-	else
+	else if (animations.find(currentAnimationKey) != animations.end())
+	{
 		animations[currentAnimationKey]->update(sprite, dt);
+	}
+
+	else
+	{
+		std::cout << "Invalid key\n";
+	}
 }

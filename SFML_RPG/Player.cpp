@@ -25,40 +25,80 @@ Player::~Player()
 {
 }
 
-void Player::update(const float& dt)
+void Player::updateAnimations(const float& dt)
 {
-	movementComponent->update(dt);
+	
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Space))
-	{
+	// Play animations
+	if (attacking)
 		animationComponent->play("ATTACK", true);
-	}
 
-	else if (movementComponent->getState(MovementComponent::movement_state::WALK_LEFT))
+	
+	if (movementComponent->getState(MovementComponent::movement_state::WALK_LEFT))
 	{
-		sprite.setOrigin({ 0.f, 0 });
-		sprite.setScale({ 1.f, 1.f });
 		animationComponent->play("WALK");
 	}
 	else if (movementComponent->getState(MovementComponent::movement_state::WALK_RIGHT))
 	{
-		sprite.setOrigin({ 258.f, 0 });
-		sprite.setScale({ -1.f, 1.f });
 		animationComponent->play("WALK");
-	} 
-	else if(movementComponent->getState(MovementComponent::movement_state::WALK_UP))
+	}
+	else if (movementComponent->getState(MovementComponent::movement_state::WALK_UP))
 	{
 		animationComponent->play("WALK");
-	} 
+	}
 	else if (movementComponent->getState(MovementComponent::movement_state::WALK_DOWN))
 	{
 		animationComponent->play("WALK");
-	} 
-	else 
+	}
+	else if (movementComponent->getState(MovementComponent::movement_state::IDLE))
 	{
 		animationComponent->play("IDLE");
 	}
-
+	
+	// Animate
 	animationComponent->update(dt);
+	if (!animationComponent->isPriority("ATTACK"))
+		attacking = false;
+
+	// Hitbox update
+	if (facingRight)
+	{
+		sprite.setScale({ -1.f, 1.f });
+
+		if (attacking)
+			sprite.setOrigin({ 258.f + 96.f, 0.f });
+		else
+			sprite.setOrigin({ 258, 0.f });
+	}
+	else
+	{
+		sprite.setScale({ 1.f, 1.f });
+
+		if (attacking)
+			sprite.setOrigin({ 96.f, 0.f });
+		else
+			sprite.setOrigin({ 0.f, 0.f });
+	}
+
+	if (movementComponent->getVelocity().x > 0.f) // Moving right
+	{
+		facingRight = true;
+	}
+	else if (movementComponent->getVelocity().x < 0.f) // Moving left
+	{
+		facingRight = false;
+	}
+}
+
+void Player::update(const float& dt)
+{
+	movementComponent->update(dt);
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	{
+		attacking = true;
+	}
+
+	updateAnimations(dt);
 	hitboxComponent->update();
 }
