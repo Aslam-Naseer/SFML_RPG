@@ -40,6 +40,7 @@ AnimationComponent::AnimationComponent(sf::Sprite& sprite, sf::Texture& textureS
 	
 	this->sprite.setTexture(this->textureSheet);
 	currentAnimationKey = "";
+	priorityAnimationKey = "";
 }
 
 AnimationComponent::~AnimationComponent()
@@ -64,7 +65,7 @@ void AnimationComponent::addAnimation(std::string key,
 	}
 }
 
-void AnimationComponent::play(std::string key)
+void AnimationComponent::play(std::string key, const bool priority)
 {
 	if (animations.find(key) == animations.end())
 	{
@@ -74,11 +75,15 @@ void AnimationComponent::play(std::string key)
 
 	if (currentAnimationKey != key)
 	{
-
 		currentAnimationKey = key;
 		animations[key]->reset();
-
 	}
+
+	if(priority && priorityAnimationKey != key)
+	{
+		priorityAnimationKey = key;
+	}
+	
 }
 
 void AnimationComponent::update(const float& dt)
@@ -89,5 +94,12 @@ void AnimationComponent::update(const float& dt)
 		return;
 	}
 
-	animations[currentAnimationKey]->update(sprite, dt);
+	if (priorityAnimationKey != "") {
+		animations[priorityAnimationKey]->update(sprite, dt);
+		if (animations[priorityAnimationKey]->isDone())
+			priorityAnimationKey = "";
+	}
+
+	else
+		animations[currentAnimationKey]->update(sprite, dt);
 }
