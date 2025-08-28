@@ -12,6 +12,9 @@ protected:
 
 	std::map<std::string, sf::Texture> textures;
 	bool quit;
+	bool paused;
+	float keyTime;
+	float maxKeyTime;
 
 	sf::Vector2i mousePosWindow;
 	sf::Vector2i mousePosScreen;
@@ -23,9 +26,15 @@ public:
 	State(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states);
 	virtual ~State();
 
-	void endState();
 	const bool& getQuit() const;
+	const bool getKeyTime();
+
+	void endState();
+	void pauseState();
+	void unpauseState();
+
 	void updateMousePositions();
+	void updateKeyTime(const float& dt);
 
 	virtual void updateInput(const float& dt) = 0;
 	virtual void update(const float &dt) = 0;

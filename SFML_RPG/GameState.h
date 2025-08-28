@@ -1,20 +1,24 @@
 #pragma once
 #include "State.h"
+#include "PauseMenu.h"
 
 class GameState :
     public State
 {
 private:
-	Player* player; // Example entity, can be removed or modified as needed
+	Player* player; 
+	PauseMenu pmenu;
 
     void initKeybinds();
 	void initTextures();
     void initPlayers();
 
 public:
-    GameState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states);
+    GameState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states, sf::Font& font);
     virtual ~GameState();
 
+	void updatePlayerInput(const float& dt);
+	void updatePauseMenuButtons();
     void updateInput(const float& dt) override;
 
     void update(const float& dt) override;

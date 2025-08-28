@@ -28,8 +28,8 @@ void GameState::initPlayers()
 	player = new Player(0, 0, textures["PLAYER_SHEET"]);
 }
 
-GameState::GameState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states):
-	State(window, supportedKeys, states)
+GameState::GameState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states, sf::Font& font):
+	State(window, supportedKeys, states), pmenu(*window, font)
 {
 	initKeybinds();
 	initTextures();
@@ -41,7 +41,7 @@ GameState::~GameState()
 	delete player;
 }
 
-void GameState::updateInput(const float& dt)
+void GameState::updatePlayerInput(const float& dt)
 {
 
 	if(sf::Keyboard::isKeyPressed(keybinds["MOVE_LEFT"]))
@@ -61,19 +61,42 @@ void GameState::updateInput(const float& dt)
 		player->move(dt, 0, 1);
 	}
 
-	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]))
-	{
+}
+
+void GameState::updatePauseMenuButtons()
+{
+	if(pmenu.isButtonPressed("QUIT"))
 		endState();
+}
+
+void GameState::updateInput(const float& dt)
+{
+	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]) && getKeyTime())
+	{
+		if (!paused)
+			pauseState();
+		else
+			unpauseState();
 	}
 }
 
 void GameState::update(const float& dt)
 {
-
 	updateMousePositions();
-	updateInput(dt);
+	updateKeyTime(dt);
+	updateInput(dt); 
 
-	player->update(dt);
+	if (!paused)
+	{
+		updatePlayerInput(dt);
+		player->update(dt);
+	}
+	else
+	{
+		pmenu.update(mousePosView);
+		updatePauseMenuButtons();
+	}
+
 }
 
 void GameState::render(sf::RenderTarget* target)
@@ -82,4 +105,9 @@ void GameState::render(sf::RenderTarget* target)
 		target = window;
 
 	player->render(*target);
+
+	if (paused)
+	{
+		pmenu.render(*target);
+	}
 }

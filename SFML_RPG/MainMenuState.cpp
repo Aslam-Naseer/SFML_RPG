@@ -81,7 +81,7 @@ void MainMenuState::updateButtons()
 
 	if (buttons["GAME_STATE"]->isPressed())
 	{
-		states.push(new GameState(window, supportedKeys, states));
+		states.push(new GameState(window, supportedKeys, states, font));
 	}
 
 	if (buttons["EDITOR_STATE"]->isPressed())
