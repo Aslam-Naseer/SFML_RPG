@@ -11,7 +11,7 @@ void PauseMenu::addButton(const std::string key, const float y, const std::strin
 	float width = 100;
 	float x = container.getPosition().x + container.getSize().x / 2.f - width / 2.f;
 
-	buttons[key] = new Button(
+	buttons[key] = new gui::Button(
 		x, y, width, height,
 		text, font, 50,
 		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),

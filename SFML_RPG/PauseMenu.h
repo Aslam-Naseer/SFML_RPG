@@ -7,7 +7,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
-#include "Button.h"
+#include "Gui.h"
 
 class PauseMenu
 {
@@ -15,7 +15,7 @@ private:
 	sf::RectangleShape background;
 	sf::RectangleShape container;
 
-	std::map<std::string, Button*> buttons;
+	std::map<std::string, gui::Button*> buttons;
 
 	sf::Text menuText;
 

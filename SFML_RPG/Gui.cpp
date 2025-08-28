@@ -1,8 +1,6 @@
-#include "Button.h"
+#include "Gui.h"
 
-
-
-Button::Button(
+gui::Button::Button(
 	float x, float y, float width, float height,
 	const std::string& text_str, sf::Font& font, unsigned int char_size, 
 	sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color, 
@@ -28,15 +26,15 @@ Button::Button(
 	buttonState = ButtonState::IDLE;
 }
 
-Button::~Button()
+gui::Button::~Button()
 { }
 
-bool Button::isPressed() const
+bool gui::Button::isPressed() const
 {
 	return buttonState == ButtonState::ACTIVE;
 }
 
-void Button::update(const sf::Vector2f& mousePos)
+void gui::Button::update(const sf::Vector2f& mousePos)
 {
 	buttonState = ButtonState::IDLE;
 
@@ -70,7 +68,7 @@ void Button::update(const sf::Vector2f& mousePos)
 	}
 }
 
-void Button::render(sf::RenderTarget& target)
+void gui::Button::render(sf::RenderTarget& target)
 {
 	target.draw(shape);
 	target.draw(text);
