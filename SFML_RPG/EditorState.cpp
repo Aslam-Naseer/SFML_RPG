@@ -20,7 +20,11 @@ void EditorState::initFonts()
 
 void EditorState::initButtons()
 {
-
+	// DDL test
+	ddl = new gui::DropDownList(
+		50.f, 50.f, 120.f, 30.f,
+		font, std::vector<std::string>{ "Easy", "Medium", "Hard" }, 0
+	);
 
 }
 
@@ -64,6 +68,8 @@ void EditorState::update(const float& dt)
 	updateMousePositions();
 	updateButtons();
 	updateInput(dt);
+
+	ddl->update(mousePosView, dt);
 }
 
 void EditorState::render(sf::RenderTarget* target)
@@ -71,7 +77,7 @@ void EditorState::render(sf::RenderTarget* target)
 	if (!target)
 		target = window;
 
-
+	ddl->render(*target);
 	for (auto& it : buttons)
 	{
 		it.second->render(*target);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include<vector>
 #include <map>
 
 #include <SFML/Graphics.hpp>
@@ -48,6 +49,32 @@ namespace gui
 
 	};
 
+
+	class DropDownList
+	{
+	private:
+		float keyTime;
+		float keyTimeMax;
+		bool showList;
+
+		sf::Font& font;
+		gui::Button* activeElement;
+		std::vector<gui::Button*> list;
+
+		bool getKeyTime();
+		void updateKeyTime(const float& dt);
+
+	public:
+		DropDownList(
+			float x, float y, float width, float height,
+			sf::Font& font, const std::vector<std::string>& list, unsigned int index = 0
+		);
+		~DropDownList();
+
+		void update(const sf::Vector2f& mousePos, const float& dt);
+		void render(sf::RenderTarget& target);
+
+	};
 }
 
 

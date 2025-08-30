@@ -9,6 +9,7 @@ private:
 
     sf::Font font;
     std::map<std::string, gui::Button*> buttons;
+	gui::DropDownList* ddl;
 
     void initKeybinds();
     void initFonts();

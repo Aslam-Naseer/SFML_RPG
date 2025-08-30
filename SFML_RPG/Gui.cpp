@@ -1,5 +1,7 @@
 #include "Gui.h"
 
+// BUTTON
+
 gui::Button::Button(
 	float x, float y, float width, float height,
 	const std::string& text_str, sf::Font& font, unsigned int char_size, 
@@ -72,4 +74,90 @@ void gui::Button::render(sf::RenderTarget& target)
 {
 	target.draw(shape);
 	target.draw(text);
+}
+
+// DROP DOWN LIST
+
+bool gui::DropDownList::getKeyTime()
+{
+	if(keyTime >= keyTimeMax)
+	{
+		keyTime = 0.f;
+		return true;
+	}
+
+	return false;
+}
+
+void gui::DropDownList::updateKeyTime(const float& dt)
+{
+	if(keyTime < keyTimeMax)
+	{
+		keyTime += 10.f * dt;
+	}
+
+}
+
+gui::DropDownList::DropDownList(
+	float x, float y, float width, float height,
+	sf::Font& font, const std::vector<std::string>& list, unsigned int index
+) : font(font), showList(false), keyTime(0.f), keyTimeMax(1.f)
+{
+	activeElement = new gui::Button(
+		x, y, width, height,
+		list[index], font, 16,
+		sf::Color::White, sf::Color::White, sf::Color::White,
+		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200)
+	);
+
+	for (unsigned i = 0; i < list.size(); ++i)
+	{
+		this->list.push_back(new gui::Button(
+			x, y + (i * height), width, height,
+			list[i], font, 16,
+			sf::Color::White, sf::Color::White, sf::Color::White,
+			sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 200)
+		));
+	}
+}
+
+gui::DropDownList::~DropDownList()
+{
+	delete activeElement;
+	for (auto& i : list)
+	{
+		delete i;
+	}
+}
+
+void gui::DropDownList::update(const sf::Vector2f& mousePos, const float& dt)
+{
+	updateKeyTime(dt);
+	activeElement->update(mousePos);
+
+	if (activeElement->isPressed() && getKeyTime())
+	{
+		showList = !showList;
+	}
+
+	if (showList)
+	{
+		for (auto& i : list)
+		{
+			i->update(mousePos);
+		}
+	}
+}
+
+void gui::DropDownList::render(sf::RenderTarget& target)
+{
+	activeElement->render(target);
+	if (showList)
+	{
+		for (auto& i : list)
+		{
+			i->render(target);
+		}
+	}
+
 }
