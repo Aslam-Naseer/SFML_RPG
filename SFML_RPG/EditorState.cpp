@@ -22,8 +22,8 @@ void EditorState::initButtons()
 {
 	// DDL test
 	ddl = new gui::DropDownList(
-		50.f, 50.f, 120.f, 30.f,
-		font, std::vector<std::string>{ "Easy", "Medium", "Hard" }, 0
+		50.f, 50.f, 250.f, 70.f, 30,
+		font, std::vector<std::string>{ "Easy", "Medium", "Hard" , "Extreme"}
 	);
 
 }

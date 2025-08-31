@@ -32,17 +32,29 @@ namespace gui
 		sf::Color textHoverColor;
 		sf::Color textActiveColor;
 
+		sf::Color outlineIdleColor;
+		sf::Color outlineHoverColor;
+		sf::Color outlineActiveColor;
+
 		ButtonState buttonState;
+		short unsigned id = -1;
 
 	public:
 
 		Button(float x, float y, float width, float height,
 			const std::string& text, sf::Font& font, unsigned int charSize,
 			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
-			sf::Color idle_color, sf::Color hover_color, sf::Color active_color);
+			sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
+			sf::Color outline_idle_color = sf::Color::Transparent, sf::Color outline_hover_color = sf::Color::Transparent, sf::Color outline_active_color = sf::Color::Transparent
+		);
 		~Button();
 
+		void setId(const short unsigned id);
+		void setText(const std::string text);
+	
 		bool isPressed() const;
+		short unsigned getId() const;
+		const std::string getText() const;
 
 		void update(const sf::Vector2f& mousePos);
 		void render(sf::RenderTarget& target);
@@ -66,7 +78,7 @@ namespace gui
 
 	public:
 		DropDownList(
-			float x, float y, float width, float height,
+			float x, float y, float width, float height, unsigned int char_size,
 			sf::Font& font, const std::vector<std::string>& list, unsigned int index = 0
 		);
 		~DropDownList();
