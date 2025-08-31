@@ -18,18 +18,20 @@ gui::Button::Button(
 	shape.setSize(sf::Vector2f(width, height));
 	shape.setPosition(sf::Vector2f(x, y));
 	shape.setFillColor(idleColor);
-
 	shape.setOutlineThickness(1.f);
 	shape.setOutlineColor(outlineIdleColor);
 
-	text.setPosition(
-		{ shape.getPosition().x + shape.getSize().x / 2.f ,
-		shape.getPosition().y + shape.getSize().y / 2.f }
-	);
+	sf::FloatRect textBounds = text.getLocalBounds();
 
-	text.setOrigin(
-		{ text.getGlobalBounds().size.x / 2.f , text.getGlobalBounds().size.y * 2.f / 3.f }
-	);
+	text.setOrigin({
+		textBounds.position.x + textBounds.size.x / 2.f,
+		textBounds.position.y + textBounds.size.y / 2.f
+		});
+
+	text.setPosition({
+		shape.getPosition().x + shape.getSize().x / 2.f,
+		shape.getPosition().y + shape.getSize().y / 2.f
+		});
 
 	buttonState = ButtonState::IDLE;
 }
@@ -47,9 +49,17 @@ void gui::Button::setId(const short unsigned id)
 void gui::Button::setText(const std::string text)
 {
 	this->text.setString(text);
-	this->text.setOrigin(
-		{ this->text.getGlobalBounds().size.x / 2.f , this->text.getGlobalBounds().size.y * 2.f / 3.f }
-	);
+
+	sf::FloatRect textBounds = this->text.getLocalBounds();
+	this->text.setOrigin({
+		textBounds.position.x + textBounds.size.x / 2.f,
+		textBounds.position.y + textBounds.size.y / 2.f
+		});
+
+	this->text.setPosition({
+		shape.getPosition().x + shape.getSize().x / 2.f,
+		shape.getPosition().y + shape.getSize().y / 2.f
+		});
 }
 
 bool gui::Button::isPressed() const
