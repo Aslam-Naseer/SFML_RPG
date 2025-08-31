@@ -1,5 +1,5 @@
+#include "stdafx.h"
 #include "AnimationComponent.h"
-
 
 AnimationComponent::Animation::Animation(int width, int height, int max_frames, int y_level, float max_time) :
 	width(width), height(height), maxFrames(max_frames), currentFrame(0), 
