@@ -156,6 +156,7 @@ gui::DropDownList::DropDownList(
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0),
 		sf::Color::White, sf::Color::White, sf::Color::White
 	);
+	activeElement->setId(index);
 
 	for (unsigned i = 0; i < list.size(); ++i)
 	{
@@ -168,6 +169,7 @@ gui::DropDownList::DropDownList(
 
 		this->list.back()->setId(i);
 	}
+
 }
 
 gui::DropDownList::~DropDownList()
@@ -177,6 +179,11 @@ gui::DropDownList::~DropDownList()
 	{
 		delete i;
 	}
+}
+
+short unsigned gui::DropDownList::getActiveId()
+{
+	return activeElement->getId();
 }
 
 void gui::DropDownList::update(const sf::Vector2f& mousePos, const float& dt)
@@ -198,6 +205,7 @@ void gui::DropDownList::update(const sf::Vector2f& mousePos, const float& dt)
 			{
 				showList = false;
 				activeElement->setText(i->getText());
+				activeElement->setId(i->getId());
 			}
 		}
 	}

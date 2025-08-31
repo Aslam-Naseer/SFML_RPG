@@ -83,6 +83,8 @@ namespace gui
 		);
 		~DropDownList();
 
+		short unsigned getActiveId();
+
 		void update(const sf::Vector2f& mousePos, const float& dt);
 		void render(sf::RenderTarget& target);
 

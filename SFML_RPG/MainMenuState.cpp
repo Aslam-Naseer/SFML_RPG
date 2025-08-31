@@ -31,7 +31,7 @@ void MainMenuState::initButtons()
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 
-	buttons["SETTINGS"] = new gui::Button(
+	buttons["SETTINGS_STATE"] = new gui::Button(
 		230.f, 550.f, 270.f, 100.f,
 		"Settings", font, 50,
 		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),
@@ -82,6 +82,11 @@ void MainMenuState::updateButtons()
 	if (buttons["GAME_STATE"]->isPressed())
 	{
 		states.push(new GameState(window, supportedKeys, states, font));
+	}
+
+	if(buttons["SETTINGS_STATE"]->isPressed())
+	{
+		states.push(new SettingsState(window, supportedKeys, states, font));
 	}
 
 	if (buttons["EDITOR_STATE"]->isPressed())
