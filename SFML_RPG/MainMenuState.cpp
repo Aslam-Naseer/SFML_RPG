@@ -54,8 +54,8 @@ void MainMenuState::initButtons()
 	);
 }
 
-MainMenuState::MainMenuState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states) :
-	State(window, supportedKeys, states)
+MainMenuState::MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states) :
+	State(window, supportedKeys, states), gfxSettings(gfxSettings)
 {
 
 	initBackground();
@@ -87,7 +87,7 @@ void MainMenuState::updateButtons()
 
 	if(buttons["SETTINGS_STATE"]->isPressed())
 	{
-		states.push(new SettingsState(window, supportedKeys, states, font));
+		states.push(new SettingsState(window, gfxSettings, supportedKeys, states, font));
 	}
 
 	if (buttons["EDITOR_STATE"]->isPressed())

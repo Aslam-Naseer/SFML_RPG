@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MainMenuState.h"
+#include "GraphicsSettings.h"
 
 class Game
 {
@@ -8,6 +9,7 @@ private:
 
 	sf::RenderWindow window;
 	std::vector<sf::VideoMode> videoModes;
+	GraphicsSettings gfxSettings;
 
 	sf::Clock clock;
 	float dt;
@@ -15,6 +17,7 @@ private:
 	std::stack<State*> states;
 	std::map<std::string, sf::Keyboard::Scancode> supportedKeys;
 
+	void initGraphicsSettings();
 	void initWindow();
 	void initKeys();
 	void initStates();

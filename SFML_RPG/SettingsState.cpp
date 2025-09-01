@@ -42,12 +42,17 @@ void SettingsState::initGui()
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 
-	dropDownLists["RESOLUTION"] = new gui::DropDownList(700.f, 470.f, 200.f, 50.f, 24, font,
-		std::vector<std::string>{ "1920x1080", "1600x900", "1280x720", "1024x576" });
+	std::vector<std::string> modes_str;
+	for (auto& i : gfxSettings.videoModes)
+	{
+		modes_str.push_back(std::to_string(i.size.x) + 'x' + std::to_string(i.size.y));
+	}
+
+	dropDownLists["RESOLUTION"] = new gui::DropDownList(700.f, 470.f, 200.f, 50.f, 24, font, modes_str);
 }	
 
-SettingsState::SettingsState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states, sf::Font& font) :
-	State(window, supportedKeys, states), font(font), optionsText(font)
+SettingsState::SettingsState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states, sf::Font& font) :
+	State(window, supportedKeys, states), gfxSettings(gfxSettings), font(font), optionsText(font)
 {
 	initBackground();
 	initKeybinds();
@@ -89,14 +94,14 @@ void SettingsState::updateGui(const float& dt)
 	if (buttons["APPLY"]->isPressed())
 	{
 		short unsigned id = dropDownLists["RESOLUTION"]->getActiveId();
-		if (id > 3)
+		if (id >= gfxSettings.videoModes.size())
 		{
 			std::cout << "ERROR id: " << id <<"\n";
 			return;
 		}
 
 		unsigned int modes_array[4][2] = { {1920, 1080} ,{1600, 900},{1280, 720},{1024, 576} };
-		window->create(sf::VideoMode({ modes_array[id][0], modes_array[id][1]}), "Test");
+		window->create(sf::VideoMode({ gfxSettings.videoModes[id].size.x, gfxSettings.videoModes[id].size.y }), gfxSettings.title);
 	}
 
 }

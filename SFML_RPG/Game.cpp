@@ -3,42 +3,23 @@
 
 // Initialisers
 
-void Game::initWindow()
+void Game::initGraphicsSettings()
 {
-	std::ifstream ifs("Config/window.ini");
-	videoModes = sf::VideoMode::getFullscreenModes();
+	gfxSettings.loadFromFile("Config/graphics.ini");
+}
 
-	sf::VideoMode video_mode = sf::VideoMode::getDesktopMode();
-	std::string title = "None";
-	bool fullscreen = false;
-	unsigned int frame_rate_limit = 120;
-	bool vertical_sync_enabled = false;
-	int anti_aliasing_level = 0;
-
-	if (ifs.is_open()) {
-		std::getline(ifs, title);
-		ifs >> video_mode.size.x >> video_mode.size.y;
-		ifs >> fullscreen;
-		ifs >> frame_rate_limit;
-		ifs >> vertical_sync_enabled;
-		ifs >> anti_aliasing_level;
-	}
-
-	ifs.close();
-
-	sf::ContextSettings context_settings;
-	context_settings.antiAliasingLevel = anti_aliasing_level;
-
-	if (fullscreen)
+void Game::initWindow()
+{	
+	if (gfxSettings.fullscreen)
 	{
-		window = sf::RenderWindow(video_mode, title, sf::State::Fullscreen, context_settings);
+		window = sf::RenderWindow(gfxSettings.resolution, gfxSettings.title, sf::State::Fullscreen, gfxSettings.contextSettings);
 	} else 
 	{
-		window = sf::RenderWindow(video_mode, title, sf::Style::Titlebar | sf::Style::Close , sf::State::Windowed, context_settings);
+		window = sf::RenderWindow(gfxSettings.resolution, gfxSettings.title, sf::Style::Titlebar | sf::Style::Close , sf::State::Windowed, gfxSettings.contextSettings);
 	}
 
-	window.setFramerateLimit(frame_rate_limit);
-	window.setVerticalSyncEnabled(vertical_sync_enabled);
+	window.setFramerateLimit(gfxSettings.frameRateLimit);
+	window.setVerticalSyncEnabled(gfxSettings.verticalSync);
 }
 
 void Game::initKeys()
@@ -52,22 +33,18 @@ void Game::initKeys()
 		supportedKeys[key] = (sf::Keyboard::Scancode)key_code;
 	}
 
-
-	//DEBUG
-	/*for (auto &item : supportedKeys)
-		std::cout << item.first << " " << (int)item.second << std::endl;*/
 }
 
 void Game::initStates()
 {
-	states.push(new MainMenuState(&window, supportedKeys, states));
-	//states.push(new GameState(&window, supportedKeys));
+	states.push(new MainMenuState(&window, gfxSettings, supportedKeys, states));
 }
 
 // Constructors and Destructors
 
 Game::Game()
 {
+	initGraphicsSettings();
 	initWindow();
 	initKeys();
 	initStates();

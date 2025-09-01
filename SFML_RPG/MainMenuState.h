@@ -5,6 +5,7 @@
 #include "GameState.h"
 #include "SettingsState.h"
 #include "EditorState.h"
+#include "GraphicsSettings.h"
 
 class MainMenuState :
     public State
@@ -14,6 +15,7 @@ private:
     sf::Texture bgTexture;
     sf::Font font;
     std::map<std::string, gui::Button*> buttons;
+    GraphicsSettings& gfxSettings;
 
     void initBackground();
     void initKeybinds();
@@ -21,7 +23,7 @@ private:
     void initButtons();
 
 public:
-    MainMenuState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states);
+    MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states);
     virtual ~MainMenuState();
 
     void updateButtons();

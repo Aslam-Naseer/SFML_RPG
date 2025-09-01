@@ -2,6 +2,7 @@
 
 #include "Gui.h"
 #include "State.h"
+#include "GraphicsSettings.h"
 
 class SettingsState :
     public State
@@ -14,6 +15,7 @@ private:
 
     std::map<std::string, gui::Button*> buttons;
     std::map<std::string, gui::DropDownList*> dropDownLists;
+    GraphicsSettings& gfxSettings;
 
     void initBackground();
     void initGui();
@@ -21,7 +23,7 @@ private:
     void initText();
 
 public:
-    SettingsState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states, sf::Font& font);
+    SettingsState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states, sf::Font& font);
     virtual ~SettingsState();
 
     void updateGui(const float& dt);

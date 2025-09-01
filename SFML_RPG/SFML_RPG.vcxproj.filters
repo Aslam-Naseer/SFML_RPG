@@ -72,9 +72,6 @@
     <ClCompile Include="HitboxComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="SettingsState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -83,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsSettings.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsState.cpp">
+      <Filter>State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,9 +125,6 @@
     <ClInclude Include="HitboxComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="SettingsState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -133,6 +133,12 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsSettings.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsState.h">
+      <Filter>State</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
