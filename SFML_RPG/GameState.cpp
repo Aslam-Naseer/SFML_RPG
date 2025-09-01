@@ -105,10 +105,12 @@ void GameState::render(sf::RenderTarget* target)
 	if (!target)
 		target = window;
 
+	tileMap.render(*target);
 	player->render(*target);
 
 	if (paused)
 	{
 		pmenu.render(*target);
 	}
+
 }

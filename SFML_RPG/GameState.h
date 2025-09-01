@@ -3,6 +3,7 @@
 #include "State.h"
 #include "PauseMenu.h"
 #include "Player.h"
+#include "TileMap.h"
 
 class GameState :
     public State
@@ -10,6 +11,7 @@ class GameState :
 private:
 	Player* player; 
 	PauseMenu pmenu;
+	TileMap tileMap;
 
     void initKeybinds();
 	void initTextures();
