@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-TileMap::TileMap()
+TileMap::TileMap(float grid_size)
 {
-	gridSize = 50.f;
+	gridSize = grid_size;
 	mapSize = { 10, 20 };
 	layers = 1;
 

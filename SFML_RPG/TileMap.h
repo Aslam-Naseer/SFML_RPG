@@ -11,7 +11,7 @@ private:
 	std::vector<std::vector<std::vector<Tile>>> map;
 
 public:
-	TileMap();
+	TileMap(float grid_size);
 	virtual ~TileMap();
 
 	void update();

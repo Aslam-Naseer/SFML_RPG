@@ -3,7 +3,7 @@
 
 void EditorState::initKeybinds()
 {
-	std::ifstream ifs("Config/editorstate_keybinds.ini");
+	std::ifstream ifs("Config/gamestate_keybinds.ini");
 
 	std::string key, key_code;
 	while (ifs >> key >> key_code)
@@ -12,65 +12,76 @@ void EditorState::initKeybinds()
 	ifs.close();
 }
 
-void EditorState::initFonts()
+void EditorState::initTextures()
 {
-	if (!font.openFromFile("Fonts/Dosis-Light.ttf")) {
-		throw std::runtime_error("ERROR::GAME::FONT_NOT_AVAILABLE");
+	if (!textures["PLAYER_SHEET"].loadFromFile("Resources/Sprites/Player/PLAYER_SHEET.png"))
+	{
+		std::cout << "ERROR::GAMESTATE::INITTEXTURES::Could not load texture PLAYER_SHEET" << std::endl;
 	}
 }
 
-void EditorState::initButtons()
+void EditorState::initGui()
 {
-	// DDL test
-	ddl = new gui::DropDownList(
-		50.f, 50.f, 250.f, 70.f, 30,
-		font, std::vector<std::string>{ "Easy", "Medium", "Hard" , "Extreme"}
-	);
-
+	selectorRect.setSize({ gridSize, gridSize });
+	selectorRect.setFillColor(sf::Color::Transparent);
+	selectorRect.setOutlineThickness(1.f);
+	selectorRect.setOutlineColor(sf::Color::Green);
 }
 
-EditorState::EditorState(StateData& state_data) :
-	State(state_data)
+EditorState::EditorState(StateData& state_data, sf::Font& font) :
+	State(state_data), pmenu(*window, font), tileMap(state_data.gridSize), gridSize(state_data.gridSize)
 {
 	initKeybinds();
-	initFonts();
-	initButtons();
-
+	initTextures();
+	initGui();
 }
 
 EditorState::~EditorState()
 {
-	for (auto& it : buttons)
-	{
-		delete it.second;
-	}
 }
 
-void EditorState::updateButtons()
+void EditorState::updatePauseMenuButtons()
 {
-	for (auto& it : buttons)
-	{
-		it.second->update(mousePosView);
-	}
+	if (pmenu.isButtonPressed("QUIT"))
+		endState();
+}
 
+void EditorState::updateGui()
+{
+	selectorRect.setPosition({
+		mousePosGrid.x * gridSize,
+		mousePosGrid.y * gridSize,
+		});
 }
 
 void EditorState::updateInput(const float& dt)
 {
-	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]))
+	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]) && getKeyTime())
 	{
-		endState();
+		if (!paused)
+			pauseState();
+		else
+			unpauseState();
 	}
 }
 
 void EditorState::update(const float& dt)
 {
-
 	updateMousePositions();
-	updateButtons();
+	updateKeyTime(dt);
 	updateInput(dt);
 
-	ddl->update(mousePosView, dt);
+	if (!paused)
+	{
+		updateGui();
+	}
+
+	else
+	{
+		pmenu.update(mousePosView);
+		updatePauseMenuButtons();
+	}
+
 }
 
 void EditorState::render(sf::RenderTarget* target)
@@ -78,10 +89,12 @@ void EditorState::render(sf::RenderTarget* target)
 	if (!target)
 		target = window;
 
-	ddl->render(*target);
-	for (auto& it : buttons)
+	tileMap.render(*target);
+	target->draw(selectorRect);
+
+	if (paused)
 	{
-		it.second->render(*target);
+		pmenu.render(*target);
 	}
 
 }

@@ -1,8 +1,14 @@
 #include "stdafx.h"
 #include "State.h"
 
+StateData::StateData()
+{
+
+}
+
+
 State::State(StateData& state_data) :
-	stateData(state_data), states(*state_data.states)
+	stateData(state_data), states(*state_data.states), paused(false), quit(false)
 {
 	keyTime = 0.f;
 	maxKeyTime = 10.f;
@@ -49,6 +55,9 @@ void State::updateMousePositions()
 	mousePosScreen = sf::Mouse::getPosition();
 	mousePosWindow = sf::Mouse::getPosition(*window);
 	mousePosView = window->mapPixelToCoords(mousePosWindow);
+
+	mousePosGrid.x = static_cast<unsigned>(mousePosView.x) / static_cast<unsigned>(stateData.gridSize);
+	mousePosGrid.y = static_cast<unsigned>(mousePosView.y) / static_cast<unsigned>(stateData.gridSize);
 }
 
 void State::updateKeyTime(const float& dt)

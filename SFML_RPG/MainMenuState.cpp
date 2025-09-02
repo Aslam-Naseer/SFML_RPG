@@ -90,7 +90,7 @@ void MainMenuState::updateButtons()
 
 	if (buttons["EDITOR_STATE"]->isPressed())
 	{
-		states.push(new EditorState(stateData));
+		states.push(new EditorState(stateData, font));
 	}
 
 	if (buttons["EXIT"]->isPressed())

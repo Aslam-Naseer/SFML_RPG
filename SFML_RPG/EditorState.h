@@ -1,30 +1,32 @@
 #pragma once
 
 #include "State.h"
-#include "Gui.h"
+#include "PauseMenu.h"
+#include "TileMap.h"
 
 class EditorState :
-    public State
+	public State
 {
 private:
+	PauseMenu pmenu;
+	TileMap tileMap;
+	float gridSize;
 
-    sf::Font font;
-    std::map<std::string, gui::Button*> buttons;
-	gui::DropDownList* ddl;
+	sf::RectangleShape selectorRect;
 
-    void initKeybinds();
-    void initFonts();
-    void initButtons();
+	void initKeybinds();
+	void initTextures();
+	void initGui();
 
 public:
-    EditorState(StateData& state_data);
-    virtual ~EditorState();
+	EditorState(StateData& state_data, sf::Font& font);
+	virtual ~EditorState();
 
-    void updateButtons();
+	void updatePauseMenuButtons();
+	void updateGui();
+	void updateInput(const float& dt) override;
 
-    void updateInput(const float& dt) override;
-    void update(const float& dt) override;
-
-    void render(sf::RenderTarget* target = nullptr) override;
+	void update(const float& dt) override;
+	void render(sf::RenderTarget* target = nullptr) override;
 };
 
