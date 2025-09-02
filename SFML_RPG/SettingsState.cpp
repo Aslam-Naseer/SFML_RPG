@@ -51,8 +51,8 @@ void SettingsState::initGui()
 	dropDownLists["RESOLUTION"] = new gui::DropDownList(700.f, 470.f, 200.f, 50.f, 24, font, modes_str);
 }	
 
-SettingsState::SettingsState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states, sf::Font& font) :
-	State(window, supportedKeys, states), gfxSettings(gfxSettings), font(font), optionsText(font)
+SettingsState::SettingsState(StateData& state_data, sf::Font& font) :
+	State(state_data), gfxSettings(*state_data.gfxSettings), font(font), optionsText(font)
 {
 	initBackground();
 	initKeybinds();
@@ -112,9 +112,6 @@ void SettingsState::updateInput(const float& dt)
 
 void SettingsState::update(const float& dt)
 {
-	/*player.update(dt);
-	checkForQuit();*/
-
 	updateMousePositions();
 	updateGui(dt);
 	updateInput(dt);

@@ -54,15 +54,13 @@ void MainMenuState::initButtons()
 	);
 }
 
-MainMenuState::MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states) :
-	State(window, supportedKeys, states), gfxSettings(gfxSettings)
+MainMenuState::MainMenuState(StateData& state_data) :
+	State(state_data)
 {
-
 	initBackground();
 	initKeybinds();
 	initFonts();
 	initButtons();
-
 }
 
 MainMenuState::~MainMenuState()
@@ -82,17 +80,17 @@ void MainMenuState::updateButtons()
 
 	if (buttons["GAME_STATE"]->isPressed())
 	{
-		states.push(new GameState(window, supportedKeys, states, font));
+		states.push(new GameState(stateData, font));
 	}
 
 	if(buttons["SETTINGS_STATE"]->isPressed())
 	{
-		states.push(new SettingsState(window, gfxSettings, supportedKeys, states, font));
+		states.push(new SettingsState(stateData, font));
 	}
 
 	if (buttons["EDITOR_STATE"]->isPressed())
 	{
-		states.push(new EditorState(window, supportedKeys, states));
+		states.push(new EditorState(stateData));
 	}
 
 	if (buttons["EXIT"]->isPressed())
@@ -107,9 +105,6 @@ void MainMenuState::updateInput(const float& dt)
 
 void MainMenuState::update(const float& dt)
 {
-	/*player.update(dt);
-	checkForQuit();*/
-
 	updateMousePositions();
 	updateButtons();
 	updateInput(dt);
@@ -128,11 +123,11 @@ void MainMenuState::render(sf::RenderTarget* target)
 	}
 
 	// DEBUG: REMOVE LATER
-	sf::Text mouseText(font,"",15);
-	mouseText.setPosition({mousePosView.x, mousePosView.y - 20});
-	std::stringstream st;
-	st << mousePosView.x << ' ' << mousePosView.y;
-	mouseText.setString(st.str());
+	//sf::Text mouseText(font,"",15);
+	//mouseText.setPosition({mousePosView.x, mousePosView.y - 20});
+	//std::stringstream st;
+	//st << mousePosView.x << ' ' << mousePosView.y;
+	//mouseText.setString(st.str());
 
-	target->draw(mouseText);
+	//target->draw(mouseText);
 }

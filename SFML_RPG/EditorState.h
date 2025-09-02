@@ -17,7 +17,7 @@ private:
     void initButtons();
 
 public:
-    EditorState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states);
+    EditorState(StateData& state_data);
     virtual ~EditorState();
 
     void updateButtons();

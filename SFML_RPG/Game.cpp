@@ -35,9 +35,18 @@ void Game::initKeys()
 
 }
 
+void Game::initStateData()
+{
+	stateData.gridSize = gridSize;
+	stateData.window = &window;
+	stateData.supportedKeys = &supportedKeys;
+	stateData.states = &states;
+	stateData.gfxSettings = &gfxSettings;
+}
+
 void Game::initStates()
 {
-	states.push(new MainMenuState(&window, gfxSettings, supportedKeys, states));
+	states.push(new MainMenuState(stateData));
 }
 
 // Constructors and Destructors
@@ -47,6 +56,7 @@ Game::Game()
 	initGraphicsSettings();
 	initWindow();
 	initKeys();
+	initStateData();
 	initStates();
 }
 

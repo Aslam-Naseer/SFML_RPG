@@ -18,8 +18,8 @@ private:
     void initPlayers();
 
 public:
-    GameState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states, sf::Font& font);
-    virtual ~GameState();
+	GameState(StateData& state_data, sf::Font& font);
+	virtual ~GameState();
 
 	void updatePlayerInput(const float& dt);
 	void updatePauseMenuButtons();

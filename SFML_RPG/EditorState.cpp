@@ -7,7 +7,7 @@ void EditorState::initKeybinds()
 
 	std::string key, key_code;
 	while (ifs >> key >> key_code)
-		keybinds[key] = supportedKeys.at(key_code);
+		keybinds[key] = stateData.supportedKeys->at(key_code);
 
 	ifs.close();
 }
@@ -29,8 +29,8 @@ void EditorState::initButtons()
 
 }
 
-EditorState::EditorState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states) :
-	State(window, supportedKeys, states)
+EditorState::EditorState(StateData& state_data) :
+	State(state_data)
 {
 	initKeybinds();
 	initFonts();

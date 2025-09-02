@@ -15,7 +15,6 @@ private:
     sf::Texture bgTexture;
     sf::Font font;
     std::map<std::string, gui::Button*> buttons;
-    GraphicsSettings& gfxSettings;
 
     void initBackground();
     void initKeybinds();
@@ -23,7 +22,7 @@ private:
     void initButtons();
 
 public:
-    MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states);
+	MainMenuState(StateData& state_data);
     virtual ~MainMenuState();
 
     void updateButtons();

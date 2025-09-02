@@ -1,10 +1,26 @@
 #pragma once
 
+#include "GraphicsSettings.h"
+
+class State;
+
+class StateData
+{
+public:
+	StateData() {};
+
+	float gridSize;
+	sf::RenderWindow* window;
+	std::map<std::string, sf::Keyboard::Scancode>* supportedKeys;
+	std::stack<State*>* states;
+	GraphicsSettings* gfxSettings;
+};
+
 class State
 {
 protected:
+	StateData& stateData;
 	sf::RenderWindow* window;
-	const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys;
 	std::map<std::string, sf::Keyboard::Scancode> keybinds;
 	std::stack<State*>& states;
 
@@ -21,7 +37,7 @@ protected:
 	virtual void initKeybinds() = 0;
 
 public:
-	State(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states);
+	State(StateData& state_data);
 	virtual ~State();
 
 	const bool& getQuit() const;

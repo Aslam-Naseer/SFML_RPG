@@ -23,7 +23,7 @@ private:
     void initText();
 
 public:
-    SettingsState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states, sf::Font& font);
+    SettingsState(StateData& state_data, sf::Font& font);
     virtual ~SettingsState();
 
     void updateGui(const float& dt);

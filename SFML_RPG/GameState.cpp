@@ -7,13 +7,9 @@ void GameState::initKeybinds()
 	
 	std::string key, key_code;
 	while (ifs >> key >> key_code)
-		keybinds[key] = supportedKeys.at(key_code);
+		keybinds[key] = stateData.supportedKeys->at(key_code);
 
 	ifs.close();
-
-	//DEBUG
-	/*for (auto& item : keybinds)
-		std::cout << item.first << " " << (int)item.second << std::endl;*/
 }
 
 void GameState::initTextures()
@@ -29,8 +25,8 @@ void GameState::initPlayers()
 	player = new Player(0, 0, textures["PLAYER_SHEET"]);
 }
 
-GameState::GameState(sf::RenderWindow* window, const std::map<std::string, sf::Keyboard::Scancode>& supportedKeys, std::stack<State*>& states, sf::Font& font):
-	State(window, supportedKeys, states), pmenu(*window, font)
+GameState::GameState(StateData& state_data, sf::Font& font):
+	State(state_data), pmenu(*window, font)
 {
 	initKeybinds();
 	initTextures();
