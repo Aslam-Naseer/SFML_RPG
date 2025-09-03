@@ -13,6 +13,7 @@ private:
 	float gridSize;
 
 	sf::RectangleShape selectorRect;
+	sf::IntRect textureRect;
 
 	void initKeybinds();
 	void initTextures();

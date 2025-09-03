@@ -15,6 +15,11 @@ TileMap::TileMap(float grid_size)
 		)
 	);
 
+	if(!tileSheet.loadFromFile("Resources/Images/Tilesheet.png"))
+	{
+		std::cout << "ERROR::TILEMAP::Could not load tilesheet." << std::endl;
+	}
+
 }
 
 TileMap::~TileMap()
@@ -32,13 +37,18 @@ TileMap::~TileMap()
 	}
 }
 
-void TileMap::addTile(unsigned x, unsigned y, unsigned layer)
+const sf::Texture& TileMap::getTileSheet() const
+{
+	return tileSheet;
+}
+
+void TileMap::addTile(unsigned x, unsigned y, unsigned layer,const sf::IntRect& textureRect)
 {
 	if(x < mapSize.x && y < mapSize.y && layer < layers)
 	{
 		if (map[x][y][layer] == NULL)
 		{
-			map[x][y][layer] = new Tile(x * gridSize, y * gridSize, gridSize);
+			map[x][y][layer] = new Tile(x * gridSize, y * gridSize, gridSize, tileSheet, textureRect);
 		}
 	}
 }

@@ -10,11 +10,15 @@ private:
 	unsigned layers;
 	std::vector<std::vector<std::vector<Tile*>>> map;
 
+	sf::Texture tileSheet;
+
 public:
 	TileMap(float grid_size);
 	virtual ~TileMap();
 
-	void addTile(unsigned x, unsigned y, unsigned layer);
+	const sf::Texture& getTileSheet() const;
+
+	void addTile(unsigned x, unsigned y, unsigned layer, const sf::IntRect& textureRect);
 	void removeTile(unsigned x, unsigned y, unsigned layer);
 
 	void update();

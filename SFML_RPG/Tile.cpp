@@ -1,14 +1,16 @@
 #include "stdafx.h"
 #include "Tile.h"
 
-Tile::Tile(float x, float y, float gridSize)
+Tile::Tile(float x, float y, float gridSize, const sf::Texture& tileSheet, const sf::IntRect& textureRect)
 {
 	shape.setPosition({ x,y });
 	shape.setSize({ gridSize, gridSize });
-	shape.setFillColor(sf::Color::White);
-	
-	shape.setOutlineThickness(1.f);
-	shape.setOutlineColor(sf::Color::Black);
+
+	//shape.setOutlineThickness(1.f);
+	//shape.setOutlineColor(sf::Color::Black);
+
+	shape.setTexture(&tileSheet);
+	shape.setTextureRect(textureRect);
 }
 
 Tile::~Tile()

@@ -14,18 +14,21 @@ void EditorState::initKeybinds()
 
 void EditorState::initTextures()
 {
-	if (!textures["PLAYER_SHEET"].loadFromFile("Resources/Sprites/Player/PLAYER_SHEET.png"))
-	{
-		std::cout << "ERROR::GAMESTATE::INITTEXTURES::Could not load texture PLAYER_SHEET" << std::endl;
-	}
+	textureRect.position.x = 0;
+	textureRect.position.y = 0;
+	textureRect.size.x = 100;
+	textureRect.size.y = 100;
 }
 
 void EditorState::initGui()
 {
 	selectorRect.setSize({ gridSize, gridSize });
-	selectorRect.setFillColor(sf::Color::Transparent);
+	selectorRect.setFillColor(sf::Color(255, 255, 255, 155));
 	selectorRect.setOutlineThickness(1.f);
-	selectorRect.setOutlineColor(sf::Color::Green);
+	selectorRect.setOutlineColor(sf::Color::White);
+	
+	selectorRect.setTexture(&tileMap.getTileSheet());
+	selectorRect.setTextureRect(textureRect);
 }
 
 EditorState::EditorState(StateData& state_data, sf::Font& font) :
@@ -53,8 +56,31 @@ void EditorState::updateGui()
 		mousePosGrid.y * gridSize,
 		});
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Space) && getKeyTime()) {
+		
+		sf::Vector2i& texturePos = textureRect.position;
+
+		if (texturePos.x == 0 && texturePos.y == 0) {
+			texturePos.x = 100;
+
+		} else if (texturePos.x == 100 && texturePos.y == 0) {
+			texturePos.x = 0;
+			texturePos.y = 100;
+
+		} else if (texturePos.x == 0 && texturePos.y == 100) {
+			texturePos.x = 100;
+
+		} else if (texturePos.x == 100 && texturePos.y == 100) {
+			texturePos.x = 0;
+			texturePos.y = 0;
+
+		}
+
+		selectorRect.setTextureRect(textureRect);
+	}
+
 	if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && getKeyTime()) {
-		tileMap.addTile(mousePosGrid.x, mousePosGrid.y, 0);
+		tileMap.addTile(mousePosGrid.x, mousePosGrid.y, 0, textureRect);
 
 	} else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && getKeyTime()) {
 		tileMap.removeTile(mousePosGrid.x, mousePosGrid.y, 0);
