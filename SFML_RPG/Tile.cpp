@@ -5,7 +5,7 @@ Tile::Tile(float x, float y, float gridSize)
 {
 	shape.setPosition({ x,y });
 	shape.setSize({ gridSize, gridSize });
-	shape.setFillColor(sf::Color::Green);
+	shape.setFillColor(sf::Color::White);
 	
 	shape.setOutlineThickness(1.f);
 	shape.setOutlineColor(sf::Color::Black);

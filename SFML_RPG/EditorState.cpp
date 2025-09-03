@@ -52,6 +52,14 @@ void EditorState::updateGui()
 		mousePosGrid.x * gridSize,
 		mousePosGrid.y * gridSize,
 		});
+
+	if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && getKeyTime()) {
+		tileMap.addTile(mousePosGrid.x, mousePosGrid.y, 0);
+
+	} else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && getKeyTime()) {
+		tileMap.removeTile(mousePosGrid.x, mousePosGrid.y, 0);
+
+	}
 }
 
 void EditorState::updateInput(const float& dt)
