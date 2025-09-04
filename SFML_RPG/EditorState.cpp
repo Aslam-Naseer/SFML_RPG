@@ -30,7 +30,13 @@ void EditorState::initGui()
 	selectorRect.setTexture(&tileMap.getTileSheet());
 	selectorRect.setTextureRect(textureRect);
 
-	textureSelector = new gui::TextureSelector(50.f, 50.f, 400.f, 500.f, tileMap.getTileSheet(), gridSize, font);
+	textureSelector = new gui::TextureSelector(150.f, 50.f, 400.f, 500.f, tileMap.getTileSheet(), gridSize, font);
+
+	sidebar.setSize({ gridSize, static_cast<float>(stateData.gfxSettings->resolution.size.x) });
+	sidebar.setPosition({ 0,0 });
+	sidebar.setFillColor(sf::Color(25, 25, 25, 255));
+	sidebar.setOutlineColor(sf::Color(150, 150, 150, 255));
+	sidebar.setOutlineThickness(1.f);
 }
 
 EditorState::EditorState(StateData& state_data, sf::Font& font) :
@@ -60,28 +66,32 @@ void EditorState::updateGui(const float& dt)
 		selectorRect.setPosition({
 			mousePosGrid.x * gridSize,
 			mousePosGrid.y * gridSize,
-		});
+			});
 
 	}
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && getKeyTime()) {
-		if (!textureSelector->isActive())
-		{
-			tileMap.addTile(mousePosGrid.x, mousePosGrid.y, 0, textureRect);
+	if (!sidebar.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
+	{
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && getKeyTime()) {
+			if (!textureSelector->isActive())
+			{
+				tileMap.addTile(mousePosGrid.x, mousePosGrid.y, 0, textureRect);
+			}
+			else
+			{
+				textureRect.position.x = textureSelector->getTextureRect().position.x;
+				textureRect.position.y = textureSelector->getTextureRect().position.y;
+			}
 		}
-		else
-		{
-			textureRect.position.x = textureSelector->getTextureRect().position.x;
-			textureRect.position.y = textureSelector->getTextureRect().position.y;
+		else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && getKeyTime()) {
+			if (!textureSelector->isActive())
+				tileMap.removeTile(mousePosGrid.x, mousePosGrid.y, 0);
+
 		}
+	
+		selectorRect.setTextureRect(textureRect);
 	}
-	else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && getKeyTime()) {
-		if (!textureSelector->isActive())
-			tileMap.removeTile(mousePosGrid.x, mousePosGrid.y, 0);
-
-	}
-
-	selectorRect.setTextureRect(textureRect);
 
 }
 
@@ -121,10 +131,12 @@ void EditorState::render(sf::RenderTarget* target)
 		target = window;
 
 	tileMap.render(*target);
-	textureSelector->render(*target);
 
 	if(!textureSelector->isActive())
 		target->draw(selectorRect);
+
+	target->draw(sidebar);
+	textureSelector->render(*target);
 
 	if (paused)
 	{
@@ -132,12 +144,12 @@ void EditorState::render(sf::RenderTarget* target)
 	}
 
 	//DEBUG: REMOVE LATER
-	sf::Text mouseText(font,"",15);
-	mouseText.setPosition({mousePosView.x + 20, mousePosView.y - 20});
-	std::stringstream st;
-	st << textureRect.position.x << ' ' << textureRect.position.y;
-	mouseText.setString(st.str());
+	//sf::Text mouseText(font,"",15);
+	//mouseText.setPosition({mousePosView.x + 20, mousePosView.y - 20});
+	//std::stringstream st;
+	//st << textureRect.position.x << ' ' << textureRect.position.y;
+	//mouseText.setString(st.str());
 
-	target->draw(mouseText);
+	//target->draw(mouseText);
 
 }

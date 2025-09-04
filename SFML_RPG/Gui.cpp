@@ -248,7 +248,7 @@ void gui::TextureSelector::updateKeyTime(const float& dt)
 }
 
 gui::TextureSelector::TextureSelector(float x, float y, float width, float height,const sf::Texture& textureSheet, float grid_size, sf::Font& font):
-	hide(false), active(false), gridSize(grid_size), sheet(textureSheet), keyTime(0.f), keyTimeMax(1.f)
+	hide(true), active(false), gridSize(grid_size), sheet(textureSheet), keyTime(0.f), keyTimeMax(1.f)
 {
 	bounds.setPosition({ x,y });
 	bounds.setSize({ width, height });
@@ -275,9 +275,9 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 	textureRect.size = { static_cast<int>(gridSize), static_cast<int>(gridSize) };
 
 	toggleBtn = new gui::Button(
-		x, y, width, 100.f,
-		"Texture Selector", font, 30,
-		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),
+		0, 0, gridSize, 200.f,
+		"TS", font, 30,
+		sf::Color(140, 140, 140, 255), sf::Color(200, 200, 200, 255), sf::Color(90, 90, 90, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 }

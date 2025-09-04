@@ -15,6 +15,7 @@ private:
 	float gridSize;
 
 	sf::RectangleShape selectorRect;
+	sf::RectangleShape sidebar;
 	sf::IntRect textureRect;
 	sf::Font& font;
 
