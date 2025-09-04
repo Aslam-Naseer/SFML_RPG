@@ -86,26 +86,33 @@ namespace gui
 	class TextureSelector 
 	{
 	private:
+		bool hide;
 		bool active;
 		float gridSize;
+		Button* toggleBtn;
+
+		float keyTime;
+		float keyTimeMax;
+
 		sf::RectangleShape bounds;
 		sf::Sprite sheet;
 		sf::RectangleShape selector;
 		sf::IntRect textureRect;
 
+		bool getKeyTime();
+		void updateKeyTime(const float& dt);
 	public:
 		TextureSelector(
 			float x, float y, float width, float height,
-			const sf::Texture& textureSheet, float grid_size
+			const sf::Texture& textureSheet, float grid_size, sf::Font& font
 		);
 		~TextureSelector();
 
 		const sf::IntRect& getTextureRect() const;
 		bool isActive() const;
 
-		void selectTexture(const sf::Vector2i& mousePosWindow);
-
-		void update(const sf::Vector2i& mousePosWindow);
+		void updateSelector(const sf::Vector2i& mousePosWindow);
+		void update(const sf::Vector2i& mousePosWindow, const float& dt);
 		void render(sf::RenderTarget& target);
 		};
 }

@@ -16,6 +16,7 @@ private:
 
 	sf::RectangleShape selectorRect;
 	sf::IntRect textureRect;
+	sf::Font& font;
 
 	void initKeybinds();
 	void initTextures();
@@ -26,7 +27,7 @@ public:
 	virtual ~EditorState();
 
 	void updatePauseMenuButtons();
-	void updateGui();
+	void updateGui(const float& dt);
 	void updateInput(const float& dt) override;
 
 	void update(const float& dt) override;

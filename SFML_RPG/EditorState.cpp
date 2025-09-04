@@ -30,11 +30,11 @@ void EditorState::initGui()
 	selectorRect.setTexture(&tileMap.getTileSheet());
 	selectorRect.setTextureRect(textureRect);
 
-	textureSelector = new gui::TextureSelector(50.f, 50.f, 400.f, 500.f, tileMap.getTileSheet(), gridSize);
+	textureSelector = new gui::TextureSelector(50.f, 50.f, 400.f, 500.f, tileMap.getTileSheet(), gridSize, font);
 }
 
 EditorState::EditorState(StateData& state_data, sf::Font& font) :
-	State(state_data), pmenu(*window, font), tileMap(state_data.gridSize), gridSize(state_data.gridSize)
+	State(state_data), pmenu(*window, font), tileMap(state_data.gridSize), gridSize(state_data.gridSize), font(font)
 {
 	initKeybinds();
 	initTextures();
@@ -51,9 +51,9 @@ void EditorState::updatePauseMenuButtons()
 		endState();
 }
 
-void EditorState::updateGui()
+void EditorState::updateGui(const float& dt)
 {
-	textureSelector->update(mousePosWindow);
+	textureSelector->update(mousePosWindow, dt);
 
 	if (!textureSelector->isActive())
 	{
@@ -104,7 +104,7 @@ void EditorState::update(const float& dt)
 
 	if (!paused)
 	{
-		updateGui();
+		updateGui(dt);
 	}
 
 	else
@@ -130,5 +130,14 @@ void EditorState::render(sf::RenderTarget* target)
 	{
 		pmenu.render(*target);
 	}
+
+	//DEBUG: REMOVE LATER
+	sf::Text mouseText(font,"",15);
+	mouseText.setPosition({mousePosView.x + 20, mousePosView.y - 20});
+	std::stringstream st;
+	st << textureRect.position.x << ' ' << textureRect.position.y;
+	mouseText.setString(st.str());
+
+	target->draw(mouseText);
 
 }
