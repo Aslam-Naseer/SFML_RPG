@@ -29,6 +29,8 @@ void EditorState::initGui()
 	
 	selectorRect.setTexture(&tileMap.getTileSheet());
 	selectorRect.setTextureRect(textureRect);
+
+	textureSelector = new gui::TextureSelector(50.f, 50.f, 400.f, 500.f, tileMap.getTileSheet(), gridSize);
 }
 
 EditorState::EditorState(StateData& state_data, sf::Font& font) :
@@ -51,41 +53,36 @@ void EditorState::updatePauseMenuButtons()
 
 void EditorState::updateGui()
 {
-	selectorRect.setPosition({
-		mousePosGrid.x * gridSize,
-		mousePosGrid.y * gridSize,
+	textureSelector->update(mousePosWindow);
+
+	if (!textureSelector->isActive())
+	{
+		selectorRect.setPosition({
+			mousePosGrid.x * gridSize,
+			mousePosGrid.y * gridSize,
 		});
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Space) && getKeyTime()) {
-		
-		sf::Vector2i& texturePos = textureRect.position;
+	}
 
-		if (texturePos.x == 0 && texturePos.y == 0) {
-			texturePos.x = 100;
-
-		} else if (texturePos.x == 100 && texturePos.y == 0) {
-			texturePos.x = 0;
-			texturePos.y = 100;
-
-		} else if (texturePos.x == 0 && texturePos.y == 100) {
-			texturePos.x = 100;
-
-		} else if (texturePos.x == 100 && texturePos.y == 100) {
-			texturePos.x = 0;
-			texturePos.y = 0;
-
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && getKeyTime()) {
+		if (!textureSelector->isActive())
+		{
+			tileMap.addTile(mousePosGrid.x, mousePosGrid.y, 0, textureRect);
 		}
+		else
+		{
+			textureRect.position.x = textureSelector->getTextureRect().position.x;
+			textureRect.position.y = textureSelector->getTextureRect().position.y;
+		}
+	}
+	else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && getKeyTime()) {
+		if (!textureSelector->isActive())
+			tileMap.removeTile(mousePosGrid.x, mousePosGrid.y, 0);
 
-		selectorRect.setTextureRect(textureRect);
 	}
 
-	if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && getKeyTime()) {
-		tileMap.addTile(mousePosGrid.x, mousePosGrid.y, 0, textureRect);
+	selectorRect.setTextureRect(textureRect);
 
-	} else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && getKeyTime()) {
-		tileMap.removeTile(mousePosGrid.x, mousePosGrid.y, 0);
-
-	}
 }
 
 void EditorState::updateInput(const float& dt)
@@ -124,7 +121,10 @@ void EditorState::render(sf::RenderTarget* target)
 		target = window;
 
 	tileMap.render(*target);
-	target->draw(selectorRect);
+	textureSelector->render(*target);
+
+	if(!textureSelector->isActive())
+		target->draw(selectorRect);
 
 	if (paused)
 	{

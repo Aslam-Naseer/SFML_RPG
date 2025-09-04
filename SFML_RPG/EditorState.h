@@ -3,6 +3,7 @@
 #include "State.h"
 #include "PauseMenu.h"
 #include "TileMap.h"
+#include "Gui.h"
 
 class EditorState :
 	public State
@@ -10,6 +11,7 @@ class EditorState :
 private:
 	PauseMenu pmenu;
 	TileMap tileMap;
+	gui::TextureSelector* textureSelector;
 	float gridSize;
 
 	sf::RectangleShape selectorRect;
