@@ -17,6 +17,14 @@ Tile::~Tile()
 {
 }
 
+std::string Tile::toString()
+{
+	std::stringstream ss;
+	ss << shape.getTextureRect().position.x << " " << shape.getTextureRect().position.y << " ";
+
+	return ss.str();
+}
+
 void Tile::setPosition(float x, float y)
 {
 	shape.setPosition({ x,y });

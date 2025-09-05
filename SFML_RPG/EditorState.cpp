@@ -40,11 +40,15 @@ void EditorState::initGui()
 }
 
 EditorState::EditorState(StateData& state_data, sf::Font& font) :
-	State(state_data), pmenu(*window, font), tileMap(state_data.gridSize), gridSize(state_data.gridSize), font(font)
+	State(state_data), tileMap(state_data.gridSize, 50, 50, "Resources/Images/Tilesheet.png"),
+	pmenu(*window, font), gridSize(state_data.gridSize), font(font)
 {
 	initKeybinds();
 	initTextures();
 	initGui();
+
+	pmenu.addButton("SAVE", 550.f, "Save", font);
+	pmenu.addButton("LOAD", 300.f, "Load", font);
 }
 
 EditorState::~EditorState()
@@ -55,6 +59,12 @@ void EditorState::updatePauseMenuButtons()
 {
 	if (pmenu.isButtonPressed("QUIT"))
 		endState();
+
+	if (pmenu.isButtonPressed("SAVE"))
+		tileMap.saveToFile("../tilemap.txt");
+
+	if (pmenu.isButtonPressed("LOAD"))
+		tileMap.loadFromFile("../tilemap.txt");
 }
 
 void EditorState::updateGui(const float& dt)

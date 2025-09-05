@@ -11,7 +11,7 @@ class GameState :
 private:
 	Player* player; 
 	PauseMenu pmenu;
-	TileMap tileMap;
+	//TileMap tileMap;
 
     void initKeybinds();
 	void initTextures();

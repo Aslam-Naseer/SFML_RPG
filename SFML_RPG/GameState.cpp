@@ -26,7 +26,7 @@ void GameState::initPlayers()
 }
 
 GameState::GameState(StateData& state_data, sf::Font& font):
-	State(state_data), pmenu(*window, font), tileMap(stateData.gridSize)
+	State(state_data), pmenu(*window, font)
 {
 	initKeybinds();
 	initTextures();
@@ -101,7 +101,7 @@ void GameState::render(sf::RenderTarget* target)
 	if (!target)
 		target = window;
 
-	tileMap.render(*target);
+	//tileMap.render(*target);
 	player->render(*target);
 
 	if (paused)
