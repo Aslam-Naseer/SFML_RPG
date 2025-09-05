@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Gui.h"
+#include "KeyTime.h"
 
 class PauseMenu
 {
@@ -11,17 +12,18 @@ private:
 	std::map<std::string, gui::Button*> buttons;
 
 	sf::Text menuText;
+	KeyTime keyTime;
 
 	void initButtons(sf::Font& font);
-	void addButton(const std::string key, const float y, const std::string text, sf::Font& font);
 
 public:
 	PauseMenu(sf::RenderTarget& window, sf::Font& font);
 	virtual ~PauseMenu();
 
 	bool isButtonPressed(const std::string key) const;
+	void addButton(const std::string key, const float y, const std::string text, sf::Font& font);
 
-	void update(const sf::Vector2f& mousePos);
+	void update(const sf::Vector2f& mousePos, const float& dt);
 	void render(sf::RenderTarget& target);
 };
 

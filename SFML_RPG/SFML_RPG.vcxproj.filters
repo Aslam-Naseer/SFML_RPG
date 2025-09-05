@@ -87,6 +87,9 @@
     <ClCompile Include="SettingsState.cpp">
       <Filter>State</Filter>
     </ClCompile>
+    <ClCompile Include="KeyTime.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -139,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="SettingsState.h">
       <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyTime.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

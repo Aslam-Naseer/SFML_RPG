@@ -90,7 +90,7 @@ void GameState::update(const float& dt)
 	}
 	else
 	{
-		pmenu.update(mousePosView);
+		pmenu.update(mousePosView, dt);
 		updatePauseMenuButtons();
 	}
 
