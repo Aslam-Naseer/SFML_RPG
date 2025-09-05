@@ -6,9 +6,12 @@ private:
 
 protected:
 	sf::RectangleShape shape;
+	bool collision;
+	short type;
 
 public:
-	Tile(float x, float y, float gridSize, const sf::Texture& tileSheet, const sf::IntRect& textureRect);
+	Tile(float x, float y, float gridSize, const sf::Texture& tileSheet,
+		const sf::IntRect& textureRect, short type = 0, bool collision = false);
 	virtual ~Tile();
 
 	std::string toString();

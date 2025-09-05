@@ -66,13 +66,13 @@ const sf::Texture& TileMap::getTileSheet() const
 	return tileSheet;
 }
 
-void TileMap::addTile(unsigned x, unsigned y, unsigned layer,const sf::IntRect& textureRect)
+void TileMap::addTile(unsigned x, unsigned y, unsigned layer, short type, bool collision ,const sf::IntRect& textureRect)
 {
 	if(x < mapSize.x && y < mapSize.y && layer < layers)
 	{
 		if (map[x][y][layer] == NULL)
 		{
-			map[x][y][layer] = new Tile(x * gridSize, y * gridSize, gridSize, tileSheet, textureRect);
+			map[x][y][layer] = new Tile(x * gridSize, y * gridSize, gridSize, tileSheet, textureRect, type, collision);
 		}
 	}
 }
@@ -143,9 +143,12 @@ void TileMap::loadFromFile(const std::string file_name)
 	initMap(grid_size, map_size_x, map_size_y, layers, texture_file);
 
 	unsigned x, y, z;
+	short type;
+	bool collisoin;
 	sf::IntRect temp_rect({ 0,0 }, { static_cast<int>(grid_size), static_cast<int>(grid_size) });
-	while (ifs >> x >> y >> z >> temp_rect.position.x >> temp_rect.position.y)
-		addTile(x, y, z, temp_rect);
+	
+	while (ifs >> x >> y >> z >> temp_rect.position.x >> temp_rect.position.y >> type >> collisoin)
+		addTile(x, y, z, type, collisoin, temp_rect);
 
 	ifs.close();
 }

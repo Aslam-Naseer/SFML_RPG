@@ -3,11 +3,14 @@
 
 void EditorState::initKeybinds()
 {
-	std::ifstream ifs("Config/gamestate_keybinds.ini");
+	std::ifstream ifs("Config/editorstate_keybinds.ini");
 
 	std::string key, key_code;
 	while (ifs >> key >> key_code)
 		keybinds[key] = stateData.supportedKeys->at(key_code);
+
+	for(auto& i : keybinds)
+		std::cout << i.first << " ";
 
 	ifs.close();
 }
@@ -41,7 +44,7 @@ void EditorState::initGui()
 
 EditorState::EditorState(StateData& state_data, sf::Font& font) :
 	State(state_data), tileMap(state_data.gridSize, 50, 50, "Resources/Images/Tilesheet.png"),
-	pmenu(*window, font), gridSize(state_data.gridSize), font(font)
+	pmenu(*window, font), gridSize(state_data.gridSize), font(font), type(0), collision(false)
 {
 	initKeybinds();
 	initTextures();
@@ -86,7 +89,7 @@ void EditorState::updateGui(const float& dt)
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && getKeyTime()) {
 			if (!textureSelector->isActive())
 			{
-				tileMap.addTile(mousePosGrid.x, mousePosGrid.y, 0, textureRect);
+				tileMap.addTile(mousePosGrid.x, mousePosGrid.y, 0, type, collision, textureRect);
 			}
 			else
 			{
@@ -114,6 +117,30 @@ void EditorState::updateInput(const float& dt)
 		else
 			unpauseState();
 	}
+
+	if(!paused)
+	{
+
+		if (sf::Keyboard::isKeyPressed(keybinds["COLLISION"]) && getKeyTime())
+		{
+			std::cout << "Collision\n";
+			collision = !collision;
+		}
+
+		if (sf::Keyboard::isKeyPressed(keybinds["TYPE_UP"]) && getKeyTime())
+		{
+			std::cout << "Type up\n";
+			type++;
+		}
+		else if (sf::Keyboard::isKeyPressed(keybinds["TYPE_DOWN"]) && getKeyTime())
+		{
+			std::cout << "Type down\n";
+
+			if (type > 0)
+				type--;
+		}
+	}
+	
 }
 
 void EditorState::update(const float& dt)
@@ -154,12 +181,14 @@ void EditorState::render(sf::RenderTarget* target)
 	}
 
 	//DEBUG: REMOVE LATER
-	//sf::Text mouseText(font,"",15);
-	//mouseText.setPosition({mousePosView.x + 20, mousePosView.y - 20});
-	//std::stringstream st;
-	//st << textureRect.position.x << ' ' << textureRect.position.y;
-	//mouseText.setString(st.str());
+	sf::Text mouseText(font,"",15);
+	mouseText.setPosition({mousePosView.x + 20, mousePosView.y - 20});
+	std::stringstream st;
+	st << textureRect.position.x << ' ' << textureRect.position.y
+		<< "\n" << "Collision: " << collision
+		<< "\n" << "Type: " << type;
+	mouseText.setString(st.str());
 
-	//target->draw(mouseText);
+	target->draw(mouseText);
 
 }

@@ -8,8 +8,8 @@ private:
 	float gridSize;
 	sf::Vector2u mapSize;
 	unsigned layers;
-	std::vector<std::vector<std::vector<Tile*>>> map;
 
+	std::vector<std::vector<std::vector<Tile*>>> map;
 	sf::Texture tileSheet;
 	std::string textureFile;
 
@@ -23,7 +23,7 @@ public:
 
 	const sf::Texture& getTileSheet() const;
 
-	void addTile(unsigned x, unsigned y, unsigned layer, const sf::IntRect& textureRect);
+	void addTile(unsigned x, unsigned y, unsigned layer, short type, bool collision, const sf::IntRect& textureRect);
 	void removeTile(unsigned x, unsigned y, unsigned layer);
 
 	void saveToFile(const std::string file_name);

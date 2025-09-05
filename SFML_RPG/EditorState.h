@@ -16,6 +16,9 @@ private:
 
 	sf::RectangleShape selectorRect;
 	sf::RectangleShape sidebar;
+
+	short type;
+	bool collision;
 	sf::IntRect textureRect;
 	sf::Font& font;
 
