@@ -48,7 +48,7 @@ namespace gui
 		short unsigned getId() const;
 		const std::string getText() const;
 
-		void update(const sf::Vector2f& mousePos);
+		void update(const sf::Vector2i& mousePos);
 		void render(sf::RenderTarget& target);
 
 	};
@@ -77,7 +77,7 @@ namespace gui
 
 		short unsigned getActiveId();
 
-		void update(const sf::Vector2f& mousePos, const float& dt);
+		void update(const sf::Vector2i& mousePos, const float& dt);
 		void render(sf::RenderTarget& target);
 
 	};

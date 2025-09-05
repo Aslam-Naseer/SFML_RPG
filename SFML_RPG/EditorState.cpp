@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "EditorState.h"
 
+void EditorState::initView()
+{
+	view.setSize(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size));
+	view.setCenter(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f);
+}
+
 void EditorState::initKeybinds()
 {
 	std::ifstream ifs("Config/editorstate_keybinds.ini");
@@ -8,9 +14,6 @@ void EditorState::initKeybinds()
 	std::string key, key_code;
 	while (ifs >> key >> key_code)
 		keybinds[key] = stateData.supportedKeys->at(key_code);
-
-	for(auto& i : keybinds)
-		std::cout << i.first << " ";
 
 	ifs.close();
 }
@@ -44,14 +47,18 @@ void EditorState::initGui()
 
 EditorState::EditorState(StateData& state_data, sf::Font& font) :
 	State(state_data), tileMap(state_data.gridSize, 50, 50, "Resources/Images/Tilesheet.png"),
-	pmenu(*window, font), gridSize(state_data.gridSize), font(font), type(0), collision(false)
+	pmenu(*window, font), gridSize(state_data.gridSize), font(font), 
+	type(0), collision(false), viewSpeed(100.f)
 {
+	initView();
 	initKeybinds();
 	initTextures();
 	initGui();
 
-	pmenu.addButton("SAVE", 550.f, "Save", font);
+	pmenu.addButton("SAVE", 450.f, "Save", font);
 	pmenu.addButton("LOAD", 300.f, "Load", font);
+
+	tileMap.loadFromFile("../tilemap.txt");
 }
 
 EditorState::~EditorState()
@@ -120,22 +127,28 @@ void EditorState::updateInput(const float& dt)
 
 	if(!paused)
 	{
+		
+		if(sf::Keyboard::isKeyPressed(keybinds["MOVE_CAM_LEFT"]))
+			view.move({ -viewSpeed * dt, 0.f });
+		else if(sf::Keyboard::isKeyPressed(keybinds["MOVE_CAM_RIGHT"]))
+			view.move({ viewSpeed * dt, 0.f });
+
+		if(sf::Keyboard::isKeyPressed(keybinds["MOVE_CAM_UP"]))
+			view.move({ 0.f, -viewSpeed * dt });
+		else if(sf::Keyboard::isKeyPressed(keybinds["MOVE_CAM_DOWN"]))
+			view.move({ 0.f, viewSpeed * dt });
+
 
 		if (sf::Keyboard::isKeyPressed(keybinds["COLLISION"]) && getKeyTime())
-		{
-			std::cout << "Collision\n";
 			collision = !collision;
-		}
+		
 
 		if (sf::Keyboard::isKeyPressed(keybinds["TYPE_UP"]) && getKeyTime())
 		{
-			std::cout << "Type up\n";
 			type++;
 		}
 		else if (sf::Keyboard::isKeyPressed(keybinds["TYPE_DOWN"]) && getKeyTime())
 		{
-			std::cout << "Type down\n";
-
 			if (type > 0)
 				type--;
 		}
@@ -145,7 +158,7 @@ void EditorState::updateInput(const float& dt)
 
 void EditorState::update(const float& dt)
 {
-	updateMousePositions();
+	updateMousePositions(&view);
 	updateKeyTime(dt);
 	updateInput(dt);
 
@@ -156,7 +169,7 @@ void EditorState::update(const float& dt)
 
 	else
 	{
-		pmenu.update(mousePosView, dt);
+		pmenu.update(mousePosWindow, dt);
 		updatePauseMenuButtons();
 	}
 
@@ -167,10 +180,14 @@ void EditorState::render(sf::RenderTarget* target)
 	if (!target)
 		target = window;
 
+	// Render everything in view
+	window->setView(view);
 	tileMap.render(*target);
-
 	if(!textureSelector->isActive())
 		target->draw(selectorRect);
+
+	// Reset to default view for GUI
+	window->setView(window->getDefaultView());
 
 	target->draw(sidebar);
 	textureSelector->render(*target);
@@ -182,7 +199,7 @@ void EditorState::render(sf::RenderTarget* target)
 
 	//DEBUG: REMOVE LATER
 	sf::Text mouseText(font,"",15);
-	mouseText.setPosition({mousePosView.x + 20, mousePosView.y - 20});
+	mouseText.setPosition({mousePosWindow.x + 20.f, mousePosWindow.y - 20.f});
 	std::stringstream st;
 	st << textureRect.position.x << ' ' << textureRect.position.y
 		<< "\n" << "Collision: " << collision

@@ -12,8 +12,10 @@ private:
 	PauseMenu pmenu;
 	TileMap tileMap;
 	gui::TextureSelector* textureSelector;
+	
 	float gridSize;
-
+	float viewSpeed;
+	sf::View view;
 	sf::RectangleShape selectorRect;
 	sf::RectangleShape sidebar;
 
@@ -22,6 +24,7 @@ private:
 	sf::IntRect textureRect;
 	sf::Font& font;
 
+	void initView();
 	void initKeybinds();
 	void initTextures();
 	void initGui();

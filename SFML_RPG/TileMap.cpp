@@ -38,8 +38,6 @@ void TileMap::clearMap()
 	}
 	map.clear();
 
-	std::cout << "YESS \n";
-
 	mapSize = { 0, 0 };
 	layers = 0;
 }

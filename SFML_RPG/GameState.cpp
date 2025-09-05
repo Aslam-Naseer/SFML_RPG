@@ -1,6 +1,20 @@
 #include "stdafx.h"
 #include "GameState.h"
 
+//void GameState::initMid()
+//{
+//	mid.setSize({ stateData.gridSize, stateData.gridSize });
+//	mid.setFillColor(sf::Color::Cyan);
+//	mid.setOrigin(mid.getSize() / 2.f);
+//	mid.setPosition(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f);
+//}
+
+void GameState::initView()
+{
+	view.setSize(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size));
+	view.setCenter(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f);
+}
+
 void GameState::initKeybinds()
 {
 	std::ifstream ifs("Config/gamestate_keybinds.ini");
@@ -22,15 +36,20 @@ void GameState::initTextures()
 
 void GameState::initPlayers()
 {
-	player = new Player(0, 0, textures["PLAYER_SHEET"]);
+	sf::Vector2f spawn_point = static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f;
+	player = new Player(spawn_point.x, spawn_point.y, textures["PLAYER_SHEET"]);
 }
 
 GameState::GameState(StateData& state_data, sf::Font& font):
 	State(state_data), pmenu(*window, font)
 {
+	initView();
 	initKeybinds();
 	initTextures();
 	initPlayers();
+	//initMid();
+
+	tileMap.loadFromFile("../tilemap.txt");
 }
 
 GameState::~GameState()
@@ -58,6 +77,7 @@ void GameState::updatePlayerInput(const float& dt)
 		player->move(dt, 0, 1);
 	}
 
+	view.setCenter(player->getPosition());
 }
 
 void GameState::updatePauseMenuButtons()
@@ -90,7 +110,7 @@ void GameState::update(const float& dt)
 	}
 	else
 	{
-		pmenu.update(mousePosView, dt);
+		pmenu.update(mousePosWindow, dt);
 		updatePauseMenuButtons();
 	}
 
@@ -101,12 +121,15 @@ void GameState::render(sf::RenderTarget* target)
 	if (!target)
 		target = window;
 
-	//tileMap.render(*target);
+	target->setView(view);
+	tileMap.render(*target);
 	player->render(*target);
 
+	target->setView(target->getDefaultView());
 	if (paused)
 	{
 		pmenu.render(*target);
 	}
+	//target->draw(mid);
 
 }

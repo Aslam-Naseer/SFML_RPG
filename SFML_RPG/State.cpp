@@ -50,14 +50,19 @@ const bool State::getKeyTime()
 	return false;
 }
 
-void State::updateMousePositions()
+void State::updateMousePositions(sf::View* view)
 {
 	mousePosScreen = sf::Mouse::getPosition();
 	mousePosWindow = sf::Mouse::getPosition(*window);
+	
+	if (view)
+		window->setView(*view);
+	
 	mousePosView = window->mapPixelToCoords(mousePosWindow);
-
 	mousePosGrid.x = static_cast<unsigned>(mousePosView.x) / static_cast<unsigned>(stateData.gridSize);
 	mousePosGrid.y = static_cast<unsigned>(mousePosView.y) / static_cast<unsigned>(stateData.gridSize);
+
+	window->setView(window->getDefaultView());
 }
 
 void State::updateKeyTime(const float& dt)

@@ -24,6 +24,7 @@ public:
 	void createAnimationComponent(sf::Texture& texture);
 	void createHitboxComponent(float offsetX, float offsetY, float width, float height);
 
+	const sf::Vector2f& getPosition() const;
 	virtual void setPosition(float x, float y);
 	virtual void move(const float& dt, int dir_x, int dir_y);
 

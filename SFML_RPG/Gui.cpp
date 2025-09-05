@@ -80,11 +80,11 @@ const std::string gui::Button::getText() const
 
 // Functions
 
-void gui::Button::update(const sf::Vector2f& mousePos)
+void gui::Button::update(const sf::Vector2i& mousePos)
 {
 	buttonState = ButtonState::IDLE;
 
-	if (shape.getGlobalBounds().contains(mousePos))
+	if (shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos)))
 	{
 		buttonState = ButtonState::HOVER;
 
@@ -187,7 +187,7 @@ short unsigned gui::DropDownList::getActiveId()
 	return activeElement->getId();
 }
 
-void gui::DropDownList::update(const sf::Vector2f& mousePos, const float& dt)
+void gui::DropDownList::update(const sf::Vector2i& mousePos, const float& dt)
 {
 	updateKeyTime(dt);
 	activeElement->update(mousePos);
@@ -329,7 +329,7 @@ void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const floa
 {
 	updateKeyTime(dt);
 
-	toggleBtn->update(static_cast<sf::Vector2f>(mousePosWindow));
+	toggleBtn->update(mousePosWindow);
 	if (toggleBtn->isPressed() && getKeyTime())
 		hide = !hide;
 

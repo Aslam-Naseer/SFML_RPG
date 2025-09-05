@@ -48,8 +48,8 @@ bool PauseMenu::isButtonPressed(std::string key) const
 
 void PauseMenu::addButton(const std::string key, const float y, const std::string text, sf::Font& font)
 {
-	float height = 270;
-	float width = 100;
+	float width = 270;
+	float height = 100;
 	float x = container.getPosition().x + container.getSize().x / 2.f - width / 2.f;
 
 	buttons[key] = new gui::Button(
@@ -60,7 +60,7 @@ void PauseMenu::addButton(const std::string key, const float y, const std::strin
 	);
 }
 
-void PauseMenu::update(const sf::Vector2f& mousePos, const float& dt)
+void PauseMenu::update(const sf::Vector2i& mousePos, const float& dt)
 {
 	keyTime.update(dt);
 	for(auto &i: buttons)

@@ -11,8 +11,13 @@ class GameState :
 private:
 	Player* player; 
 	PauseMenu pmenu;
-	//TileMap tileMap;
+	TileMap tileMap;
+	sf::View view;
 
+	//sf::RectangleShape mid;
+	//void initMid();
+
+	void initView();
     void initKeybinds();
 	void initTextures();
     void initPlayers();
