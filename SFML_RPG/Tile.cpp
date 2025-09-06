@@ -7,12 +7,6 @@ Tile::Tile(float x, float y, float gridSize, const sf::Texture& tileSheet,
 	shape.setPosition({ x,y });
 	shape.setSize({ gridSize, gridSize });
 
-	if(collision)
-	{
-		shape.setOutlineThickness(1.f);
-		shape.setOutlineColor(sf::Color::Red);
-	}
-
 	shape.setTexture(&tileSheet);
 	shape.setTextureRect(textureRect);
 

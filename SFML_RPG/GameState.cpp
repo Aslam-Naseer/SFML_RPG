@@ -9,6 +9,19 @@
 //	mid.setPosition(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f);
 //}
 
+void GameState::initDeferredRender()
+{
+	if (!renderTexture.resize(stateData.gfxSettings->resolution.size))
+	{
+		std::cout << "ERROR::GAMESTATE::CANNOT_RESIZE_RENDER_TEXTURE" << "\n";
+	}
+	
+	renderSprite.setTextureRect(sf::IntRect(
+		{ 0,0 },
+		static_cast<sf::Vector2i>(stateData.gfxSettings->resolution.size)
+	));
+}
+
 void GameState::initView()
 {
 	view.setSize(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size));
@@ -41,8 +54,9 @@ void GameState::initPlayers()
 }
 
 GameState::GameState(StateData& state_data, sf::Font& font):
-	State(state_data), pmenu(*window, font)
+	State(state_data), pmenu(*window, font), renderSprite(renderTexture.getTexture())
 {
+	initDeferredRender();
 	initView();
 	initKeybinds();
 	initTextures();
@@ -77,6 +91,21 @@ void GameState::updatePlayerInput(const float& dt)
 		player->move(dt, 0, 1);
 	}
 
+	float player_x = player->getPosition().x, player_y = player->getPosition().y;
+	float map_width = tileMap.getMapSize().x, map_height = tileMap.getMapSize().y;
+	float player_width = player->getGlobalBounds().size.x, player_height = player->getGlobalBounds().size.y;
+
+	if (player_x < 0.f)
+		player_x = 0.f;
+	else if (player_x + player_width > map_width)
+		player_x = map_width - player_width;
+
+	if (player_y < 0.f)
+		player_y = 0.f;
+	else if (player_y + player_height > map_height)
+		player_y = map_height - player_height;
+
+	player->setPosition(player_x, player_y);
 	view.setCenter(player->getPosition());
 }
 
@@ -121,15 +150,19 @@ void GameState::render(sf::RenderTarget* target)
 	if (!target)
 		target = window;
 
-	target->setView(view);
-	tileMap.render(*target);
-	player->render(*target);
+	renderTexture.clear();
 
-	target->setView(target->getDefaultView());
+	renderTexture.setView(view);
+	tileMap.render(renderTexture);
+	player->render(renderTexture);
+
 	if (paused)
 	{
-		pmenu.render(*target);
+		renderTexture.setView(renderTexture.getDefaultView());
+		pmenu.render(renderTexture);
 	}
-	//target->draw(mid);
+
+	renderTexture.display();
+	target->draw(renderSprite);
 
 }

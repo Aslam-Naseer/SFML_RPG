@@ -19,5 +19,7 @@ public:
 
 	void update();
 	void render(sf::RenderTarget& target);
+
+	friend class TileMap;
 };
 

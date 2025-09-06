@@ -20,6 +20,17 @@ void TileMap::initMap(float grid_size, unsigned width, unsigned height, unsigned
 	{
 		std::cout << "ERROR::TILEMAP::Could not load tilesheet." << std::endl;
 	}
+
+	collisionBox.setSize({ gridSize, gridSize });
+	collisionBox.setFillColor(sf::Color(255, 0, 0, 100));
+	collisionBox.setOutlineColor(sf::Color::Red);
+	collisionBox.setOutlineThickness(1.f);
+
+	mapBorder.setSize({ width * grid_size, height * grid_size });
+	mapBorder.setPosition({ 0.f, 0.f });
+	mapBorder.setFillColor(sf::Color::Transparent);
+	mapBorder.setOutlineColor(sf::Color::White);
+	mapBorder.setOutlineThickness(2.f);
 }
 
 void TileMap::clearMap()
@@ -59,10 +70,23 @@ TileMap::~TileMap()
 	clearMap();
 }
 
+
 const sf::Texture& TileMap::getTileSheet() const
 {
 	return tileSheet;
 }
+
+bool TileMap::isWithinBounds(float x, float y) const
+{
+	return (x >= 0.f && x < mapSize.x * gridSize &&
+		y >= 0.f && y < mapSize.y * gridSize);
+}
+
+const sf::Vector2f TileMap::getMapSize() const
+{
+	return mapBorder.getSize();
+}
+
 
 void TileMap::addTile(unsigned x, unsigned y, unsigned layer, short type, bool collision ,const sf::IntRect& textureRect)
 {
@@ -157,6 +181,8 @@ void TileMap::update()
 
 void TileMap::render(sf::RenderTarget& target)
 {
+	target.draw(mapBorder);
+
 	for (size_t x = 0; x < mapSize.x; x++)
 	{
 		for (size_t y = 0; y < mapSize.y; y++)
@@ -164,7 +190,14 @@ void TileMap::render(sf::RenderTarget& target)
 			for (size_t z = 0; z < layers; z++)
 			{
 				if (map[x][y][z] != NULL)
+				{
 					map[x][y][z]->render(target);
+					if (map[x][y][z]->collision)
+					{
+						collisionBox.setPosition(map[x][y][z]->shape.getPosition());
+						target.draw(collisionBox);
+					}
+				}
 			}
 		}
 	}

@@ -16,15 +16,11 @@ Player::Player(float x, float y, sf::Texture& texture)
 	createHitboxComponent(95, 55, 80, 135);
 
 	setPosition(x, y);
-	sprite.setOrigin(sprite.getLocalBounds().size / 2.f);	
 
 	animationComponent->addAnimation("IDLE", 192, 192, 14, 0, .5f);
 	animationComponent->addAnimation("WALK", 192, 192, 11, 1, .7f);
 	animationComponent->addAnimation("ATTACK", 192 * 2, 192, 14, 2, .7f);
 
-	std::cout << sprite.getOrigin().x << " " << sprite.getOrigin().y << std::endl;
-	std::cout << sprite.getPosition().x << " " << sprite.getPosition().y << std::endl;
-	std::cout << sprite.getLocalBounds().size.x << " " << sprite.getLocalBounds().size.y << std::endl;
 }
 
 Player::~Player()

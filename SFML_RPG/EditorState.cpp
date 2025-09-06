@@ -46,9 +46,9 @@ void EditorState::initGui()
 }
 
 EditorState::EditorState(StateData& state_data, sf::Font& font) :
-	State(state_data), tileMap(state_data.gridSize, 50, 50, "Resources/Images/Tilesheet.png"),
+	State(state_data), tileMap(state_data.gridSize, 20, 20, "Resources/Images/Tilesheet.png"),
 	pmenu(*window, font), gridSize(state_data.gridSize), font(font), 
-	type(0), collision(false), viewSpeed(100.f)
+	type(0), collision(false), viewSpeed(250.f)
 {
 	initView();
 	initKeybinds();
@@ -58,7 +58,7 @@ EditorState::EditorState(StateData& state_data, sf::Font& font) :
 	pmenu.addButton("SAVE", 450.f, "Save", font);
 	pmenu.addButton("LOAD", 300.f, "Load", font);
 
-	tileMap.loadFromFile("../tilemap.txt");
+	//tileMap.loadFromFile("../tilemap.txt");
 }
 
 EditorState::~EditorState()

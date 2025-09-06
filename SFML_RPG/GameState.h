@@ -12,11 +12,16 @@ private:
 	Player* player; 
 	PauseMenu pmenu;
 	TileMap tileMap;
+
 	sf::View view;
+	sf::Sprite renderSprite;
+	sf::RenderTexture renderTexture;
+
 
 	//sf::RectangleShape mid;
 	//void initMid();
 
+	void initDeferredRender();
 	void initView();
     void initKeybinds();
 	void initTextures();

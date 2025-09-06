@@ -8,10 +8,12 @@ private:
 	float gridSize;
 	sf::Vector2u mapSize;
 	unsigned layers;
+	sf::RectangleShape mapBorder;
 
 	std::vector<std::vector<std::vector<Tile*>>> map;
 	sf::Texture tileSheet;
 	std::string textureFile;
+	sf::RectangleShape collisionBox;
 
 	void initMap(float grid_size, unsigned width, unsigned height, unsigned layers, std::string& texture_file);
 	void clearMap();
@@ -22,6 +24,8 @@ public:
 	virtual ~TileMap();
 
 	const sf::Texture& getTileSheet() const;
+	bool isWithinBounds(float x, float y) const;
+	const sf::Vector2f getMapSize() const;
 
 	void addTile(unsigned x, unsigned y, unsigned layer, short type, bool collision, const sf::IntRect& textureRect);
 	void removeTile(unsigned x, unsigned y, unsigned layer);

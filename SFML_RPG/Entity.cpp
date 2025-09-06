@@ -41,14 +41,28 @@ void Entity::createHitboxComponent(float offsetX, float offsetY, float width, fl
 
 // Functions
 
-const sf::Vector2f& Entity::getPosition() const
+const sf::FloatRect Entity::getGlobalBounds() const
 {
+	if (hitboxComponent)
+		return hitboxComponent->getGlobalBounds();
+
+	return sprite.getGlobalBounds();
+}
+
+const sf::Vector2f Entity::getPosition() const
+{
+	if (hitboxComponent)
+		return hitboxComponent->getPosition();
+
 	return sprite.getPosition();
 }
 
 void Entity::setPosition(float x, float y)
 {
-	sprite.setPosition({ x, y });
+	if (hitboxComponent)
+		hitboxComponent->setPosition(x, y);
+	else
+		sprite.setPosition({ x, y });
 }
 
 void Entity::move(const float& dt, int dir_x, int dir_y)
