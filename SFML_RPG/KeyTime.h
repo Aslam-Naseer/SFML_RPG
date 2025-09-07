@@ -7,7 +7,7 @@ private:
 	float maxKeyTime;
 
 public:
-		KeyTime(float max_key_time = 1.f);
+		KeyTime(float max_key_time = 1.5f);
 		virtual ~KeyTime();
 
 		const bool isReady() const;

@@ -11,7 +11,7 @@ private:
 	unsigned layers;
 	sf::RectangleShape mapBorder;
 
-	std::vector<std::vector<std::vector<Tile*>>> map;
+	std::vector<std::vector<std::vector<std::vector<Tile*>>>> map;
 	sf::Texture tileSheet;
 	std::string textureFile;
 	sf::RectangleShape collisionBox;
@@ -27,6 +27,7 @@ public:
 	const sf::Texture& getTileSheet() const;
 	bool isWithinBounds(float x, float y) const;
 	const sf::Vector2f getMapSize() const;
+	const int getLayerSize(const int x, const int y, const int layer) const;
 
 	sf::Vector2f resolveCollision(const Entity* entity, const float& dt) const;
 	void addTile(unsigned x, unsigned y, unsigned layer, short type, bool collision, const sf::IntRect& textureRect);
@@ -35,6 +36,6 @@ public:
 	void loadFromFile(const std::string file_name);
 
 	void update();
-	void render(sf::RenderTarget& target, const Entity* entity = NULL);
+	void render(sf::RenderTarget& target, const sf::Vector2i& gridPosition);
 };
 

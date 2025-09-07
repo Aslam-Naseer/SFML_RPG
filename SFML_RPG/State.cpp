@@ -50,8 +50,8 @@ void State::updateMousePositions(sf::View* view)
 		window->setView(*view);
 	
 	mousePosView = window->mapPixelToCoords(mousePosWindow);
-	mousePosGrid.x = static_cast<unsigned>(mousePosView.x) / static_cast<unsigned>(stateData.gridSize);
-	mousePosGrid.y = static_cast<unsigned>(mousePosView.y) / static_cast<unsigned>(stateData.gridSize);
+	mousePosGrid.x = static_cast<int>(mousePosView.x) / static_cast<int>(stateData.gridSize);
+	mousePosGrid.y = static_cast<int>(mousePosView.y) / static_cast<int>(stateData.gridSize);
 
 	window->setView(window->getDefaultView());
 }

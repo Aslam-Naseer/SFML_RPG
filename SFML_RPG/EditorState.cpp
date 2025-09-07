@@ -182,7 +182,7 @@ void EditorState::render(sf::RenderTarget* target)
 
 	// Render everything in view
 	window->setView(view);
-	tileMap.render(*target);
+	tileMap.render(*target, mousePosGrid);
 	if(!textureSelector->isActive())
 		target->draw(selectorRect);
 
@@ -203,7 +203,8 @@ void EditorState::render(sf::RenderTarget* target)
 	std::stringstream st;
 	st << textureRect.position.x << ' ' << textureRect.position.y
 		<< "\n" << "Collision: " << collision
-		<< "\n" << "Type: " << type;
+		<< "\n" << "Type: " << type
+		<< "\n" << "Layers: " << tileMap.getLayerSize(mousePosGrid.x, mousePosGrid.y, 0);
 	mouseText.setString(st.str());
 
 	target->draw(mouseText);

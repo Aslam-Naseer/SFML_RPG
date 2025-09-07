@@ -7,10 +7,10 @@ void TileMap::initMap(float grid_size, unsigned width, unsigned height, unsigned
 	mapSize = { width, height };
 	this->layers = layers;
 
-	map = std::vector<std::vector<std::vector<Tile*>>>(
-		mapSize.x, std::vector<std::vector<Tile*>>(
-			mapSize.y, std::vector<Tile*>(
-				layers, NULL
+	map = std::vector<std::vector<std::vector<std::vector<Tile*>>>>(
+		mapSize.x, std::vector<std::vector<std::vector<Tile*>>>(
+			mapSize.y, std::vector<std::vector<Tile*>>(
+				layers, std::vector<Tile*>()
 			)
 		)
 	);
@@ -41,7 +41,11 @@ void TileMap::clearMap()
 		{
 			for (size_t z = 0; z < layers; z++)
 			{
-					delete map[x][y][z];
+				for (auto& tile : map[x][y][z])
+				{
+					delete tile;
+				}
+				map[x][y][z].clear();
 			}
 			map[x][y].clear();
 		}
@@ -87,6 +91,14 @@ const sf::Vector2f TileMap::getMapSize() const
 	return mapBorder.getSize();
 }
 
+const int TileMap::getLayerSize(const int x, const int y, const int layer) const
+{
+	if (x < 0 || y < 0 || layer < 0 || x >= static_cast<int>(mapSize.x) || y >= static_cast<int>(mapSize.y) || layer >= static_cast<int>(layers))
+		return -1;
+
+	return static_cast<int>(map[x][y][layer].size());
+}
+
 sf::Vector2f TileMap::resolveCollision(const Entity* entity, const float& dt) const
 {
 	// World Border
@@ -103,7 +115,7 @@ sf::Vector2f TileMap::resolveCollision(const Entity* entity, const float& dt) co
 	// Tile Collision
 
 	sf::Vector2i gridPos = entity->getGridPosition(static_cast<int>(gridSize));
-	sf::Vector2i cullSize = { 5, 5 };
+	sf::Vector2i cullSize = { 4, 5 };
 
 	int startX = std::clamp(gridPos.x - cullSize.x / 2, 0, static_cast<int>(mapSize.x));
 	int startY = std::clamp(gridPos.y - cullSize.y / 2, 0, static_cast<int>(mapSize.y));
@@ -119,51 +131,54 @@ sf::Vector2f TileMap::resolveCollision(const Entity* entity, const float& dt) co
 
 	for (int x = startX; x < endX; x++) {
 		for (int y = startY; y < endY; y++) {
-
-			if (!map[x][y][layer] || !map[x][y][layer]->collision)
-				continue;
-
-			if (!map[x][y][layer]->intersects(nextBounds))
-				continue;
-
-			sf::FloatRect tileBounds = map[x][y][layer]->shape.getGlobalBounds();
-
-			float nextLeft = nextBounds.position.x;
-			float nextRight = nextBounds.position.x + nextBounds.size.x;
-			float nextTop = nextBounds.position.y;
-			float nextBot = nextBounds.position.y + nextBounds.size.y;
-
-			float tileLeft = tileBounds.position.x;
-			float tileRight = tileBounds.position.x + tileBounds.size.x;
-			float tileTop = tileBounds.position.y;
-			float tileBot = tileBounds.position.y + tileBounds.size.y;
-
-			float overlapLeft = nextRight - tileLeft;
-			float overlapRight = tileRight - nextLeft;
-			float overlapTop = nextBot - tileTop;
-			float overlapBottom = tileBot - nextTop;
-
-			float minOverlapX = std::min(overlapLeft, overlapRight);
-			float minOverlapY = std::min(overlapTop, overlapBottom);
-
-			if(minOverlapX < minOverlapY)
+			for (int k = 0; k < map[x][y][layer].size(); k++)
 			{
-				if(overlapLeft < overlapRight)
-					correctedX = tileLeft - entityWidth;
-				else
-					correctedX = tileRight;
+				if (!map[x][y][layer][k] || !map[x][y][layer][k]->collision)
+					continue;
 
-				resolveX = true;
-			}
-			else
-			{
-				if(overlapTop < overlapBottom)
-					correctedY = tileTop - entityHeight;
-				else
-					correctedY = tileBot;
+				if (!map[x][y][layer][k]->intersects(nextBounds))
+					continue;
 
-				resolveY = true;
+				sf::FloatRect tileBounds = map[x][y][layer][k]->shape.getGlobalBounds();
+
+				float nextLeft = nextBounds.position.x;
+				float nextRight = nextBounds.position.x + nextBounds.size.x;
+				float nextTop = nextBounds.position.y;
+				float nextBot = nextBounds.position.y + nextBounds.size.y;
+
+				float tileLeft = tileBounds.position.x;
+				float tileRight = tileBounds.position.x + tileBounds.size.x;
+				float tileTop = tileBounds.position.y;
+				float tileBot = tileBounds.position.y + tileBounds.size.y;
+
+				float overlapLeft = nextRight - tileLeft;
+				float overlapRight = tileRight - nextLeft;
+				float overlapTop = nextBot - tileTop;
+				float overlapBottom = tileBot - nextTop;
+
+				float minOverlapX = std::min(overlapLeft, overlapRight);
+				float minOverlapY = std::min(overlapTop, overlapBottom);
+
+				if (minOverlapX < minOverlapY)
+				{
+					if (overlapLeft < overlapRight)
+						correctedX = tileLeft - entityWidth;
+					else
+						correctedX = tileRight;
+
+					resolveX = true;
+				}
+				else
+				{
+					if (overlapTop < overlapBottom)
+						correctedY = tileTop - entityHeight;
+					else
+						correctedY = tileBot;
+
+					resolveY = true;
+				}
 			}
+			
 		}
 	}
 
@@ -179,10 +194,7 @@ void TileMap::addTile(unsigned x, unsigned y, unsigned layer, short type, bool c
 {
 	if(x < mapSize.x && y < mapSize.y && layer < layers)
 	{
-		if (map[x][y][layer] == NULL)
-		{
-			map[x][y][layer] = new Tile(x * gridSize, y * gridSize, gridSize, tileSheet, textureRect, type, collision);
-		}
+		map[x][y][layer].push_back(new Tile(x * gridSize, y * gridSize, gridSize, tileSheet, textureRect, type, collision));
 	}
 }
 
@@ -190,10 +202,10 @@ void TileMap::removeTile(unsigned x, unsigned y, unsigned layer)
 {
 	if (x < mapSize.x && y < mapSize.y && layer < layers)
 	{
-		if (map[x][y][layer] != NULL)
+		if (!map[x][y][layer].empty())
 		{
-			delete map[x][y][layer];
-			map[x][y][layer] = NULL;
+			delete map[x][y][layer][map[x][y][layer].size() - 1];
+			map[x][y][layer].pop_back();
 		}
 	}
 }
@@ -221,8 +233,13 @@ void TileMap::saveToFile(const std::string file_name)
 		{
 			for (size_t z = 0; z < layers; z++)
 			{
-				if (map[x][y][z] != NULL)
-					ofs << x << " " << y << " " << z << " " << map[x][y][z]->toString();
+				if (!map[x][y][z].empty())
+				{
+					for (auto& tile : map[x][y][z])
+					{
+						ofs << x << " " << y << " " << z << " " << tile->toString() << "\n";
+					}
+				}
 			}
 		}
 	}
@@ -266,49 +283,30 @@ void TileMap::update()
 {
 }
 
-void TileMap::render(sf::RenderTarget& target, const Entity* entity)
+void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 {
 	target.draw(mapBorder);
 
-	for (size_t x = 0; x < mapSize.x; x++)
-	{
-		for (size_t y = 0; y < mapSize.y; y++)
-		{
-			for (size_t z = 0; z < layers; z++)
+	sf::Vector2i cull_size = { 20, 12 };
+
+	int start_x = std::clamp(gridPosition.x - cull_size.x / 2, 0, static_cast<int>(mapSize.x));
+	int start_y = std::clamp(gridPosition.y - cull_size.y / 2, 0, static_cast<int>(mapSize.y));
+	int end_x = std::clamp(gridPosition.x + cull_size.x / 2 + 1, 0, static_cast<int>(mapSize.x));
+	int end_y = std::clamp(gridPosition.y + cull_size.y / 2 + 1, 0, static_cast<int>(mapSize.y));
+
+	int layer = 0;
+	for (int x = start_x; x < end_x; x++) {
+		for (int y = start_y; y < end_y; y++) {
+			for (auto& tile : map[x][y][layer])
 			{
-				if (map[x][y][z] != NULL)
+				tile->render(target);
+				if (tile->collision) 
 				{
-					map[x][y][z]->render(target);
-					if (!entity && map[x][y][z]->collision)
-					{
-						collisionBox.setPosition(map[x][y][z]->shape.getPosition());
-						target.draw(collisionBox);
-					}
-				}
-			}
-		}
-	}
-
-	if (entity)
-	{
-		sf::Vector2i grid_pos = entity->getGridPosition(static_cast<int>(gridSize));
-		sf::Vector2i cull_size = { 7, 7 };
-
-		int start_x = std::clamp(grid_pos.x - cull_size.x / 2, 0, static_cast<int>(mapSize.x));
-		int start_y = std::clamp(grid_pos.y - cull_size.y / 2, 0, static_cast<int>(mapSize.y));
-		int end_x = std::clamp(grid_pos.x + cull_size.x / 2 + 1, 0, static_cast<int>(mapSize.x));
-		int end_y = std::clamp(grid_pos.y + cull_size.y / 2 + 1, 0, static_cast<int>(mapSize.y));
-
-		int layer = 0;
-		for (int x = start_x; x < end_x; x++) {
-			for (int y = start_y; y < end_y; y++) {
-				if (map[x][y][layer]->collision) {
-					collisionBox.setPosition(map[x][y][layer]->shape.getPosition());
+					collisionBox.setPosition(tile->shape.getPosition());
 					target.draw(collisionBox);
 				}
 			}
-		}
 
+		}
 	}
-	
 }
