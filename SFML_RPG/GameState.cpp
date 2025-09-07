@@ -91,21 +91,14 @@ void GameState::updatePlayerInput(const float& dt)
 		player->move(dt, 0, 1);
 	}
 
-	float player_x = player->getPosition().x, player_y = player->getPosition().y;
-	float map_width = tileMap.getMapSize().x, map_height = tileMap.getMapSize().y;
-	float player_width = player->getGlobalBounds().size.x, player_height = player->getGlobalBounds().size.y;
+	sf::Vector2f corrected_position = tileMap.resolveCollision(player, dt);
 
-	if (player_x < 0.f)
-		player_x = 0.f;
-	else if (player_x + player_width > map_width)
-		player_x = map_width - player_width;
+	if (player->getPosition().x != corrected_position.x)
+		player->stopMovement(true, false);
+	if (player->getPosition().y != corrected_position.y)
+		player->stopMovement(false, true);
 
-	if (player_y < 0.f)
-		player_y = 0.f;
-	else if (player_y + player_height > map_height)
-		player_y = map_height - player_height;
-
-	player->setPosition(player_x, player_y);
+	player->setPosition(corrected_position.x, corrected_position.y);
 	view.setCenter(player->getPosition());
 }
 
@@ -153,7 +146,7 @@ void GameState::render(sf::RenderTarget* target)
 	renderTexture.clear();
 
 	renderTexture.setView(view);
-	tileMap.render(renderTexture);
+	tileMap.render(renderTexture, player);
 	player->render(renderTexture);
 
 	if (paused)

@@ -32,6 +32,11 @@ void Tile::setPosition(float x, float y)
 	shape.setPosition({ x,y });
 }
 
+bool Tile::intersects(const sf::FloatRect bounds) const
+{
+	return shape.getGlobalBounds().findIntersection(bounds).has_value();
+}
+
 void Tile::update()
 {
 }

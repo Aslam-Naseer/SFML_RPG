@@ -17,6 +17,7 @@ public:
 	std::string toString();
 	void setPosition(float x, float y);
 
+	bool intersects(const sf::FloatRect bounds) const;
 	void update();
 	void render(sf::RenderTarget& target);
 

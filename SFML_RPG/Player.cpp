@@ -104,3 +104,9 @@ void Player::update(const float& dt)
 	updateAnimations(dt);
 	hitboxComponent->update();
 }
+
+void Player::render(sf::RenderTarget& target)
+{
+	target.draw(sprite);
+	hitboxComponent->render(target);
+}

@@ -87,6 +87,93 @@ const sf::Vector2f TileMap::getMapSize() const
 	return mapBorder.getSize();
 }
 
+sf::Vector2f TileMap::resolveCollision(const Entity* entity, const float& dt) const
+{
+	// World Border
+
+	sf::Vector2f resolvedPos = entity->getPosition();
+
+	float mapWidth = getMapSize().x, mapHeight = getMapSize().y;
+	float entityWidth = entity->getGlobalBounds().size.x, entityHeight = entity->getGlobalBounds().size.y;
+
+	resolvedPos.x = std::clamp(resolvedPos.x, 0.f, mapWidth - entityWidth);
+	resolvedPos.y = std::clamp(resolvedPos.y, 0.f, mapHeight - entityHeight);
+
+
+	// Tile Collision
+
+	sf::Vector2i gridPos = entity->getGridPosition(static_cast<int>(gridSize));
+	sf::Vector2i cullSize = { 5, 5 };
+
+	int startX = std::clamp(gridPos.x - cullSize.x / 2, 0, static_cast<int>(mapSize.x));
+	int startY = std::clamp(gridPos.y - cullSize.y / 2, 0, static_cast<int>(mapSize.y));
+	int endX = std::clamp(gridPos.x + cullSize.x / 2 + 1, 0, static_cast<int>(mapSize.x));
+	int endY = std::clamp(gridPos.y + cullSize.y / 2 + 1, 0, static_cast<int>(mapSize.y));
+
+	int layer = 0;
+	sf::FloatRect entityBounds = entity->getGlobalBounds();
+	sf::FloatRect nextBounds = entity->getNextPosBounds(dt);
+
+	bool resolveX = false, resolveY = false;
+	float correctedX = resolvedPos.x, correctedY = resolvedPos.y;
+
+	for (int x = startX; x < endX; x++) {
+		for (int y = startY; y < endY; y++) {
+
+			if (!map[x][y][layer] || !map[x][y][layer]->collision)
+				continue;
+
+			if (!map[x][y][layer]->intersects(nextBounds))
+				continue;
+
+			sf::FloatRect tileBounds = map[x][y][layer]->shape.getGlobalBounds();
+
+			float nextLeft = nextBounds.position.x;
+			float nextRight = nextBounds.position.x + nextBounds.size.x;
+			float nextTop = nextBounds.position.y;
+			float nextBot = nextBounds.position.y + nextBounds.size.y;
+
+			float tileLeft = tileBounds.position.x;
+			float tileRight = tileBounds.position.x + tileBounds.size.x;
+			float tileTop = tileBounds.position.y;
+			float tileBot = tileBounds.position.y + tileBounds.size.y;
+
+			float overlapLeft = nextRight - tileLeft;
+			float overlapRight = tileRight - nextLeft;
+			float overlapTop = nextBot - tileTop;
+			float overlapBottom = tileBot - nextTop;
+
+			float minOverlapX = std::min(overlapLeft, overlapRight);
+			float minOverlapY = std::min(overlapTop, overlapBottom);
+
+			if(minOverlapX < minOverlapY)
+			{
+				if(overlapLeft < overlapRight)
+					correctedX = tileLeft - entityWidth;
+				else
+					correctedX = tileRight;
+
+				resolveX = true;
+			}
+			else
+			{
+				if(overlapTop < overlapBottom)
+					correctedY = tileTop - entityHeight;
+				else
+					correctedY = tileBot;
+
+				resolveY = true;
+			}
+		}
+	}
+
+	if (resolveX)
+		resolvedPos.x = correctedX;
+	if (resolveY)
+		resolvedPos.y = correctedY;
+
+	return resolvedPos;
+}
 
 void TileMap::addTile(unsigned x, unsigned y, unsigned layer, short type, bool collision ,const sf::IntRect& textureRect)
 {
@@ -179,7 +266,7 @@ void TileMap::update()
 {
 }
 
-void TileMap::render(sf::RenderTarget& target)
+void TileMap::render(sf::RenderTarget& target, const Entity* entity)
 {
 	target.draw(mapBorder);
 
@@ -192,7 +279,7 @@ void TileMap::render(sf::RenderTarget& target)
 				if (map[x][y][z] != NULL)
 				{
 					map[x][y][z]->render(target);
-					if (map[x][y][z]->collision)
+					if (!entity && map[x][y][z]->collision)
 					{
 						collisionBox.setPosition(map[x][y][z]->shape.getPosition());
 						target.draw(collisionBox);
@@ -201,4 +288,27 @@ void TileMap::render(sf::RenderTarget& target)
 			}
 		}
 	}
+
+	if (entity)
+	{
+		sf::Vector2i grid_pos = entity->getGridPosition(static_cast<int>(gridSize));
+		sf::Vector2i cull_size = { 7, 7 };
+
+		int start_x = std::clamp(grid_pos.x - cull_size.x / 2, 0, static_cast<int>(mapSize.x));
+		int start_y = std::clamp(grid_pos.y - cull_size.y / 2, 0, static_cast<int>(mapSize.y));
+		int end_x = std::clamp(grid_pos.x + cull_size.x / 2 + 1, 0, static_cast<int>(mapSize.x));
+		int end_y = std::clamp(grid_pos.y + cull_size.y / 2 + 1, 0, static_cast<int>(mapSize.y));
+
+		int layer = 0;
+		for (int x = start_x; x < end_x; x++) {
+			for (int y = start_y; y < end_y; y++) {
+				if (map[x][y][layer]->collision) {
+					collisionBox.setPosition(map[x][y][layer]->shape.getPosition());
+					target.draw(collisionBox);
+				}
+			}
+		}
+
+	}
+	
 }

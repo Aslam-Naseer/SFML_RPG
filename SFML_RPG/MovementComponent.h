@@ -17,9 +17,9 @@ public:
 	~MovementComponent();
 
 	const sf::Vector2f& getVelocity() const;
-
 	const bool getState(const movement_state state) const;
 
+	void stopMovement(bool dir_x = true, bool dir_y = true);
 	void move(const float& dt, const int dir_x, const int dir_y);
 	void update(const float& dt);
 };

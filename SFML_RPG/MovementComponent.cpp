@@ -36,6 +36,15 @@ const bool MovementComponent::getState(const movement_state state) const
 	}
 }
 
+void MovementComponent::stopMovement(bool dir_x, bool dir_y)
+{
+	if (dir_x)
+		velocity.x = 0;
+
+	if (dir_y)
+		velocity.y = 0;
+}
+
 void MovementComponent::move(const float& dt, const int dir_x, const int dir_y)
 {
 	// Accelerate
