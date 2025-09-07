@@ -125,30 +125,10 @@ void gui::Button::render(sf::RenderTarget& target)
 
 // DROP DOWN LIST =================================================================
 
-bool gui::DropDownList::getKeyTime()
-{
-	if(keyTime >= keyTimeMax)
-	{
-		keyTime = 0.f;
-		return true;
-	}
-
-	return false;
-}
-
-void gui::DropDownList::updateKeyTime(const float& dt)
-{
-	if(keyTime < keyTimeMax)
-	{
-		keyTime += 10.f * dt;
-	}
-
-}
-
 gui::DropDownList::DropDownList(
 	float x, float y, float width, float height, unsigned int char_size,
 	sf::Font& font, const std::vector<std::string>& list, unsigned int index
-) : font(font), showList(false), keyTime(0.f), keyTimeMax(1.5f)
+) : font(font), showList(false)
 {
 	activeElement = new gui::Button(
 		x, y, width, height,
@@ -189,10 +169,10 @@ short unsigned gui::DropDownList::getActiveId()
 
 void gui::DropDownList::update(const sf::Vector2i& mousePos, const float& dt)
 {
-	updateKeyTime(dt);
+	keyTime.update(dt);
 	activeElement->update(mousePos);
 
-	if (activeElement->isPressed() && getKeyTime())
+	if (activeElement->isPressed() && keyTime.isReady())
 	{
 		showList = !showList;
 	}
@@ -202,7 +182,7 @@ void gui::DropDownList::update(const sf::Vector2i& mousePos, const float& dt)
 		for (auto& i : list)
 		{
 			i->update(mousePos);
-			if(i->isPressed() && getKeyTime())
+			if(i->isPressed() && keyTime.isReady())
 			{
 				showList = false;
 				activeElement->setText(i->getText());
@@ -227,28 +207,8 @@ void gui::DropDownList::render(sf::RenderTarget& target)
 
 // TEXTURE SELECTOR ===============================================================
 
-bool gui::TextureSelector::getKeyTime()
-{
-	if (keyTime >= keyTimeMax)
-	{
-		keyTime = 0.f;
-		return true;
-	}
-
-	return false;
-}
-
-void gui::TextureSelector::updateKeyTime(const float& dt)
-{
-	if (keyTime < keyTimeMax)
-	{
-		keyTime += 10.f * dt;
-	}
-
-}
-
 gui::TextureSelector::TextureSelector(float x, float y, float width, float height,const sf::Texture& textureSheet, float grid_size, sf::Font& font):
-	hide(true), active(false), gridSize(grid_size), sheet(textureSheet), keyTime(0.f), keyTimeMax(1.f)
+	hide(true), active(false), gridSize(grid_size), sheet(textureSheet)
 {
 	bounds.setPosition({ x,y });
 	bounds.setSize({ width, height });
@@ -327,10 +287,10 @@ void gui::TextureSelector::updateSelector(const sf::Vector2i& mousePosWindow)
 
 void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const float& dt)
 {
-	updateKeyTime(dt);
+	keyTime.update(dt);
 
 	toggleBtn->update(mousePosWindow);
-	if (toggleBtn->isPressed() && getKeyTime())
+	if (toggleBtn->isPressed() && keyTime.isReady())
 		hide = !hide;
 
 	if (hide)

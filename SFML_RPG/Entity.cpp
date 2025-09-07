@@ -53,6 +53,8 @@ const sf::FloatRect Entity::getNextPosBounds(const float& dt) const
 {
 	if(hitboxComponent && movementComponent)
 		return hitboxComponent->getNextPosition(movementComponent->getVelocity() * dt);
+
+	return sf::FloatRect({{-1,-1}, {-1,-1}});
 }
 
 const sf::Vector2i Entity::getGridPosition(int gridSize) const

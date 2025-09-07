@@ -93,7 +93,7 @@ void EditorState::updateGui(const float& dt)
 	if (!sidebar.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
 	{
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && getKeyTime()) {
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && keyTime.isReady()) {
 			if (!textureSelector->isActive())
 			{
 				tileMap.addTile(mousePosGrid.x, mousePosGrid.y, 0, type, collision, textureRect);
@@ -104,7 +104,7 @@ void EditorState::updateGui(const float& dt)
 				textureRect.position.y = textureSelector->getTextureRect().position.y;
 			}
 		}
-		else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && getKeyTime()) {
+		else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && keyTime.isReady()) {
 			if (!textureSelector->isActive())
 				tileMap.removeTile(mousePosGrid.x, mousePosGrid.y, 0);
 
@@ -117,7 +117,7 @@ void EditorState::updateGui(const float& dt)
 
 void EditorState::updateInput(const float& dt)
 {
-	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]) && getKeyTime())
+	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]) && keyTime.isReady())
 	{
 		if (!paused)
 			pauseState();
@@ -139,15 +139,15 @@ void EditorState::updateInput(const float& dt)
 			view.move({ 0.f, viewSpeed * dt });
 
 
-		if (sf::Keyboard::isKeyPressed(keybinds["COLLISION"]) && getKeyTime())
+		if (sf::Keyboard::isKeyPressed(keybinds["COLLISION"]) && keyTime.isReady())
 			collision = !collision;
 		
 
-		if (sf::Keyboard::isKeyPressed(keybinds["TYPE_UP"]) && getKeyTime())
+		if (sf::Keyboard::isKeyPressed(keybinds["TYPE_UP"]) && keyTime.isReady())
 		{
 			type++;
 		}
-		else if (sf::Keyboard::isKeyPressed(keybinds["TYPE_DOWN"]) && getKeyTime())
+		else if (sf::Keyboard::isKeyPressed(keybinds["TYPE_DOWN"]) && keyTime.isReady())
 		{
 			if (type > 0)
 				type--;
@@ -158,8 +158,8 @@ void EditorState::updateInput(const float& dt)
 
 void EditorState::update(const float& dt)
 {
+	keyTime.update(dt);
 	updateMousePositions(&view);
-	updateKeyTime(dt);
 	updateInput(dt);
 
 	if (!paused)

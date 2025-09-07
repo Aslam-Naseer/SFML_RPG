@@ -1,5 +1,7 @@
 #pragma once
 
+#include "KeyTime.h"
+
 enum class ButtonState
 {
 	IDLE = 0,
@@ -57,16 +59,12 @@ namespace gui
 	class DropDownList
 	{
 	private:
-		float keyTime;
-		float keyTimeMax;
 		bool showList;
+		KeyTime keyTime;
 
 		sf::Font& font;
 		gui::Button* activeElement;
 		std::vector<gui::Button*> list;
-
-		bool getKeyTime();
-		void updateKeyTime(const float& dt);
 
 	public:
 		DropDownList(
@@ -89,18 +87,15 @@ namespace gui
 		bool hide;
 		bool active;
 		float gridSize;
-		Button* toggleBtn;
 
-		float keyTime;
-		float keyTimeMax;
+		Button* toggleBtn;
+		KeyTime keyTime;
 
 		sf::RectangleShape bounds;
 		sf::Sprite sheet;
 		sf::RectangleShape selector;
 		sf::IntRect textureRect;
 
-		bool getKeyTime();
-		void updateKeyTime(const float& dt);
 	public:
 		TextureSelector(
 			float x, float y, float width, float height,

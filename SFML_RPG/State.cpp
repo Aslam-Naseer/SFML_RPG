@@ -3,15 +3,17 @@
 
 StateData::StateData()
 {
-
+	gridSize = 0;
+	window = nullptr;
+	supportedKeys = nullptr;
+	states = nullptr;
+	gfxSettings = nullptr;
 }
 
 
 State::State(StateData& state_data) :
 	stateData(state_data), states(*state_data.states), paused(false), quit(false)
 {
-	keyTime = 0.f;
-	maxKeyTime = 10.f;
 	window = stateData.window;
 }
 
@@ -39,17 +41,6 @@ const bool& State::getQuit() const
 	return quit;
 }
 
-const bool State::getKeyTime()
-{
-	if(keyTime >= maxKeyTime)
-	{
-		keyTime = 0.f;
-		return true;
-	}
-
-	return false;
-}
-
 void State::updateMousePositions(sf::View* view)
 {
 	mousePosScreen = sf::Mouse::getPosition();
@@ -65,8 +56,3 @@ void State::updateMousePositions(sf::View* view)
 	window->setView(window->getDefaultView());
 }
 
-void State::updateKeyTime(const float& dt)
-{
-	if (keyTime < maxKeyTime)
-		keyTime += 100.f * dt;
-}
