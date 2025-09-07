@@ -11,7 +11,7 @@ Player::Player(float x, float y, sf::Texture& texture)
 	: Entity(texture)
 {
 	//initComponents();
-	createMovementComponent(700.f, 30.f, 10.f);
+	createMovementComponent(700.f, 3000.f, 1000.f);
 	createAnimationComponent(texture);
 	createHitboxComponent(95, 55, 80, 135);
 
@@ -35,8 +35,11 @@ void Player::updateAnimations(const float& dt)
 	if (attacking)
 		animationComponent->play("ATTACK", true);
 
-	
-	if (movementComponent->getState(MovementComponent::movement_state::WALK_LEFT))
+	if (movementComponent->getState(MovementComponent::movement_state::IDLE))
+	{
+		animationComponent->play("IDLE");
+	}
+	else if (movementComponent->getState(MovementComponent::movement_state::WALK_LEFT))
 	{
 		animationComponent->play("WALK");
 	}
@@ -52,10 +55,8 @@ void Player::updateAnimations(const float& dt)
 	{
 		animationComponent->play("WALK");
 	}
-	else if (movementComponent->getState(MovementComponent::movement_state::IDLE))
-	{
-		animationComponent->play("IDLE");
-	}
+
+
 	
 	// Animate
 	animationComponent->update(dt);

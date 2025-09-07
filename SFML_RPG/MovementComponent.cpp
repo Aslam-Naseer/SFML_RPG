@@ -49,8 +49,8 @@ void MovementComponent::move(const float& dt, const int dir_x, const int dir_y)
 {
 	// Accelerate
 
-	velocity.x += acceleration * dir_x;
-	velocity.y += acceleration * dir_y;
+	velocity.x += acceleration * dir_x * dt;
+	velocity.y += acceleration * dir_y * dt;
 
 	velocity.x = std::clamp(velocity.x, -maxVelocity, maxVelocity);
 	velocity.y = std::clamp(velocity.y, -maxVelocity, maxVelocity);
@@ -60,12 +60,12 @@ void MovementComponent::update(const float& dt)
 {
 	// Decelerate
 	
-	velocity.x -= deceleration * (velocity.x > 0 ? 1 : -1);
-	velocity.y -= deceleration * (velocity.y > 0 ? 1 : -1);
+	velocity.x -= deceleration * (velocity.x > 0 ? 1 : -1) * dt;
+	velocity.y -= deceleration * (velocity.y > 0 ? 1 : -1) * dt;
 
-	if (std::abs(velocity.x) <= deceleration)
+	if (std::abs(velocity.x) <= deceleration * dt)
 		velocity.x = 0.f;
-	if (std::abs(velocity.y) <= deceleration)
+	if (std::abs(velocity.y) <= deceleration * dt)
 		velocity.y = 0.f;
 
 	// Update

@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "GameState.h"
 
-//void GameState::initMid()
-//{
-//	mid.setSize({ stateData.gridSize, stateData.gridSize });
-//	mid.setFillColor(sf::Color::Cyan);
-//	mid.setOrigin(mid.getSize() / 2.f);
-//	mid.setPosition(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f);
-//}
+void GameState::initMid()
+{
+	mid.setSize({ stateData.gridSize, stateData.gridSize });
+	mid.setFillColor(sf::Color::Cyan);
+	mid.setOrigin(mid.getSize() / 2.f);
+	mid.setPosition(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f);
+}
 
 void GameState::initDeferredRender()
 {
@@ -61,7 +61,7 @@ GameState::GameState(StateData& state_data, sf::Font& font):
 	initKeybinds();
 	initTextures();
 	initPlayers();
-	//initMid();
+	initMid();
 
 	tileMap.loadFromFile("../tilemap.txt");
 }
@@ -91,6 +91,8 @@ void GameState::updatePlayerInput(const float& dt)
 		player->move(dt, 0, 1);
 	}
 
+	player->update(dt);
+
 	sf::Vector2f corrected_position = tileMap.resolveCollision(player, dt);
 
 	if (player->getPosition().x != corrected_position.x)
@@ -100,6 +102,7 @@ void GameState::updatePlayerInput(const float& dt)
 
 	player->setPosition(corrected_position.x, corrected_position.y);
 	view.setCenter(player->getPosition());
+	
 }
 
 void GameState::updatePauseMenuButtons()
@@ -128,7 +131,6 @@ void GameState::update(const float& dt)
 	if (!paused)
 	{
 		updatePlayerInput(dt);
-		player->update(dt);
 	}
 	else
 	{
@@ -146,7 +148,7 @@ void GameState::render(sf::RenderTarget* target)
 	renderTexture.clear();
 
 	renderTexture.setView(view);
-	tileMap.render(renderTexture, player->getGridPosition(stateData.gridSize));
+	tileMap.render(renderTexture, player->getGridPosition(static_cast<int>(stateData.gridSize)));
 	player->render(renderTexture);
 
 	if (paused)
@@ -157,5 +159,7 @@ void GameState::render(sf::RenderTarget* target)
 
 	renderTexture.display();
 	target->draw(renderSprite);
+
+	//target->draw(mid)
 
 }

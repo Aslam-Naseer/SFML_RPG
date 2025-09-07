@@ -18,8 +18,8 @@ private:
 	sf::RenderTexture renderTexture;
 
 
-	//sf::RectangleShape mid;
-	//void initMid();
+	sf::RectangleShape mid;
+	void initMid();
 
 	void initDeferredRender();
 	void initView();

@@ -127,7 +127,7 @@ void gui::Button::render(sf::RenderTarget& target)
 
 gui::DropDownList::DropDownList(
 	float x, float y, float width, float height, unsigned int char_size,
-	sf::Font& font, const std::vector<std::string>& list, unsigned int index
+	sf::Font& font, const std::vector<std::string>& list, int index
 ) : font(font), showList(false)
 {
 	activeElement = new gui::Button(

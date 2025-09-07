@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TileMap.h"
 
-void TileMap::initMap(float grid_size, unsigned width, unsigned height, unsigned layers, std::string& texture_file)
+void TileMap::initMap(float grid_size, int width, int height, int layers, std::string& texture_file)
 {
 	gridSize = grid_size;
 	mapSize = { width, height };
@@ -64,7 +64,7 @@ TileMap::TileMap()
 	layers = 0;
 }
 
-TileMap::TileMap(float grid_size, unsigned width, unsigned height, std::string texture_file)
+TileMap::TileMap(float grid_size, int width, int height, std::string texture_file)
 {
 	initMap(grid_size, width, height, 1, texture_file);
 }
@@ -190,7 +190,7 @@ sf::Vector2f TileMap::resolveCollision(const Entity* entity, const float& dt) co
 	return resolvedPos;
 }
 
-void TileMap::addTile(unsigned x, unsigned y, unsigned layer, short type, bool collision ,const sf::IntRect& textureRect)
+void TileMap::addTile(int x, int y, int layer, short type, bool collision ,const sf::IntRect& textureRect)
 {
 	if(x < mapSize.x && y < mapSize.y && layer < layers)
 	{
@@ -198,7 +198,7 @@ void TileMap::addTile(unsigned x, unsigned y, unsigned layer, short type, bool c
 	}
 }
 
-void TileMap::removeTile(unsigned x, unsigned y, unsigned layer)
+void TileMap::removeTile(int x, int y, int layer)
 {
 	if (x < mapSize.x && y < mapSize.y && layer < layers)
 	{

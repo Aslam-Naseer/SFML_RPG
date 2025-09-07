@@ -90,7 +90,6 @@ void AnimationComponent::play(std::string key, const bool priority)
 
 void AnimationComponent::update(const float& dt)
 {
-	
 
 	if (priorityAnimationKey != "" && animations.find(priorityAnimationKey) != animations.end()) {
 		animations[priorityAnimationKey]->update(sprite, dt);
@@ -105,6 +104,6 @@ void AnimationComponent::update(const float& dt)
 
 	else
 	{
-		std::cout << "Invalid key\n";
+		std::cout << "Invalid animation key\n";
 	}
 }

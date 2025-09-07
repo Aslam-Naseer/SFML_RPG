@@ -69,7 +69,7 @@ namespace gui
 	public:
 		DropDownList(
 			float x, float y, float width, float height, unsigned int char_size,
-			sf::Font& font, const std::vector<std::string>& list, unsigned int index = 0
+			sf::Font& font, const std::vector<std::string>& list, int index = 0
 		);
 		~DropDownList();
 
