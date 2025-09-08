@@ -14,6 +14,7 @@ Player::Player(float x, float y, sf::Texture& texture)
 	createMovementComponent(700.f, 3000.f, 1000.f);
 	createAnimationComponent(texture);
 	createHitboxComponent(95, 55, 80, 135);
+	createAttributeComponent(1);
 
 	setPosition(x, y);
 
@@ -101,6 +102,12 @@ void Player::update(const float& dt)
 	{
 		attacking = true;
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::E))
+		attributeComponent->gainExp(20);
+
+	system("cls");
+	std::cout << attributeComponent->debugPrint();
 
 	updateAnimations(dt);
 	hitboxComponent->update();
