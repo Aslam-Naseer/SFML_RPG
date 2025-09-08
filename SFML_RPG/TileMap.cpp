@@ -192,9 +192,12 @@ sf::Vector2f TileMap::resolveCollision(const Entity* entity, const float& dt) co
 
 void TileMap::addTile(int x, int y, int layer, short type, bool collision ,const sf::IntRect& textureRect)
 {
+	Tile::Type tileType = Tile::Type::Default; 
+	if (type == 1) tileType = Tile::Type::Floating;
+
 	if(x < mapSize.x && y < mapSize.y && layer < layers)
 	{
-		map[x][y][layer].push_back(new Tile(x * gridSize, y * gridSize, gridSize, tileSheet, textureRect, type, collision));
+		map[x][y][layer].push_back(new Tile(x * gridSize, y * gridSize, gridSize, tileSheet, textureRect, tileType, collision));
 	}
 }
 
@@ -283,6 +286,15 @@ void TileMap::update()
 {
 }
 
+void TileMap::renderDeferred(sf::RenderTarget& target)
+{
+	while (!deferredRenderStack.empty())
+	{
+		deferredRenderStack.top()->render(target);
+		deferredRenderStack.pop();
+	}
+}
+
 void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 {
 	target.draw(mapBorder);
@@ -299,14 +311,22 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 		for (int y = start_y; y < end_y; y++) {
 			for (auto& tile : map[x][y][layer])
 			{
-				tile->render(target);
-				if (tile->collision) 
+				if(tile->type == Tile::Type::Floating)
 				{
-					collisionBox.setPosition(tile->shape.getPosition());
-					target.draw(collisionBox);
+					deferredRenderStack.push(tile);
+				}
+				else
+				{
+					tile->render(target);
+					if (tile->collision) 
+					{
+						collisionBox.setPosition(tile->shape.getPosition());
+						target.draw(collisionBox);
+					}
 				}
 			}
 
 		}
 	}
 }
+

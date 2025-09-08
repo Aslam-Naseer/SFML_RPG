@@ -15,6 +15,7 @@ private:
 	sf::Texture tileSheet;
 	std::string textureFile;
 	sf::RectangleShape collisionBox;
+	std::stack<Tile*> deferredRenderStack;
 
 	void initMap(float grid_size, int width, int height, int layers, std::string& texture_file);
 	void clearMap();
@@ -36,6 +37,7 @@ public:
 	void loadFromFile(const std::string file_name);
 
 	void update();
+	void renderDeferred(sf::RenderTarget& target);
 	void render(sf::RenderTarget& target, const sf::Vector2i& gridPosition);
 };
 

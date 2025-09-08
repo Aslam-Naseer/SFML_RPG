@@ -36,7 +36,7 @@ void EditorState::initGui()
 	selectorRect.setTexture(&tileMap.getTileSheet());
 	selectorRect.setTextureRect(textureRect);
 
-	textureSelector = new gui::TextureSelector(150.f, 50.f, 400.f, 500.f, tileMap.getTileSheet(), gridSize, font);
+	textureSelector = new gui::TextureSelector(150.f, 50.f, 400.f, 1000.f, tileMap.getTileSheet(), gridSize, font);
 
 	sidebar.setSize({ gridSize, static_cast<float>(stateData.gfxSettings->resolution.size.x) });
 	sidebar.setPosition({ 0,0 });
@@ -145,7 +145,8 @@ void EditorState::updateInput(const float& dt)
 
 		if (sf::Keyboard::isKeyPressed(keybinds["TYPE_UP"]) && keyTime.isReady())
 		{
-			type++;
+			if (type < 1)
+				type++;
 		}
 		else if (sf::Keyboard::isKeyPressed(keybinds["TYPE_DOWN"]) && keyTime.isReady())
 		{
@@ -183,6 +184,7 @@ void EditorState::render(sf::RenderTarget* target)
 	// Render everything in view
 	window->setView(view);
 	tileMap.render(*target, mousePosGrid);
+	tileMap.renderDeferred(*target);
 	if(!textureSelector->isActive())
 		target->draw(selectorRect);
 

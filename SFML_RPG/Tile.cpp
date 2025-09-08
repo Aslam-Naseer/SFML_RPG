@@ -2,7 +2,7 @@
 #include "Tile.h"
 
 Tile::Tile(float x, float y, float gridSize, const sf::Texture& tileSheet, 
-	const sf::IntRect& textureRect, short type, bool collision)
+	const sf::IntRect& textureRect, Type type, bool collision)
 {
 	shape.setPosition({ x,y });
 	shape.setSize({ gridSize, gridSize });
@@ -22,7 +22,7 @@ std::string Tile::toString()
 {
 	std::stringstream ss;
 	ss << shape.getTextureRect().position.x << " " << shape.getTextureRect().position.y 
-		<< " " << type << " " << collision << " ";
+		<< " " << static_cast<short>(type) << " " << collision << " ";
 
 	return ss.str();
 }

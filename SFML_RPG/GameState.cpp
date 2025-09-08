@@ -150,6 +150,7 @@ void GameState::render(sf::RenderTarget* target)
 	renderTexture.setView(view);
 	tileMap.render(renderTexture, player->getGridPosition(static_cast<int>(stateData.gridSize)));
 	player->render(renderTexture);
+	tileMap.renderDeferred(renderTexture);
 
 	if (paused)
 	{
