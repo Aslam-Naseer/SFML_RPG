@@ -147,6 +147,9 @@ void GameState::update(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::E) && keyTime.isReady())
 		player->gainExp(20);
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Q) && keyTime.isReady())
+		player->loseExp(20);
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up) && keyTime.isReady())
 		player->gainHp(1);
 
