@@ -51,6 +51,8 @@ void GameState::initPlayers()
 {
 	sf::Vector2f spawn_point = static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f;
 	player = new Player(spawn_point.x, spawn_point.y, textures["PLAYER_SHEET"]);
+
+	playerGui = new PlayerGui(player);
 }
 
 GameState::GameState(StateData& state_data, sf::Font& font):
@@ -68,6 +70,7 @@ GameState::GameState(StateData& state_data, sf::Font& font):
 
 GameState::~GameState()
 {
+	delete playerGui;
 	delete player;
 }
 
@@ -92,6 +95,7 @@ void GameState::updatePlayerInput(const float& dt)
 	}
 
 	player->update(dt);
+	playerGui->update(dt);
 
 	sf::Vector2f corrected_position = tileMap.resolveCollision(player, dt);
 
@@ -105,8 +109,9 @@ void GameState::updatePlayerInput(const float& dt)
 	
 }
 
-void GameState::updatePauseMenuButtons()
+void GameState::updatePauseMenuButtons(const float& dt)
 {
+	pmenu.update(mousePosWindow, dt);
 	if(pmenu.isButtonPressed("QUIT"))
 		endState();
 }
@@ -134,9 +139,24 @@ void GameState::update(const float& dt)
 	}
 	else
 	{
-		pmenu.update(mousePosWindow, dt);
-		updatePauseMenuButtons();
+		updatePauseMenuButtons(dt);
 	}
+
+	// Test updates : Remove later -----------------------------------
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::E) && keyTime.isReady())
+		player->gainExp(20);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up) && keyTime.isReady())
+		player->gainHp(1);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down) && keyTime.isReady())
+		player->loseHp(1);
+
+	system("cls");
+	std::cout << player->getAttributeComponent()->debugPrint();
+
+	// ----------------------------------------------------------------
 
 }
 
@@ -147,14 +167,18 @@ void GameState::render(sf::RenderTarget* target)
 
 	renderTexture.clear();
 
+	// Currrent View 
 	renderTexture.setView(view);
 	tileMap.render(renderTexture, player->getGridPosition(static_cast<int>(stateData.gridSize)));
 	player->render(renderTexture);
 	tileMap.renderDeferred(renderTexture);
 
+	// Window View
+	renderTexture.setView(renderTexture.getDefaultView());
+	playerGui->render(renderTexture);
+
 	if (paused)
 	{
-		renderTexture.setView(renderTexture.getDefaultView());
 		pmenu.render(renderTexture);
 	}
 

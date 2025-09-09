@@ -28,6 +28,41 @@ Player::~Player()
 {
 }
 
+
+const AttributeComponent* Player::getAttributeComponent() const
+{
+	return attributeComponent ? attributeComponent : nullptr;
+}
+
+void Player::gainHp(int hp)
+{
+	attributeComponent->hp += hp;
+
+	if (attributeComponent->hp > attributeComponent->hpMax)
+		attributeComponent->hp = attributeComponent->hpMax;
+}
+
+void Player::loseHp(int hp)
+{
+	attributeComponent->hp -= hp;
+
+	if (attributeComponent->hp < 0)
+		attributeComponent->hp = 0;
+}
+
+void Player::gainExp(unsigned exp)
+{
+	attributeComponent->gainExp(exp);
+}
+
+void Player::loseExp(unsigned exp)
+{
+	attributeComponent->exp -= exp;
+
+	if (attributeComponent->exp < 0)
+		attributeComponent->exp = 0;
+}
+
 void Player::updateAnimations(const float& dt)
 {
 	
@@ -102,12 +137,6 @@ void Player::update(const float& dt)
 	{
 		attacking = true;
 	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::E))
-		attributeComponent->gainExp(20);
-
-	system("cls");
-	std::cout << attributeComponent->debugPrint();
 
 	updateAnimations(dt);
 	hitboxComponent->update();

@@ -5,8 +5,6 @@
 #include "HitboxComponent.h"
 #include "AttributeComponent.h"
 
-class AttributeComponent;
-
 class Entity
 {
 private:

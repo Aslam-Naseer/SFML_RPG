@@ -8,6 +8,7 @@ void Entity::initVariables()
 	movementComponent = NULL;
 	animationComponent = NULL;
 	hitboxComponent = NULL;
+	attributeComponent = NULL;
 }
 
 

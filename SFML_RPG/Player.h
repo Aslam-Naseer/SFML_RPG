@@ -12,9 +12,15 @@ private:
     void initComponents();
 
 public:
-
     Player(float x, float y, sf::Texture& texture);
     virtual ~Player();
+
+    const AttributeComponent* getAttributeComponent() const;
+
+    void gainHp(int hp);
+    void loseHp(int hp);
+    void gainExp(unsigned exp);
+    void loseExp(unsigned exp);
 
 	void updateAnimations(const float& dt);
     void update(const float& dt);

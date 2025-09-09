@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "AttributeComponent.h"
+#include "Player.h"
 
 AttributeComponent::AttributeComponent(unsigned startLevel)
 {

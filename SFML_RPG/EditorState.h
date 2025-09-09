@@ -33,7 +33,7 @@ public:
 	EditorState(StateData& state_data, sf::Font& font);
 	virtual ~EditorState();
 
-	void updatePauseMenuButtons();
+	void updatePauseMenuButtons(const float& dt);
 	void updateGui(const float& dt);
 	void updateInput(const float& dt) override;
 

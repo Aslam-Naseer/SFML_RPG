@@ -65,8 +65,10 @@ EditorState::~EditorState()
 {
 }
 
-void EditorState::updatePauseMenuButtons()
+void EditorState::updatePauseMenuButtons(const float& dt)
 {
+	pmenu.update(mousePosWindow, dt);
+
 	if (pmenu.isButtonPressed("QUIT"))
 		endState();
 
@@ -170,8 +172,7 @@ void EditorState::update(const float& dt)
 
 	else
 	{
-		pmenu.update(mousePosWindow, dt);
-		updatePauseMenuButtons();
+		updatePauseMenuButtons(dt);
 	}
 
 }

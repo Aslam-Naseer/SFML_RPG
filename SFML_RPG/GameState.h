@@ -4,6 +4,7 @@
 #include "PauseMenu.h"
 #include "Player.h"
 #include "TileMap.h"
+#include "PlayerGui.h"
 
 class GameState :
     public State
@@ -12,6 +13,7 @@ private:
 	Player* player; 
 	PauseMenu pmenu;
 	TileMap tileMap;
+	PlayerGui* playerGui;
 
 	sf::View view;
 	sf::Sprite renderSprite;
@@ -32,7 +34,7 @@ public:
 	virtual ~GameState();
 
 	void updatePlayerInput(const float& dt);
-	void updatePauseMenuButtons();
+	void updatePauseMenuButtons(const float& dt);
     void updateInput(const float& dt) override;
 
     void update(const float& dt) override;
