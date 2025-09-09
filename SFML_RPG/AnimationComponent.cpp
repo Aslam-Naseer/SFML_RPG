@@ -27,7 +27,6 @@ void AnimationComponent::Animation::update(sf::Sprite& sprite, const float& dt)
 		curTime -= maxTime;
 	}
 
-	//std::cout << currentFrame << " / " << maxFrames-1 << std::endl;
 }
 
 void AnimationComponent::Animation::reset()

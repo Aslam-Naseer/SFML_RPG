@@ -19,8 +19,8 @@ public:
 
     void gainHp(int hp);
     void loseHp(int hp);
-    void gainExp(unsigned exp);
-    void loseExp(unsigned exp);
+    void gainExp(int exp);
+    void loseExp(int exp);
 
 	void updateAnimations(const float& dt);
     void update(const float& dt);

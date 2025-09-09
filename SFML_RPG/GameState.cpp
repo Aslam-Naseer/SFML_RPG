@@ -1,14 +1,6 @@
 #include "stdafx.h"
 #include "GameState.h"
 
-void GameState::initMid()
-{
-	mid.setSize({ stateData.gridSize, stateData.gridSize });
-	mid.setFillColor(sf::Color::Cyan);
-	mid.setOrigin(mid.getSize() / 2.f);
-	mid.setPosition(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f);
-}
-
 void GameState::initDeferredRender()
 {
 	if (!renderTexture.resize(stateData.gfxSettings->resolution.size))
@@ -63,7 +55,6 @@ GameState::GameState(StateData& state_data, sf::Font& font):
 	initKeybinds();
 	initTextures();
 	initPlayers();
-	initMid();
 
 	tileMap.loadFromFile("../tilemap.txt");
 }
@@ -95,18 +86,22 @@ void GameState::updatePlayerInput(const float& dt)
 	}
 
 	player->update(dt);
-	playerGui->update(dt);
 
-	sf::Vector2f corrected_position = tileMap.resolveCollision(player, dt);
+	sf::Vector2f correctedPosition = tileMap.resolveCollision(player, dt);
 
-	if (player->getPosition().x != corrected_position.x)
+	if (player->getPosition().x != correctedPosition.x)
 		player->stopMovement(true, false);
-	if (player->getPosition().y != corrected_position.y)
+	if (player->getPosition().y != correctedPosition.y)
 		player->stopMovement(false, true);
 
-	player->setPosition(corrected_position.x, corrected_position.y);
+	player->setPosition(correctedPosition.x, correctedPosition.y);
 	view.setCenter(player->getPosition());
 	
+}
+
+void GameState::updateGui(const float& dt)
+{
+	playerGui->update(dt);
 }
 
 void GameState::updatePauseMenuButtons(const float& dt)
@@ -114,6 +109,25 @@ void GameState::updatePauseMenuButtons(const float& dt)
 	pmenu.update(mousePosWindow, dt);
 	if(pmenu.isButtonPressed("QUIT"))
 		endState();
+}
+
+void GameState::updateTestControls(const float& dt)
+{
+	// Test updates : Remove later -----------------------------------
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::E) && keyTime.isReady())
+		player->gainExp(20);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Q) && keyTime.isReady())
+		player->loseExp(20);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up) && keyTime.isReady())
+		player->gainHp(1);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down) && keyTime.isReady())
+		player->loseHp(1);
+
+	// ----------------------------------------------------------------
 }
 
 void GameState::updateInput(const float& dt)
@@ -136,30 +150,13 @@ void GameState::update(const float& dt)
 	if (!paused)
 	{
 		updatePlayerInput(dt);
+		updateGui(dt);
+		updateTestControls(dt);
 	}
 	else
 	{
 		updatePauseMenuButtons(dt);
 	}
-
-	// Test updates : Remove later -----------------------------------
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::E) && keyTime.isReady())
-		player->gainExp(20);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Q) && keyTime.isReady())
-		player->loseExp(20);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up) && keyTime.isReady())
-		player->gainHp(1);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down) && keyTime.isReady())
-		player->loseHp(1);
-
-	system("cls");
-	std::cout << player->getAttributeComponent()->debugPrint();
-
-	// ----------------------------------------------------------------
 
 }
 
@@ -187,7 +184,5 @@ void GameState::render(sf::RenderTarget* target)
 
 	renderTexture.display();
 	target->draw(renderSprite);
-
-	//target->draw(mid)
 
 }

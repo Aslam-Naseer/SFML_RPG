@@ -50,12 +50,12 @@ void Player::loseHp(int hp)
 		attributeComponent->hp = 0;
 }
 
-void Player::gainExp(unsigned exp)
+void Player::gainExp(int exp)
 {
 	attributeComponent->gainExp(exp);
 }
 
-void Player::loseExp(unsigned exp)
+void Player::loseExp(int exp)
 {
 	attributeComponent->exp -= exp;
 

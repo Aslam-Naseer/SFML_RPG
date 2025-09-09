@@ -37,7 +37,7 @@ void Game::initKeys()
 
 void Game::initStateData()
 {
-	stateData.gridSize = 100.f;
+	stateData.gridSize = 64.f;
 	stateData.window = &window;
 	stateData.supportedKeys = &supportedKeys;
 	stateData.states = &states;

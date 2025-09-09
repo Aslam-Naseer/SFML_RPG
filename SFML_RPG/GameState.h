@@ -19,10 +19,6 @@ private:
 	sf::Sprite renderSprite;
 	sf::RenderTexture renderTexture;
 
-
-	sf::RectangleShape mid;
-	void initMid();
-
 	void initDeferredRender();
 	void initView();
     void initKeybinds();
@@ -34,7 +30,9 @@ public:
 	virtual ~GameState();
 
 	void updatePlayerInput(const float& dt);
+	void updateGui(const float& dt);
 	void updatePauseMenuButtons(const float& dt);
+	void updateTestControls(const float& dt);
     void updateInput(const float& dt) override;
 
     void update(const float& dt) override;

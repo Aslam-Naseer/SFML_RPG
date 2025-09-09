@@ -3,8 +3,18 @@
 
 int main()
 {
-    Game game;
-    game.run();
+    std::cout << "Program starting..." << std::endl;
 
-    return 0;
+    try {
+
+        Game game;
+        game.run();
+
+        std::cout << "Game loop finished normally" << std::endl;
+        return 0;
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
+        return 3;
+    }
 }

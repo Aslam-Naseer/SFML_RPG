@@ -2,10 +2,10 @@
 #include "AttributeComponent.h"
 #include "Player.h"
 
-AttributeComponent::AttributeComponent(unsigned startLevel)
+AttributeComponent::AttributeComponent(int startLevel)
 {
     level = startLevel;
-    expNext = static_cast<unsigned>(
+    expNext = static_cast<int>(
         50.f * ((pow(level, 3) - 3 * pow(level, 2) + (level * 8)) / 3));
 
     updateLevel();
@@ -29,7 +29,7 @@ std::string AttributeComponent::debugPrint() const
     return ss.str();
 }
 
-void AttributeComponent::gainExp(const unsigned expGain)
+void AttributeComponent::gainExp(const int expGain)
 {
     exp += expGain;
     updateLevel();
@@ -49,13 +49,13 @@ void AttributeComponent::updateStats(const bool reset)
 
 void AttributeComponent::updateLevel()
 {
-    if (exp >= expNext)
+    while (exp >= expNext)
     {
         level++;
         attributePoints++;
         exp -= expNext;
 
-        expNext = static_cast<unsigned>(
+        expNext = static_cast<int>(
             50.f * ((pow(level, 3) - 3 * pow(level, 2) + (level * 8)) / 3));
     }
 }

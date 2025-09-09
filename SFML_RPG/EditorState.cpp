@@ -22,8 +22,8 @@ void EditorState::initTextures()
 {
 	textureRect.position.x = 0;
 	textureRect.position.y = 0;
-	textureRect.size.x = 100;
-	textureRect.size.y = 100;
+	textureRect.size.x = static_cast<int>(gridSize);
+	textureRect.size.y = static_cast<int>(gridSize);
 }
 
 void EditorState::initGui()
@@ -36,9 +36,9 @@ void EditorState::initGui()
 	selectorRect.setTexture(&tileMap.getTileSheet());
 	selectorRect.setTextureRect(textureRect);
 
-	textureSelector = new gui::TextureSelector(150.f, 50.f, 400.f, 1000.f, tileMap.getTileSheet(), gridSize, font);
+	textureSelector = new gui::TextureSelector(150.f, 50.f, 400.f, 900.f, tileMap.getTileSheet(), gridSize, font);
 
-	sidebar.setSize({ gridSize, static_cast<float>(stateData.gfxSettings->resolution.size.x) });
+	sidebar.setSize({ gridSize * 1.5f, static_cast<float>(stateData.gfxSettings->resolution.size.x) });
 	sidebar.setPosition({ 0,0 });
 	sidebar.setFillColor(sf::Color(25, 25, 25, 255));
 	sidebar.setOutlineColor(sf::Color(150, 150, 150, 255));

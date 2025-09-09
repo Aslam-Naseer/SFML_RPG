@@ -115,7 +115,7 @@ sf::Vector2f TileMap::resolveCollision(const Entity* entity, const float& dt) co
 	// Tile Collision
 
 	sf::Vector2i gridPos = entity->getGridPosition(static_cast<int>(gridSize));
-	sf::Vector2i cullSize = { 4, 5 };
+	sf::Vector2i cullSize = { 7, 7 };
 
 	int startX = std::clamp(gridPos.x - cullSize.x / 2, 0, static_cast<int>(mapSize.x));
 	int startY = std::clamp(gridPos.y - cullSize.y / 2, 0, static_cast<int>(mapSize.y));
@@ -192,10 +192,11 @@ sf::Vector2f TileMap::resolveCollision(const Entity* entity, const float& dt) co
 
 void TileMap::addTile(int x, int y, int layer, short type, bool collision ,const sf::IntRect& textureRect)
 {
+
 	Tile::Type tileType = Tile::Type::Default; 
 	if (type == 1) tileType = Tile::Type::Floating;
 
-	if(x < mapSize.x && y < mapSize.y && layer < layers)
+	if(x >= 0 && y >= 0 && layer >= 0 && x < mapSize.x && y < mapSize.y && layer < layers)
 	{
 		map[x][y][layer].push_back(new Tile(x * gridSize, y * gridSize, gridSize, tileSheet, textureRect, tileType, collision));
 	}
@@ -203,7 +204,7 @@ void TileMap::addTile(int x, int y, int layer, short type, bool collision ,const
 
 void TileMap::removeTile(int x, int y, int layer)
 {
-	if (x < mapSize.x && y < mapSize.y && layer < layers)
+	if (x >= 0 && y >= 0 && layer >= 0 && x < mapSize.x && y < mapSize.y && layer < layers)
 	{
 		if (!map[x][y][layer].empty())
 		{
@@ -299,7 +300,13 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 {
 	target.draw(mapBorder);
 
-	sf::Vector2i cull_size = { 20, 12 };
+	sf::View currentView = target.getView();
+	sf::Vector2f viewSize = currentView.getSize();
+
+	sf::Vector2i cull_size = {
+		static_cast<int>(viewSize.x / gridSize) + 4,
+		static_cast<int>(viewSize.y / gridSize) + 4
+	};
 
 	int start_x = std::clamp(gridPosition.x - cull_size.x / 2, 0, static_cast<int>(mapSize.x));
 	int start_y = std::clamp(gridPosition.y - cull_size.y / 2, 0, static_cast<int>(mapSize.y));
