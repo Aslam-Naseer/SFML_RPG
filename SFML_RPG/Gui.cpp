@@ -213,7 +213,7 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 {
 	bounds.setPosition({ x,y });
 	bounds.setSize({ width, height });
-	bounds.setFillColor(sf::Color(55, 55, 55, 100));
+	bounds.setFillColor(sf::Color(55, 55, 55, 175));
 	bounds.setOutlineThickness(1.f);
 	bounds.setOutlineColor(sf::Color(255, 255, 255, 200));
 

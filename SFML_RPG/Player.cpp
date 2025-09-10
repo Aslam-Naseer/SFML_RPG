@@ -11,16 +11,19 @@ Player::Player(float x, float y, sf::Texture& texture)
 	: Entity(texture)
 {
 	//initComponents();
-	createMovementComponent(700.f, 3000.f, 1000.f);
+	createMovementComponent(400.f, 1500.f, 700.f);
 	createAnimationComponent(texture);
-	createHitboxComponent(95, 55, 80, 135);
+	createHitboxComponent(10.f, 2.f, 44.f, 60.f);
 	createAttributeComponent(1);
 
 	setPosition(x, y);
 
-	animationComponent->addAnimation("IDLE", 192, 192, 14, 0, .5f);
-	animationComponent->addAnimation("WALK", 192, 192, 11, 1, .7f);
-	animationComponent->addAnimation("ATTACK", 192 * 2, 192, 14, 2, .7f);
+	animationComponent->addAnimation("WALK_DOWN", 64, 64, 4, 0, .5f);
+	animationComponent->addAnimation("WALK_LEFT", 64, 64, 4, 1, .5f);
+	animationComponent->addAnimation("WALK_RIGHT", 64, 64, 4, 2, .5f);
+	animationComponent->addAnimation("WALK_UP", 64, 64, 4, 3, .5f);
+	animationComponent->addAnimation("IDLE", 64, 64, 9, 4, .5f);
+	//animationComponent->addAnimation("ATTACK", 192 * 2, 192, 14, 2, .7f);
 
 }
 
@@ -68,28 +71,28 @@ void Player::updateAnimations(const float& dt)
 	
 
 	// Play animations
-	if (attacking)
-		animationComponent->play("ATTACK", true);
+	//if (attacking)
+	//	animationComponent->play("ATTACK", true);
 
 	if (movementComponent->getState(MovementComponent::movement_state::IDLE))
 	{
 		animationComponent->play("IDLE");
 	}
-	else if (movementComponent->getState(MovementComponent::movement_state::WALK_LEFT))
-	{
-		animationComponent->play("WALK");
-	}
-	else if (movementComponent->getState(MovementComponent::movement_state::WALK_RIGHT))
-	{
-		animationComponent->play("WALK");
-	}
 	else if (movementComponent->getState(MovementComponent::movement_state::WALK_UP))
 	{
-		animationComponent->play("WALK");
+		animationComponent->play("WALK_UP");
 	}
 	else if (movementComponent->getState(MovementComponent::movement_state::WALK_DOWN))
 	{
-		animationComponent->play("WALK");
+		animationComponent->play("WALK_DOWN");
+	}
+	else if (movementComponent->getState(MovementComponent::movement_state::WALK_LEFT))
+	{
+		animationComponent->play("WALK_LEFT");
+	}
+	else if (movementComponent->getState(MovementComponent::movement_state::WALK_RIGHT))
+	{
+		animationComponent->play("WALK_RIGHT");
 	}
 
 
@@ -99,51 +102,25 @@ void Player::updateAnimations(const float& dt)
 	if (!animationComponent->isPriority("ATTACK"))
 		attacking = false;
 
-	// Hitbox update
-	if (facingRight)
-	{
-		sprite.setScale({ -1.f, 1.f });
-
-		if (attacking)
-			sprite.setOrigin({ 258.f + 96.f, 0.f });
-		else
-			sprite.setOrigin({ 258, 0.f });
-	}
-	else
-	{
-		sprite.setScale({ 1.f, 1.f });
-
-		if (attacking)
-			sprite.setOrigin({ 96.f, 0.f });
-		else
-			sprite.setOrigin({ 0.f, 0.f });
-	}
-
-	if (movementComponent->getVelocity().x > 0.f) // Moving right
-	{
-		facingRight = true;
-	}
-	else if (movementComponent->getVelocity().x < 0.f) // Moving left
-	{
-		facingRight = false;
-	}
 }
 
 void Player::update(const float& dt)
 {
 	movementComponent->update(dt);
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
-	{
-		attacking = true;
-	}
+	//if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	//{
+	//	attacking = true;
+	//}
 
 	updateAnimations(dt);
 	hitboxComponent->update();
 }
 
-void Player::render(sf::RenderTarget& target)
+void Player::render(sf::RenderTarget& target, bool showHitbox)
 {
 	target.draw(sprite);
-	hitboxComponent->render(target);
+
+	if(showHitbox)
+		hitboxComponent->render(target);
 }

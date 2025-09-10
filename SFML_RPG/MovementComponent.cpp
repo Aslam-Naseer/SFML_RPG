@@ -24,13 +24,13 @@ const bool MovementComponent::getState(const movement_state state) const
 	case movement_state::IDLE:
 		return velocity.x == 0.f && velocity.y == 0.f;
 	case movement_state::WALK_LEFT:
-		return velocity.x < 0.f;
+		return velocity.x < 0.f && std::abs(velocity.x) >= std::abs(velocity.y);
 	case movement_state::WALK_RIGHT:
-		return velocity.x > 0.f;
+		return velocity.x > 0.f && std::abs(velocity.x) >= std::abs(velocity.y);
 	case movement_state::WALK_UP:
-		return velocity.y < 0.f;
+		return velocity.y < 0.f && std::abs(velocity.x) <= std::abs(velocity.y);
 	case movement_state::WALK_DOWN:
-		return velocity.y > 0.f;
+		return velocity.y > 0.f && std::abs(velocity.x) <= std::abs(velocity.y);
 	default:
 		return false;
 	}

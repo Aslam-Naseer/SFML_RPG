@@ -24,6 +24,6 @@ public:
 
 	void updateAnimations(const float& dt);
     void update(const float& dt);
-    void render(sf::RenderTarget& target);
+    void render(sf::RenderTarget& target, bool showHitbox = false);
 };
 

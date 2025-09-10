@@ -296,7 +296,7 @@ void TileMap::renderDeferred(sf::RenderTarget& target)
 	}
 }
 
-void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
+void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition, bool showCollision)
 {
 	target.draw(mapBorder);
 
@@ -325,7 +325,7 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 				else
 				{
 					tile->render(target);
-					if (tile->collision) 
+					if (showCollision && tile->collision) 
 					{
 						collisionBox.setPosition(tile->shape.getPosition());
 						target.draw(collisionBox);

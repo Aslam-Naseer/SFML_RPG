@@ -40,7 +40,7 @@ void EditorState::initGui()
 	selectorRect.setTexture(&tileMap.getTileSheet());
 	selectorRect.setTextureRect(textureRect);
 
-	textureSelector = new gui::TextureSelector(150.f, 50.f, 400.f, 900.f, sidebarWidth, tileMap.getTileSheet(), gridSize, font);
+	textureSelector = new gui::TextureSelector(150.f, 50.f, 900.f, 400.f, sidebarWidth, tileMap.getTileSheet(), gridSize, font);
 
 	// Sidebar
 
@@ -58,7 +58,7 @@ void EditorState::initGui()
 }
 
 EditorState::EditorState(StateData& state_data, sf::Font& font) :
-	State(state_data), tileMap(state_data.gridSize, 20, 20, "Resources/Images/Tilesheet.png"),
+	State(state_data), tileMap(state_data.gridSize, 20, 20, "Resources/Images/Tilesheet3.png"),
 	pmenu(font), gridSize(state_data.gridSize), font(font), 
 	type(0), collision(false), viewSpeed(250.f)
 {
@@ -191,7 +191,7 @@ void EditorState::render(sf::RenderTarget* target)
 
 	// Render everything in view
 	window->setView(view);
-	tileMap.render(*target, mousePosGrid);
+	tileMap.render(*target, mousePosGrid, true);
 	tileMap.renderDeferred(*target);
 	if(!textureSelector->isActive())
 		target->draw(selectorRect);

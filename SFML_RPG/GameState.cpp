@@ -33,7 +33,7 @@ void GameState::initKeybinds()
 
 void GameState::initTextures()
 {
-	if (!textures["PLAYER_SHEET"].loadFromFile("Resources/Sprites/Player/PLAYER_SHEET.png"))
+	if (!textures["PLAYER_SHEET"].loadFromFile("Resources/Sprites/Player/PLAYER_SHEET2.png"))
 	{
 		std::cout << "ERROR::GAMESTATE::INITTEXTURES::Could not load texture PLAYER_SHEET" << std::endl;
 	}
@@ -179,7 +179,7 @@ void GameState::render(sf::RenderTarget* target)
 	// Currrent View 
 	renderTexture.setView(view);
 	tileMap.render(renderTexture, player->getGridPosition(static_cast<int>(stateData.gridSize)));
-	player->render(renderTexture);
+	player->render(renderTexture, false);
 	tileMap.renderDeferred(renderTexture);
 
 	// Window View

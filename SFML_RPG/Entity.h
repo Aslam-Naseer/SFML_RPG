@@ -37,6 +37,6 @@ public:
 	virtual void move(const float& dt, int dir_x, int dir_y);
 
 	virtual void update(const float& dt) = 0;
-	virtual void render(sf::RenderTarget& target) = 0;
+	virtual void render(sf::RenderTarget& target, bool showHitbox = false) = 0;
 };
 

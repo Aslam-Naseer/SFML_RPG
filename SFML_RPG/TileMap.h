@@ -38,6 +38,6 @@ public:
 
 	void update();
 	void renderDeferred(sf::RenderTarget& target);
-	void render(sf::RenderTarget& target, const sf::Vector2i& gridPosition);
+	void render(sf::RenderTarget& target, const sf::Vector2i& gridPosition, bool showCollision = false);
 };
 
