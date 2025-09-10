@@ -19,15 +19,15 @@ void SettingsState::initGui()
 
 	// Buttons
 	buttons["BACK"] = new gui::Button(
-		Utils::p2pX(67.7f), Utils::p2pY(80.5f), Utils::p2pX(7.8f), Utils::p2pY(6.5f),
-		"Back", font, Utils::calcCharSize(1.4f),
+		utils::p2pX(67.7f), utils::p2pY(80.5f), utils::p2pX(7.8f), utils::p2pY(6.5f),
+		"Back", font, utils::calcCharSize(1.4f),
 		sf::Color(150, 150, 150, 255), sf::Color(255, 255, 255, 255), sf::Color(200, 200, 200, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 
 	buttons["APPLY"] = new gui::Button(
-		Utils::p2pX(75.5f), Utils::p2pY(80.5f), Utils::p2pX(7.8f), Utils::p2pY(6.5f),
-		"Apply", font, Utils::calcCharSize(1.4f),
+		utils::p2pX(75.5f), utils::p2pY(80.5f), utils::p2pX(7.8f), utils::p2pY(6.5f),
+		"Apply", font, utils::calcCharSize(1.4f),
 		sf::Color(150, 150, 150, 255), sf::Color(255, 255, 255, 255), sf::Color(200, 200, 200, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
@@ -43,14 +43,14 @@ void SettingsState::initGui()
 		if (gfxSettings.resolution == i) id = modes_str.size() - 1;
 	}
 
-	dropDownLists["RESOLUTION"] = new gui::DropDownList(Utils::p2pX(36.4f), Utils::p2pY(43.5f), Utils::p2pX(10.4f), Utils::p2pY(4.6f), Utils::calcCharSize(1), font, modes_str, id);
+	dropDownLists["RESOLUTION"] = new gui::DropDownList(utils::p2pX(36.4f), utils::p2pY(43.5f), utils::p2pX(10.4f), utils::p2pY(4.6f), utils::calcCharSize(1), font, modes_str, id);
 
 
 	// Text
 
-	optionsText.setCharacterSize(Utils::calcCharSize(1.3f));
+	optionsText.setCharacterSize(utils::calcCharSize(1.3f));
 	optionsText.setFillColor(sf::Color(255, 255, 255, 200));
-	optionsText.setPosition({ Utils::p2pX(20.8f), Utils::p2pY(43.5f) });
+	optionsText.setPosition({ utils::p2pX(20.8f), utils::p2pY(43.5f) });
 
 	optionsText.setString(
 		"Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing \n\n "

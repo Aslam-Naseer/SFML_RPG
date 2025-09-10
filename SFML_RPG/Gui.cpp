@@ -236,8 +236,8 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 	textureRect.size = { static_cast<int>(gridSize), static_cast<int>(gridSize) };
 
 	toggleBtn = new gui::Button(
-		0, 0, btnWidth, Utils::p2pY(7.f),
-		"TS", font, Utils::calcCharSize(1.2f),
+		0, 0, btnWidth, utils::p2pY(7.f),
+		"TS", font, utils::calcCharSize(1.2f),
 		sf::Color(140, 140, 140, 255), sf::Color(200, 200, 200, 255), sf::Color(90, 90, 90, 200),
 		sf::Color(70, 70, 70, 100), sf::Color(200, 200, 200, 100), sf::Color(20, 20, 20, 100)
 	);

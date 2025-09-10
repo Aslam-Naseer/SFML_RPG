@@ -10,9 +10,9 @@ void PlayerGui::initFont()
 
 void PlayerGui::initHpBar()
 {
-	float x = Utils::p2pX(2.f), y = Utils::p2pY(4.f);
-	float width = Utils::p2pX(20.f), height = Utils::p2pY(3.9f);
-	unsigned fontSize = Utils::calcCharSize(1.f);
+	float x = utils::p2pX(2.f), y = utils::p2pY(4.f);
+	float width = utils::p2pX(20.f), height = utils::p2pY(3.9f);
+	unsigned fontSize = utils::calcCharSize(1.f);
 
 	hpBarMax.setSize({ width, height });
 	hpBarMax.setFillColor(sf::Color(50, 50, 50, 200));
@@ -30,9 +30,9 @@ void PlayerGui::initHpBar()
 
 void PlayerGui::initExpBar()
 {
-	float x = Utils::p2pX(2.f), y = Utils::p2pY(10.f);
-	float width = Utils::p2pX(20.f), height = Utils::p2pY(3.6f);
-	unsigned fontSize = Utils::calcCharSize(0.75f);
+	float x = utils::p2pX(2.f), y = utils::p2pY(10.f);
+	float width = utils::p2pX(20.f), height = utils::p2pY(3.6f);
+	unsigned fontSize = utils::calcCharSize(0.75f);
 
 	expBarMax.setSize({ width, height });
 	expBarMax.setFillColor(sf::Color(50, 50, 50, 200));

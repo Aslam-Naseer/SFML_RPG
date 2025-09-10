@@ -1,13 +1,13 @@
 #include "stdafx.h"
-#include "Utils.h"
+#include "utils.h"
 
-namespace Utils {
+namespace utils {
     const GraphicsSettings* gfxSettings = nullptr;
 
 	const unsigned calcCharSize(float size)
 	{
 		if (!gfxSettings)
-			throw std::runtime_error("GraphicsSettings not initialized in Utils");
+			throw std::runtime_error("GraphicsSettings not initialized in utils");
 
 		if (size < 0.1f)
 			size = 0.1f;

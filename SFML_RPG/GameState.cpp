@@ -54,7 +54,7 @@ void GameState::initGui()
 
 
 	// Pause Menu
-	pmenu.addButton("QUIT", Utils::p2pY(70.f), "Quit");
+	pmenu.addButton("QUIT", utils::p2pY(70.f), "Quit");
 
 }
 

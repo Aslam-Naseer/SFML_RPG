@@ -4,22 +4,22 @@
 PauseMenu::PauseMenu(sf::Font& font) :
 	menuText(font), font(font)
 {
-	float windowWidth = Utils::p2pX(100.f);
-	float windowHeight = Utils::p2pY(100.f);
+	float windowWidth = utils::p2pX(100.f);
+	float windowHeight = utils::p2pY(100.f);
 
 	background.setFillColor(sf::Color(20, 20, 20, 100));
 	background.setSize({windowWidth, windowHeight});
 
 	container.setFillColor(sf::Color(50, 50, 50, 200));
-	container.setSize({ windowWidth * 0.3f, windowHeight - Utils::p2pY(28.f)});
-	container.setPosition({ windowWidth / 2.f - container.getSize().x / 2.f, Utils::p2pY(14.f)});
+	container.setSize({ windowWidth * 0.3f, windowHeight - utils::p2pY(28.f)});
+	container.setPosition({ windowWidth / 2.f - container.getSize().x / 2.f, utils::p2pY(14.f)});
 
 	menuText.setString("PAUSED");
-	menuText.setCharacterSize(Utils::calcCharSize(2.7f));
+	menuText.setCharacterSize(utils::calcCharSize(2.7f));
 	menuText.setFillColor(sf::Color::White);
 	menuText.setPosition({
 		container.getPosition().x + container.getSize().x / 2.f - menuText.getGlobalBounds().size.x / 2.f,
-		container.getPosition().y + Utils::p2pY(5.f)
+		container.getPosition().y + utils::p2pY(5.f)
 		});
 }
 
@@ -41,14 +41,14 @@ bool PauseMenu::isButtonPressed(std::string key) const
 
 void PauseMenu::addButton(const std::string key, const float y, const std::string text)
 {
-	float width = Utils::p2pX(14.1f);
-	float height = Utils::p2pY(9.3f);
+	float width = utils::p2pX(14.1f);
+	float height = utils::p2pY(9.3f);
 	float x = container.getPosition().x + container.getSize().x / 2.f - width / 2.f;
 
 	buttons[key] = new gui::Button(
 		x, y, width, height,
-		text, font, Utils::calcCharSize(2),
-		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),
+		text, font, utils::calcCharSize(2),
+		sf::Color(150, 150, 150, 200), sf::Color(255, 255, 255, 255), sf::Color(200, 200, 200, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 }

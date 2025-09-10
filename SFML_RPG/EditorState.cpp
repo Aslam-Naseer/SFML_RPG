@@ -28,7 +28,7 @@ void EditorState::initTextures()
 
 void EditorState::initGui()
 {
-	float sidebarWidth = std::min(100.f, Utils::p2pX(7.5f));
+	float sidebarWidth = std::min(100.f, utils::p2pX(7.5f));
 
 	// Base GUI
 
@@ -44,7 +44,7 @@ void EditorState::initGui()
 
 	// Sidebar
 
-	sidebar.setSize({ sidebarWidth, Utils::p2pY(100.f)});
+	sidebar.setSize({ sidebarWidth, utils::p2pY(100.f)});
 	sidebar.setPosition({ 0,0 });
 	sidebar.setFillColor(sf::Color(25, 25, 25, 255));
 	sidebar.setOutlineColor(sf::Color(150, 150, 150, 255));
@@ -52,9 +52,9 @@ void EditorState::initGui()
 
 	// Pause Menu
 
-	pmenu.addButton("LOAD", Utils::p2pY(35.f), "Load");
-	pmenu.addButton("SAVE", Utils::p2pY(45.f), "Save");
-	pmenu.addButton("QUIT", Utils::p2pY(70.f), "Quit");
+	pmenu.addButton("LOAD", utils::p2pY(35.f), "Load");
+	pmenu.addButton("SAVE", utils::p2pY(45.f), "Save");
+	pmenu.addButton("QUIT", utils::p2pY(70.f), "Quit");
 }
 
 EditorState::EditorState(StateData& state_data, sf::Font& font) :
