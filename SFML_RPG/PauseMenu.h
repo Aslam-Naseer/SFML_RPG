@@ -14,10 +14,8 @@ private:
 	sf::Text menuText;
 	KeyTime keyTime;
 
-	void initButtons(sf::Font& font);
-
 public:
-	PauseMenu(sf::RenderTarget& window, sf::Font& font);
+	PauseMenu(sf::Font& font);
 	virtual ~PauseMenu();
 
 	bool isButtonPressed(const std::string key) const;

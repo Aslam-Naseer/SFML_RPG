@@ -28,6 +28,8 @@ void EditorState::initTextures()
 
 void EditorState::initGui()
 {
+	float sidebarWidth = std::min(100.f, Utils::p2pX(7.5f));
+
 	selectorRect.setSize({ gridSize, gridSize });
 	selectorRect.setFillColor(sf::Color(255, 255, 255, 155));
 	selectorRect.setOutlineThickness(1.f);
@@ -36,9 +38,9 @@ void EditorState::initGui()
 	selectorRect.setTexture(&tileMap.getTileSheet());
 	selectorRect.setTextureRect(textureRect);
 
-	textureSelector = new gui::TextureSelector(150.f, 50.f, 400.f, 900.f, tileMap.getTileSheet(), gridSize, font);
+	textureSelector = new gui::TextureSelector(150.f, 50.f, 400.f, 900.f, sidebarWidth, tileMap.getTileSheet(), gridSize, font);
 
-	sidebar.setSize({ gridSize * 1.5f, static_cast<float>(stateData.gfxSettings->resolution.size.x) });
+	sidebar.setSize({ sidebarWidth, Utils::p2pY(100.f)});
 	sidebar.setPosition({ 0,0 });
 	sidebar.setFillColor(sf::Color(25, 25, 25, 255));
 	sidebar.setOutlineColor(sf::Color(150, 150, 150, 255));
@@ -47,7 +49,7 @@ void EditorState::initGui()
 
 EditorState::EditorState(StateData& state_data, sf::Font& font) :
 	State(state_data), tileMap(state_data.gridSize, 20, 20, "Resources/Images/Tilesheet.png"),
-	pmenu(*window, font), gridSize(state_data.gridSize), font(font), 
+	pmenu(font), gridSize(state_data.gridSize), font(font), 
 	type(0), collision(false), viewSpeed(250.f)
 {
 	initView();
@@ -55,8 +57,10 @@ EditorState::EditorState(StateData& state_data, sf::Font& font) :
 	initTextures();
 	initGui();
 
-	pmenu.addButton("SAVE", 450.f, "Save", font);
-	pmenu.addButton("LOAD", 300.f, "Load", font);
+	pmenu.addButton("LOAD", Utils::p2pY(35.f), "Load", font);
+	pmenu.addButton("SAVE", Utils::p2pY(45.f), "Save", font);
+	pmenu.addButton("QUIT", Utils::p2pY(70.f), "Quit", font);
+
 
 	//tileMap.loadFromFile("../tilemap.txt");
 }

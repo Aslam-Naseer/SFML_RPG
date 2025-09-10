@@ -10,9 +10,9 @@ void PlayerGui::initFont()
 
 void PlayerGui::initHpBar()
 {
-	float x = 40.f, y = 50.f;
-	float width = 300.f, height = 40.f;
-	unsigned fontSize = 24;
+	float x = Utils::p2pX(2.f), y = Utils::p2pY(4.f);
+	float width = Utils::p2pX(20.f), height = Utils::p2pY(3.9f);
+	unsigned fontSize = Utils::calcCharSize(1.f);
 
 	hpBarMax.setSize({ width, height });
 	hpBarMax.setFillColor(sf::Color(50, 50, 50, 200));
@@ -25,14 +25,14 @@ void PlayerGui::initHpBar()
 	hpBarMain.setPosition({ x, y });
 
 	hpBarText.setCharacterSize(fontSize);
-	hpBarText.setPosition({ x + 20.f, y + height / 2.f - fontSize / 2.f});
+	hpBarText.setPosition({ x + width / 15.f, y + height / 2.f - fontSize / 2.f});
 }
 
 void PlayerGui::initExpBar()
 {
-	float x = 40.f, y = 110.f;
-	float width = 300.f, height = 35.f;
-	unsigned fontSize = 18;
+	float x = Utils::p2pX(2.f), y = Utils::p2pY(10.f);
+	float width = Utils::p2pX(20.f), height = Utils::p2pY(3.6f);
+	unsigned fontSize = Utils::calcCharSize(0.75f);
 
 	expBarMax.setSize({ width, height });
 	expBarMax.setFillColor(sf::Color(50, 50, 50, 200));
@@ -45,7 +45,7 @@ void PlayerGui::initExpBar()
 	expBarMain.setPosition({ x, y });
 
 	expBarText.setCharacterSize(fontSize);
-	expBarText.setPosition({ x + 20.f, y + height / 2.f - 10 });
+	expBarText.setPosition({ x + width / 15.f , y + height / 2.f - fontSize / 2.f });
 
 	levelText.setCharacterSize(fontSize);
 	levelText.setPosition({ x + (width * 0.75f) , y + height / 2.f - fontSize / 2.f });

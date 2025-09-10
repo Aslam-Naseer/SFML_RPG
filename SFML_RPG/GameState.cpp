@@ -48,7 +48,7 @@ void GameState::initPlayers()
 }
 
 GameState::GameState(StateData& state_data, sf::Font& font):
-	State(state_data), pmenu(*window, font), renderSprite(renderTexture.getTexture())
+	State(state_data), pmenu(font), renderSprite(renderTexture.getTexture())
 {
 	initDeferredRender();
 	initView();
@@ -56,6 +56,7 @@ GameState::GameState(StateData& state_data, sf::Font& font):
 	initTextures();
 	initPlayers();
 
+	pmenu.addButton("QUIT", Utils::p2pY(70.f), "Quit", font);
 	tileMap.loadFromFile("../tilemap.txt");
 }
 

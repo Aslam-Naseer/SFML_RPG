@@ -98,7 +98,7 @@ namespace gui
 
 	public:
 		TextureSelector(
-			float x, float y, float width, float height,
+			float x, float y, float width, float height, float btnWidth,
 			const sf::Texture& textureSheet, float grid_size, sf::Font& font
 		);
 		~TextureSelector();

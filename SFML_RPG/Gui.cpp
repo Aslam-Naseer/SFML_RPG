@@ -207,7 +207,8 @@ void gui::DropDownList::render(sf::RenderTarget& target)
 
 // TEXTURE SELECTOR ===============================================================
 
-gui::TextureSelector::TextureSelector(float x, float y, float width, float height,const sf::Texture& textureSheet, float grid_size, sf::Font& font):
+gui::TextureSelector::TextureSelector(float x, float y, float width, float height, float btnWidth, 
+	const sf::Texture& textureSheet, float grid_size, sf::Font& font):
 	hide(true), active(false), gridSize(grid_size), sheet(textureSheet)
 {
 	bounds.setPosition({ x,y });
@@ -235,10 +236,10 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 	textureRect.size = { static_cast<int>(gridSize), static_cast<int>(gridSize) };
 
 	toggleBtn = new gui::Button(
-		0, 0, gridSize * 1.5f, 140.f,
-		"TS", font, 30,
+		0, 0, btnWidth, Utils::p2pY(7.f),
+		"TS", font, Utils::calcCharSize(1.2f),
 		sf::Color(140, 140, 140, 255), sf::Color(200, 200, 200, 255), sf::Color(90, 90, 90, 200),
-		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
+		sf::Color(70, 70, 70, 100), sf::Color(200, 200, 200, 100), sf::Color(20, 20, 20, 100)
 	);
 }
 

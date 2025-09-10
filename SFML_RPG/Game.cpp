@@ -6,6 +6,7 @@
 void Game::initGraphicsSettings()
 {
 	gfxSettings.loadFromFile("Config/graphics.ini");
+	Utils::gfxSettings = &gfxSettings;
 }
 
 void Game::initWindow()

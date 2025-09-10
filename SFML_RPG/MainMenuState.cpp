@@ -26,29 +26,29 @@ void MainMenuState::initButtons()
 {
 
 	buttons["GAME_STATE"] = new gui::Button(
-		230.f, 440.f, 270.f, 100.f,
-		"New Game", font, 50,
+		Utils::p2pX(12.f), Utils::p2pY(40.7f), Utils::p2pX(14.f), Utils::p2pY(9.3f),
+		"New Game", font, Utils::calcCharSize(2),
 		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 
 	buttons["SETTINGS_STATE"] = new gui::Button(
-		230.f, 550.f, 270.f, 100.f,
-		"Settings", font, 50,
+		Utils::p2pX(12.f), Utils::p2pY(50.9f), Utils::p2pX(14.f), Utils::p2pY(9.3f),
+		"Settings", font, Utils::calcCharSize(2),
 		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 
 	buttons["EDITOR_STATE"] = new gui::Button(
-		230.f, 660.f, 270.f, 100.f,
-		"Editor", font, 50,
+		Utils::p2pX(12.f), Utils::p2pY(61.1f), Utils::p2pX(14.f), Utils::p2pY(9.3f),
+		"Editor", font, Utils::calcCharSize(2),
 		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 
 	buttons["EXIT"] = new gui::Button(
-		230.f, 850.f, 270.f, 100.f,
-		"Exit", font, 50,
+		Utils::p2pX(12.f), Utils::p2pY(78.7f), Utils::p2pX(14.f), Utils::p2pY(9.3f),
+		"Exit", font, Utils::calcCharSize(2),
 		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
@@ -122,12 +122,4 @@ void MainMenuState::render(sf::RenderTarget* target)
 		it.second->render(*target);
 	}
 
-	// DEBUG: REMOVE LATER
-	//sf::Text mouseText(font,"",15);
-	//mouseText.setPosition({mousePosView.x, mousePosView.y - 20});
-	//std::stringstream st;
-	//st << mousePosView.x << ' ' << mousePosView.y;
-	//mouseText.setString(st.str());
-
-	//target->draw(mouseText);
 }

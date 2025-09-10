@@ -13,6 +13,8 @@ public:
 
 	GraphicsSettings();
 
+	void updateResolution(sf::RenderWindow* target, int id);
+
 	void loadFromFile(const std::string& filename);
 	void saveToFile(const std::string& filename) const;
 };

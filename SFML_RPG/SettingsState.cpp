@@ -17,9 +17,9 @@ void SettingsState::initKeybinds()
 
 void SettingsState::initText()
 {
-	optionsText.setCharacterSize(32);
+	optionsText.setCharacterSize(Utils::calcCharSize(1.3f));
 	optionsText.setFillColor(sf::Color(255, 255, 255, 200));
-	optionsText.setPosition({ 400.f, 470.f });
+	optionsText.setPosition({ Utils::p2pX(20.8f), Utils::p2pY(43.5f) });
 
 	optionsText.setString(
 		"Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing \n\n "
@@ -29,15 +29,15 @@ void SettingsState::initText()
 void SettingsState::initGui()
 {
 	buttons["BACK"] = new gui::Button(
-		1300.f, 870.f, 150.f, 70.f,
-		"Back", font, 36,
+		Utils::p2pX(67.7f), Utils::p2pY(80.5f), Utils::p2pX(7.8f), Utils::p2pY(6.5f),
+		"Back", font, Utils::calcCharSize(1.4f),
 		sf::Color(150, 150, 150, 255), sf::Color(255, 255, 255, 255), sf::Color(200, 200, 200, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 
 	buttons["APPLY"] = new gui::Button(
-		1450.f, 870.f, 150.f, 70.f,
-		"Apply", font, 36,
+		Utils::p2pX(75.5f), Utils::p2pY(80.5f), Utils::p2pX(7.8f), Utils::p2pY(6.5f),
+		"Apply", font, Utils::calcCharSize(1.4f),
 		sf::Color(150, 150, 150, 255), sf::Color(255, 255, 255, 255), sf::Color(200, 200, 200, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
@@ -48,7 +48,7 @@ void SettingsState::initGui()
 		modes_str.push_back(std::to_string(i.size.x) + 'x' + std::to_string(i.size.y));
 	}
 
-	dropDownLists["RESOLUTION"] = new gui::DropDownList(700.f, 470.f, 200.f, 50.f, 24, font, modes_str);
+	dropDownLists["RESOLUTION"] = new gui::DropDownList(Utils::p2pX(36.4f), Utils::p2pY(43.5f), Utils::p2pX(10.4f), Utils::p2pY(4.6f), Utils::calcCharSize(1), font, modes_str);
 }	
 
 SettingsState::SettingsState(StateData& state_data, sf::Font& font) :
@@ -100,8 +100,8 @@ void SettingsState::updateGui(const float& dt)
 			return;
 		}
 
-		unsigned int modes_array[4][2] = { {1920, 1080} ,{1600, 900},{1280, 720},{1024, 576} };
-		window->create(sf::VideoMode({ gfxSettings.videoModes[id].size.x, gfxSettings.videoModes[id].size.y }), gfxSettings.title);
+		gfxSettings.updateResolution(window, id);
+		
 	}
 
 }
@@ -135,12 +135,4 @@ void SettingsState::render(sf::RenderTarget* target)
 		it.second->render(*target);
 	}
 
-	// DEBUG: REMOVE LATER
-	sf::Text mouseText(font, "", 15);
-	mouseText.setPosition({ mousePosView.x, mousePosView.y - 20 });
-	std::stringstream st;
-	st << mousePosView.x << ' ' << mousePosView.y;
-	mouseText.setString(st.str());
-
-	target->draw(mouseText);
 }
