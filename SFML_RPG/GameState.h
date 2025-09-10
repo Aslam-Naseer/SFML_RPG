@@ -23,7 +23,7 @@ private:
 	void initView();
     void initKeybinds();
 	void initTextures();
-    void initPlayers();
+    void initGui();
 
 public:
 	GameState(StateData& state_data, sf::Font& font);

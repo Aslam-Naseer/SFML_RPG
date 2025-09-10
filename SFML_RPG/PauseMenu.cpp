@@ -2,7 +2,7 @@
 #include "PauseMenu.h"
 
 PauseMenu::PauseMenu(sf::Font& font) :
-	menuText(font)
+	menuText(font), font(font)
 {
 	float windowWidth = Utils::p2pX(100.f);
 	float windowHeight = Utils::p2pY(100.f);
@@ -39,7 +39,7 @@ bool PauseMenu::isButtonPressed(std::string key) const
     return false;
 }
 
-void PauseMenu::addButton(const std::string key, const float y, const std::string text, sf::Font& font)
+void PauseMenu::addButton(const std::string key, const float y, const std::string text)
 {
 	float width = Utils::p2pX(14.1f);
 	float height = Utils::p2pY(9.3f);

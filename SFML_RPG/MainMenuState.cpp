@@ -1,16 +1,6 @@
 #include "stdafx.h"
 #include "MainMenuState.h"
 
-void MainMenuState::initBackground()
-{
-	if(!bgTexture.loadFromFile("Resources/Backgrounds/bg1.png")) {
-		std::cerr << "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE" << std::endl;
-	}
-	
-	background.setSize({ static_cast<float>(window->getSize().x), static_cast<float>(window->getSize().y) });
-	background.setTexture(&bgTexture);
-}
-
 void MainMenuState::initKeybinds()
 {
 }
@@ -22,8 +12,19 @@ void MainMenuState::initFonts()
 	}
 }
 
-void MainMenuState::initButtons()
+void MainMenuState::initGui()
 {
+	// Backgrond
+
+	if (!bgTexture.loadFromFile("Resources/Backgrounds/bg1.png")) {
+		std::cerr << "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE" << std::endl;
+	}
+
+	background.setSize({ static_cast<float>(window->getSize().x), static_cast<float>(window->getSize().y) });
+	background.setTexture(&bgTexture);
+
+
+	// Buttons
 
 	buttons["GAME_STATE"] = new gui::Button(
 		Utils::p2pX(12.f), Utils::p2pY(40.7f), Utils::p2pX(14.f), Utils::p2pY(9.3f),
@@ -52,15 +53,25 @@ void MainMenuState::initButtons()
 		sf::Color(70, 70, 70, 255), sf::Color(200, 200, 200, 255), sf::Color(20, 20, 20, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
+
+}
+
+void MainMenuState::resetGui()
+{
+	for (auto& it : buttons)
+	{
+		delete it.second;
+	}
+
+	initGui();
 }
 
 MainMenuState::MainMenuState(StateData& state_data) :
 	State(state_data)
 {
-	initBackground();
 	initKeybinds();
 	initFonts();
-	initButtons();
+	initGui();
 }
 
 MainMenuState::~MainMenuState()

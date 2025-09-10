@@ -39,12 +39,23 @@ void GameState::initTextures()
 	}
 }
 
-void GameState::initPlayers()
+void GameState::initGui()
 {
+	// Player GUI
+
 	sf::Vector2f spawn_point = static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f;
 	player = new Player(spawn_point.x, spawn_point.y, textures["PLAYER_SHEET"]);
 
 	playerGui = new PlayerGui(player);
+
+
+	// Tile Map
+	tileMap.loadFromFile("../tilemap.txt");
+
+
+	// Pause Menu
+	pmenu.addButton("QUIT", Utils::p2pY(70.f), "Quit");
+
 }
 
 GameState::GameState(StateData& state_data, sf::Font& font):
@@ -54,10 +65,7 @@ GameState::GameState(StateData& state_data, sf::Font& font):
 	initView();
 	initKeybinds();
 	initTextures();
-	initPlayers();
-
-	pmenu.addButton("QUIT", Utils::p2pY(70.f), "Quit", font);
-	tileMap.loadFromFile("../tilemap.txt");
+	initGui();
 }
 
 GameState::~GameState()

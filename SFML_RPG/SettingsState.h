@@ -17,10 +17,9 @@ private:
     std::map<std::string, gui::DropDownList*> dropDownLists;
     GraphicsSettings& gfxSettings;
 
-    void initBackground();
     void initGui();
 	void initKeybinds();
-    void initText();
+    void resetGui();
 
 public:
     SettingsState(StateData& state_data, sf::Font& font);

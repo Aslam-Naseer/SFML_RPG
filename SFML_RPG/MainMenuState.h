@@ -16,10 +16,10 @@ private:
     sf::Font font;
     std::map<std::string, gui::Button*> buttons;
 
-    void initBackground();
     void initKeybinds();
     void initFonts();
-    void initButtons();
+    void initGui();
+    void resetGui();
 
 public:
 	MainMenuState(StateData& state_data);

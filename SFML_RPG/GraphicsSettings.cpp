@@ -14,9 +14,15 @@ GraphicsSettings::GraphicsSettings()
 
 void GraphicsSettings::updateResolution(sf::RenderWindow* window, int id)
 {
-	window->create(sf::VideoMode({ videoModes[id].size.x, videoModes[id].size.y }), title);
-	resolution.size.x = videoModes[id].size.x;	
-	resolution.size.y = videoModes[id].size.y;
+	if (id < 0 || id >= videoModes.size()) return;
+
+	resolution = videoModes[id];
+
+	if (fullscreen)
+		window->create(resolution, title, sf::State::Fullscreen, contextSettings);
+	else
+		window->create(resolution, title, sf::Style::Titlebar | sf::Style::Close, sf::State::Windowed, contextSettings);
+
 }
 
 void GraphicsSettings::loadFromFile(const std::string& filename)

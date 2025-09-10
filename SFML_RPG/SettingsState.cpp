@@ -1,33 +1,23 @@
 #include "stdafx.h"
 #include "SettingsState.h"
 
-void SettingsState::initBackground()
+void SettingsState::initKeybinds()
 {
+}
+
+void SettingsState::initGui()
+{
+	// Background
+
 	if (!bgTexture.loadFromFile("Resources/Backgrounds/bg1.png")) {
 		std::cerr << "ERROR::MAINMENUSTATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE" << std::endl;
 	}
 
 	background.setSize({ static_cast<float>(window->getSize().x), static_cast<float>(window->getSize().y) });
 	background.setTexture(&bgTexture);
-}
 
-void SettingsState::initKeybinds()
-{
-}
 
-void SettingsState::initText()
-{
-	optionsText.setCharacterSize(Utils::calcCharSize(1.3f));
-	optionsText.setFillColor(sf::Color(255, 255, 255, 200));
-	optionsText.setPosition({ Utils::p2pX(20.8f), Utils::p2pY(43.5f) });
-
-	optionsText.setString(
-		"Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing \n\n "
-	);
-}
-
-void SettingsState::initGui()
-{
+	// Buttons
 	buttons["BACK"] = new gui::Button(
 		Utils::p2pX(67.7f), Utils::p2pY(80.5f), Utils::p2pX(7.8f), Utils::p2pY(6.5f),
 		"Back", font, Utils::calcCharSize(1.4f),
@@ -42,22 +32,51 @@ void SettingsState::initGui()
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 
+
+	// Dropdown List
+
+	int id = 0;
 	std::vector<std::string> modes_str;
 	for (auto& i : gfxSettings.videoModes)
 	{
 		modes_str.push_back(std::to_string(i.size.x) + 'x' + std::to_string(i.size.y));
+		if (gfxSettings.resolution == i) id = modes_str.size() - 1;
 	}
 
-	dropDownLists["RESOLUTION"] = new gui::DropDownList(Utils::p2pX(36.4f), Utils::p2pY(43.5f), Utils::p2pX(10.4f), Utils::p2pY(4.6f), Utils::calcCharSize(1), font, modes_str);
+	dropDownLists["RESOLUTION"] = new gui::DropDownList(Utils::p2pX(36.4f), Utils::p2pY(43.5f), Utils::p2pX(10.4f), Utils::p2pY(4.6f), Utils::calcCharSize(1), font, modes_str, id);
+
+
+	// Text
+
+	optionsText.setCharacterSize(Utils::calcCharSize(1.3f));
+	optionsText.setFillColor(sf::Color(255, 255, 255, 200));
+	optionsText.setPosition({ Utils::p2pX(20.8f), Utils::p2pY(43.5f) });
+
+	optionsText.setString(
+		"Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing \n\n "
+	);
 }	
+
+void SettingsState::resetGui()
+{
+	for(auto& it : buttons)
+	{
+		delete it.second;
+	}
+
+	for(auto& it : dropDownLists)
+	{
+		delete it.second;
+	}
+
+	initGui();
+}
 
 SettingsState::SettingsState(StateData& state_data, sf::Font& font) :
 	State(state_data), gfxSettings(*state_data.gfxSettings), font(font), optionsText(font)
 {
-	initBackground();
 	initKeybinds();
 	initGui();
-	initText();
 }
 
 SettingsState::~SettingsState()
@@ -101,7 +120,7 @@ void SettingsState::updateGui(const float& dt)
 		}
 
 		gfxSettings.updateResolution(window, id);
-		
+		resetGui();
 	}
 
 }
