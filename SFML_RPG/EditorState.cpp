@@ -4,7 +4,7 @@
 void EditorState::initView()
 {
 	view.setSize(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size));
-	view.setCenter(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f);
+	view.setCenter(tileMap.checkViewBounds(view));
 }
 
 void EditorState::initKeybinds()
@@ -46,7 +46,7 @@ void EditorState::initGui()
 
 	sidebar.setSize({ sidebarWidth, utils::p2pY(100.f)});
 	sidebar.setPosition({ 0,0 });
-	sidebar.setFillColor(sf::Color(25, 25, 25, 255));
+	sidebar.setFillColor(sf::Color(25, 25, 25, 200));
 	sidebar.setOutlineColor(sf::Color(150, 150, 150, 255));
 	sidebar.setOutlineThickness(1.f);
 
@@ -58,7 +58,7 @@ void EditorState::initGui()
 }
 
 EditorState::EditorState(StateData& state_data, sf::Font& font) :
-	State(state_data), tileMap(state_data.gridSize, 20, 20, "Resources/Images/Tilesheet3.png"),
+	State(state_data), tileMap(state_data.gridSize, 30, 20, "Resources/Images/Tilesheet3.png"),
 	pmenu(font), gridSize(state_data.gridSize), font(font), 
 	type(0), collision(false), viewSpeed(250.f)
 {
@@ -133,37 +133,45 @@ void EditorState::updateInput(const float& dt)
 		else
 			unpauseState();
 	}
-
-	if(!paused)
+	if (paused)
 	{
-		
-		if(sf::Keyboard::isKeyPressed(keybinds["MOVE_CAM_LEFT"]))
-			view.move({ -viewSpeed * dt, 0.f });
-		else if(sf::Keyboard::isKeyPressed(keybinds["MOVE_CAM_RIGHT"]))
-			view.move({ viewSpeed * dt, 0.f });
-
-		if(sf::Keyboard::isKeyPressed(keybinds["MOVE_CAM_UP"]))
-			view.move({ 0.f, -viewSpeed * dt });
-		else if(sf::Keyboard::isKeyPressed(keybinds["MOVE_CAM_DOWN"]))
-			view.move({ 0.f, viewSpeed * dt });
-
-
-		if (sf::Keyboard::isKeyPressed(keybinds["COLLISION"]) && keyTime.isReady())
-			collision = !collision;
-		
-
-		if (sf::Keyboard::isKeyPressed(keybinds["TYPE_UP"]) && keyTime.isReady())
-		{
-			if (type < 1)
-				type++;
-		}
-		else if (sf::Keyboard::isKeyPressed(keybinds["TYPE_DOWN"]) && keyTime.isReady())
-		{
-			if (type > 0)
-				type--;
-		}
+		view.setCenter(tileMap.checkViewBounds(view, {100, 50}));
+		return;
 	}
-	
+
+
+	// Camera movement
+	sf::Vector2f movement(0.f, 0.f);
+	if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAM_LEFT"]))
+		movement.x -= viewSpeed * dt;
+	if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAM_RIGHT"]))
+		movement.x += viewSpeed * dt;
+	if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAM_UP"]))
+		movement.y -= viewSpeed * dt;
+	if (sf::Keyboard::isKeyPressed(keybinds["MOVE_CAM_DOWN"]))
+		movement.y += viewSpeed * dt;
+
+	if (movement.x != 0.f || movement.y != 0.f)
+	{
+		view.move(movement);
+		view.setCenter(tileMap.checkViewBounds(view, {100, 50}));
+	}
+
+
+	// Other inputs
+	if (sf::Keyboard::isKeyPressed(keybinds["COLLISION"]) && keyTime.isReady())
+		collision = !collision; 
+
+	if (sf::Keyboard::isKeyPressed(keybinds["TYPE_UP"]) && keyTime.isReady())
+	{
+		if (type < 1) 
+			type++;
+	}
+	else if (sf::Keyboard::isKeyPressed(keybinds["TYPE_DOWN"]) && keyTime.isReady())
+	{
+		if (type > 0)
+			type--;
+	}
 }
 
 void EditorState::update(const float& dt)

@@ -40,7 +40,7 @@ void SettingsState::initGui()
 	for (auto& i : gfxSettings.videoModes)
 	{
 		modes_str.push_back(std::to_string(i.size.x) + 'x' + std::to_string(i.size.y));
-		if (gfxSettings.resolution == i) id = modes_str.size() - 1;
+		if (gfxSettings.resolution == i) id = static_cast<int>(modes_str.size() - 1);
 	}
 
 	dropDownLists["RESOLUTION"] = new gui::DropDownList(utils::p2pX(36.4f), utils::p2pY(43.5f), utils::p2pX(10.4f), utils::p2pY(4.6f), utils::calcCharSize(1), font, modes_str, id);

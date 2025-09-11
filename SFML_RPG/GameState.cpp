@@ -17,7 +17,6 @@ void GameState::initDeferredRender()
 void GameState::initView()
 {
 	view.setSize(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size));
-	view.setCenter(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f);
 }
 
 void GameState::initKeybinds()
@@ -42,10 +41,7 @@ void GameState::initTextures()
 void GameState::initGui()
 {
 	// Player GUI
-
-	sf::Vector2f spawn_point = static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 2.f;
-	player = new Player(spawn_point.x, spawn_point.y, textures["PLAYER_SHEET"]);
-
+	player = new Player(100, 100, textures["PLAYER_SHEET"]);
 	playerGui = new PlayerGui(player);
 
 
@@ -113,11 +109,14 @@ void GameState::updatePlayerInput(const float& dt)
 		player->stopMovement(false, true);
 
 	player->setPosition(correctedPosition.x, correctedPosition.y);
-	view.setCenter(player->getPosition() + 
-		static_cast<sf::Vector2f>(
-			mousePosWindow - static_cast<sf::Vector2i>(stateData.gfxSettings->resolution.size
-				) / 2)
-		/ 15.f);
+
+	sf::Vector2f mouseOffset = static_cast<sf::Vector2f>(
+		mousePosWindow - static_cast<sf::Vector2i>(stateData.gfxSettings->resolution.size) / 2
+		) / 15.f;
+
+	sf::Vector2f desiredCenter = player->getPosition() + mouseOffset;
+	view.setCenter(desiredCenter);
+	view.setCenter(tileMap.checkViewBounds(view, { 10.f, 50.f }));
 	
 }
 
@@ -190,8 +189,6 @@ void GameState::render(sf::RenderTarget* target)
 	renderTexture.clear();
 	coreShader.setUniform("hasTexture", true);
 	coreShader.setUniform("lightPosition", player->getCenter());
-
-	//std::cout << "Player center: " << player->getCenter().x << " " << player->getCenter().y << "\n";
 
 	// Currrent View 
 	renderTexture.setView(view);

@@ -17,7 +17,7 @@ void main()
 	lightToFrag.y = lightToFrag.y / 1.7;
 
 	//Length of the vector (distance)
-	float vecLength = clamp(length(lightToFrag)  , 0.0, 1.0);
+	float vecLength = clamp(length(lightToFrag) / 1.5 , 0.0, 1.0);
 
     // lookup the pixel in the texture
     vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);

@@ -26,10 +26,10 @@ public:
 	virtual ~TileMap();
 
 	const sf::Texture& getTileSheet() const;
-	bool isWithinBounds(float x, float y) const;
 	const sf::Vector2f getMapSize() const;
 	const int getLayerSize(const int x, const int y, const int layer) const;
 
+	sf::Vector2f checkViewBounds(const sf::View& view, sf::Vector2f padding = {0,0}) const;
 	sf::Vector2f resolveCollision(const Entity* entity, const float& dt) const;
 	void addTile(int x, int y, int layer, short type, bool collision, const sf::IntRect& textureRect);
 	void removeTile(int x, int y, int layer);

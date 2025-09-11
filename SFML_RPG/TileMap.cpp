@@ -30,7 +30,7 @@ void TileMap::initMap(float grid_size, int width, int height, int layers, std::s
 	mapBorder.setPosition({ 0.f, 0.f });
 	mapBorder.setFillColor(sf::Color::Transparent);
 	mapBorder.setOutlineColor(sf::Color::White);
-	mapBorder.setOutlineThickness(2.f);
+	mapBorder.setOutlineThickness(-2.f);
 }
 
 void TileMap::clearMap()
@@ -80,12 +80,6 @@ const sf::Texture& TileMap::getTileSheet() const
 	return tileSheet;
 }
 
-bool TileMap::isWithinBounds(float x, float y) const
-{
-	return (x >= 0.f && x < mapSize.x * gridSize &&
-		y >= 0.f && y < mapSize.y * gridSize);
-}
-
 const sf::Vector2f TileMap::getMapSize() const
 {
 	return mapBorder.getSize();
@@ -97,6 +91,26 @@ const int TileMap::getLayerSize(const int x, const int y, const int layer) const
 		return -1;
 
 	return static_cast<int>(map[x][y][layer].size());
+}
+
+sf::Vector2f TileMap::checkViewBounds(const sf::View& view, sf::Vector2f padding) const
+{
+	sf::Vector2f viewSize = view.getSize();
+	sf::Vector2f viewCenter = view.getCenter();
+	sf::Vector2f mapSizeF = mapBorder.getSize();
+	sf::Vector2f mapPos = mapBorder.getPosition();
+
+	if(mapSizeF.x < viewSize.x)
+		viewCenter.x = mapPos.x + mapSizeF.x / 2.f;
+	else
+		viewCenter.x = std::clamp(viewCenter.x, viewSize.x / 2.f - padding.x , mapSizeF.x - viewSize.x / 2.f + padding.x);
+
+	if (mapSizeF.y < viewSize.y)
+		viewCenter.y = mapPos.y + mapSizeF.y / 2.f;
+	else
+		viewCenter.y = std::clamp(viewCenter.y, viewSize.y / 2.f - padding.y, mapSizeF.y - viewSize.y / 2.f + padding.y); 
+
+	return viewCenter;
 }
 
 sf::Vector2f TileMap::resolveCollision(const Entity* entity, const float& dt) const
@@ -190,27 +204,33 @@ sf::Vector2f TileMap::resolveCollision(const Entity* entity, const float& dt) co
 	return resolvedPos;
 }
 
-void TileMap::addTile(int x, int y, int layer, short type, bool collision ,const sf::IntRect& textureRect)
+void TileMap::addTile(int x, int y, int layer, short type, bool collision, const sf::IntRect& textureRect)
 {
+	if (x < 0 || y < 0 || layer < 0 || x >= mapSize.x || y >= mapSize.y || layer >= layers) 
+		return;
 
-	Tile::Type tileType = Tile::Type::Default; 
-	if (type == 1) tileType = Tile::Type::Floating;
 
-	if(x >= 0 && y >= 0 && layer >= 0 && x < mapSize.x && y < mapSize.y && layer < layers)
-	{
-		map[x][y][layer].push_back(new Tile(x * gridSize, y * gridSize, gridSize, tileSheet, textureRect, tileType, collision));
-	}
+	Tile::Type tileType = (type == 1 || type == 2) ?
+		Tile::Type::Floating : Tile::Type::Default;
+
+	auto& tileLayer = map[x][y][layer];
+	if (!tileLayer.empty() && tileLayer.back()->shape.getTextureRect() == textureRect)
+		return;
+
+	tileLayer.push_back(
+		new Tile(x * gridSize, y * gridSize, gridSize, tileSheet, textureRect, tileType, collision)
+	);
 }
 
 void TileMap::removeTile(int x, int y, int layer)
 {
-	if (x >= 0 && y >= 0 && layer >= 0 && x < mapSize.x && y < mapSize.y && layer < layers)
+	if (x < 0 || y < 0 || layer < 0 || x >= mapSize.x || y >= mapSize.y || layer >= layers)
+		return;
+
+	if (!map[x][y][layer].empty())
 	{
-		if (!map[x][y][layer].empty())
-		{
-			delete map[x][y][layer][map[x][y][layer].size() - 1];
-			map[x][y][layer].pop_back();
-		}
+		delete map[x][y][layer][map[x][y][layer].size() - 1];
+		map[x][y][layer].pop_back();
 	}
 }
 
@@ -294,18 +314,20 @@ void TileMap::renderDeferred(sf::RenderTarget& target, sf::Shader* shader)
 		deferredRenderStack.top()->render(target, shader);
 		deferredRenderStack.pop();
 	}
+
+	target.draw(mapBorder);
+
 }
 
 void TileMap::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2i& gridPosition, bool showCollision)
 {
-	target.draw(mapBorder);
 
 	sf::View currentView = target.getView();
 	sf::Vector2f viewSize = currentView.getSize();
 
 	sf::Vector2i cull_size = {
-		static_cast<int>(viewSize.x / gridSize) + 4,
-		static_cast<int>(viewSize.y / gridSize) + 4
+		static_cast<int>(viewSize.x / gridSize) * 2 ,
+		static_cast<int>(viewSize.y / gridSize) * 2 
 	};
 
 	int start_x = std::clamp(gridPosition.x - cull_size.x / 2, 0, static_cast<int>(mapSize.x));
