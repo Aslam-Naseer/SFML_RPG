@@ -58,6 +58,14 @@ void GameState::initGui()
 
 }
 
+void GameState::initShader()
+{
+	if(!coreShader.loadFromFile("Resources/Shaders/core_shader.vert", "Resources/Shaders/core_shader.frag"))
+	{
+		std::cout << "ERROR::GAMESTATE::COULD NOT LOAD SHADER" << "\n";
+	}
+}
+
 GameState::GameState(StateData& state_data, sf::Font& font):
 	State(state_data), pmenu(font), renderSprite(renderTexture.getTexture())
 {
@@ -66,6 +74,7 @@ GameState::GameState(StateData& state_data, sf::Font& font):
 	initKeybinds();
 	initTextures();
 	initGui();
+	initShader();
 }
 
 GameState::~GameState()
@@ -104,7 +113,11 @@ void GameState::updatePlayerInput(const float& dt)
 		player->stopMovement(false, true);
 
 	player->setPosition(correctedPosition.x, correctedPosition.y);
-	view.setCenter(player->getPosition());
+	view.setCenter(player->getPosition() + 
+		static_cast<sf::Vector2f>(
+			mousePosWindow - static_cast<sf::Vector2i>(stateData.gfxSettings->resolution.size
+				) / 2)
+		/ 15.f);
 	
 }
 
@@ -175,12 +188,16 @@ void GameState::render(sf::RenderTarget* target)
 		target = window;
 
 	renderTexture.clear();
+	coreShader.setUniform("hasTexture", true);
+	coreShader.setUniform("lightPosition", player->getCenter());
+
+	//std::cout << "Player center: " << player->getCenter().x << " " << player->getCenter().y << "\n";
 
 	// Currrent View 
 	renderTexture.setView(view);
-	tileMap.render(renderTexture, player->getGridPosition(static_cast<int>(stateData.gridSize)));
-	player->render(renderTexture, false);
-	tileMap.renderDeferred(renderTexture);
+	tileMap.render(renderTexture, &coreShader, player->getGridPosition(static_cast<int>(stateData.gridSize)));
+	player->render(renderTexture, &coreShader, false);
+	tileMap.renderDeferred(renderTexture, &coreShader);
 
 	// Window View
 	renderTexture.setView(renderTexture.getDefaultView());

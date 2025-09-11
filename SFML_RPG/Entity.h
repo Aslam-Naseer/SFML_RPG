@@ -30,6 +30,7 @@ public:
 	virtual const sf::FloatRect getGlobalBounds() const;
 	virtual const sf::FloatRect getNextPosBounds(const float& dt) const;
 	virtual const sf::Vector2i getGridPosition(int gridSize) const;
+	virtual const sf::Vector2f getCenter() const;
 	virtual const sf::Vector2f getPosition() const;
 	virtual void setPosition(float x, float y);
 
@@ -37,6 +38,6 @@ public:
 	virtual void move(const float& dt, int dir_x, int dir_y);
 
 	virtual void update(const float& dt) = 0;
-	virtual void render(sf::RenderTarget& target, bool showHitbox = false) = 0;
+	virtual void render(sf::RenderTarget& target, sf::Shader* shader = nullptr, bool showHitbox = false) = 0;
 };
 

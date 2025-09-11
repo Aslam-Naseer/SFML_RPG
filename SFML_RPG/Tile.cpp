@@ -2,12 +2,10 @@
 #include "Tile.h"
 
 Tile::Tile(float x, float y, float gridSize, const sf::Texture& tileSheet, 
-	const sf::IntRect& textureRect, Type type, bool collision)
+	const sf::IntRect& textureRect, Type type, bool collision):
+	shape(tileSheet)
 {
 	shape.setPosition({ x,y });
-	shape.setSize({ gridSize, gridSize });
-
-	shape.setTexture(&tileSheet);
 	shape.setTextureRect(textureRect);
 
 	this->type = type;
@@ -41,7 +39,7 @@ void Tile::update()
 {
 }
 
-void Tile::render(sf::RenderTarget& target)
+void Tile::render(sf::RenderTarget& target, sf::Shader* shader)
 {
-	target.draw(this->shape);
+	target.draw(this->shape, shader);
 }

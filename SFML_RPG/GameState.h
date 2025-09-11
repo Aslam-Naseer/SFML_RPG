@@ -18,12 +18,14 @@ private:
 	sf::View view;
 	sf::Sprite renderSprite;
 	sf::RenderTexture renderTexture;
+	sf::Shader coreShader;
 
 	void initDeferredRender();
 	void initView();
     void initKeybinds();
 	void initTextures();
     void initGui();
+	void initShader();
 
 public:
 	GameState(StateData& state_data, sf::Font& font);

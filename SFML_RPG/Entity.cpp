@@ -72,6 +72,14 @@ const sf::Vector2i Entity::getGridPosition(int gridSize) const
 		});
 }
 
+const sf::Vector2f Entity::getCenter() const
+{
+	if (hitboxComponent)
+		return hitboxComponent->getPosition() + hitboxComponent->getGlobalBounds().size / 2.f;
+
+	return sprite.getPosition() + sprite.getGlobalBounds().size / 2.f;
+}
+
 const sf::Vector2f Entity::getPosition() const
 {
 	if (hitboxComponent)

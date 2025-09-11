@@ -287,16 +287,16 @@ void TileMap::update()
 {
 }
 
-void TileMap::renderDeferred(sf::RenderTarget& target)
+void TileMap::renderDeferred(sf::RenderTarget& target, sf::Shader* shader)
 {
 	while (!deferredRenderStack.empty())
 	{
-		deferredRenderStack.top()->render(target);
+		deferredRenderStack.top()->render(target, shader);
 		deferredRenderStack.pop();
 	}
 }
 
-void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition, bool showCollision)
+void TileMap::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2i& gridPosition, bool showCollision)
 {
 	target.draw(mapBorder);
 
@@ -324,7 +324,7 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition,
 				}
 				else
 				{
-					tile->render(target);
+					tile->render(target, shader);
 					if (showCollision && tile->collision) 
 					{
 						collisionBox.setPosition(tile->shape.getPosition());

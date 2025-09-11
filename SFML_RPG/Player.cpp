@@ -117,9 +117,9 @@ void Player::update(const float& dt)
 	hitboxComponent->update();
 }
 
-void Player::render(sf::RenderTarget& target, bool showHitbox)
+void Player::render(sf::RenderTarget& target, sf::Shader* shader, bool showHitbox)
 {
-	target.draw(sprite);
+	target.draw(sprite, shader);
 
 	if(showHitbox)
 		hitboxComponent->render(target);

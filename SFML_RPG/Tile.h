@@ -9,7 +9,7 @@ private:
 	};
 
 protected:
-	sf::RectangleShape shape;
+	sf::Sprite shape;
 	bool collision;
 	Type type;
 
@@ -23,7 +23,7 @@ public:
 
 	bool intersects(const sf::FloatRect bounds) const;
 	void update();
-	void render(sf::RenderTarget& target);
+	void render(sf::RenderTarget& target, sf::Shader* shader = nullptr);
 
 	friend class TileMap;
 };

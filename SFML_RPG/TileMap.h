@@ -37,7 +37,7 @@ public:
 	void loadFromFile(const std::string file_name);
 
 	void update();
-	void renderDeferred(sf::RenderTarget& target);
-	void render(sf::RenderTarget& target, const sf::Vector2i& gridPosition, bool showCollision = false);
+	void renderDeferred(sf::RenderTarget& target, sf::Shader* shader);
+	void render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2i& gridPosition, bool showCollision = false);
 };
 
