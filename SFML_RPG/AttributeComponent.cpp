@@ -35,6 +35,26 @@ void AttributeComponent::gainExp(const int expGain)
     updateLevel();
 }
 
+void AttributeComponent::loseExp(int expLose)
+{
+    exp -= expLose;
+    exp = std::max(0, exp);
+}
+
+
+void AttributeComponent::gainHp(int hpGain)
+{
+    hp += hpGain;
+    hp = std::min(hp, hpMax);
+}
+
+void AttributeComponent::loseHp(int hpLose)
+{
+    hp -= hpLose;
+    hp = std::max(0, hp);
+}
+
+
 void AttributeComponent::updateStats(const bool reset)
 {
     hpMax =     vitality * 7 + strength / 2 + intelligence / 5;

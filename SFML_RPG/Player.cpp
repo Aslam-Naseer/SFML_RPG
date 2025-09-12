@@ -41,18 +41,12 @@ const AttributeComponent* Player::getAttributeComponent() const
 
 void Player::gainHp(int hp)
 {
-	attributeComponent->hp += hp;
-
-	if (attributeComponent->hp > attributeComponent->hpMax)
-		attributeComponent->hp = attributeComponent->hpMax;
+	attributeComponent->gainHp(hp);
 }
 
 void Player::loseHp(int hp)
 {
-	attributeComponent->hp -= hp;
-
-	if (attributeComponent->hp < 0)
-		attributeComponent->hp = 0;
+	attributeComponent->loseHp(hp);
 }
 
 void Player::gainExp(int exp)
@@ -62,11 +56,9 @@ void Player::gainExp(int exp)
 
 void Player::loseExp(int exp)
 {
-	attributeComponent->exp -= exp;
-
-	if (attributeComponent->exp < 0)
-		attributeComponent->exp = 0;
+	attributeComponent->loseExp(exp);
 }
+
 
 void Player::updateAnimations(const float& dt)
 {

@@ -29,7 +29,10 @@ public:
 	~AttributeComponent();
 
 	std::string debugPrint() const;
-	void gainExp(const int exp);
+	void gainExp(const int expGain);
+	void loseExp(const int expLose);
+	void gainHp(const int hpGain);
+	void loseHp(const int hpLose);
 
 	void updateStats(const bool reset);
 	void updateLevel();
