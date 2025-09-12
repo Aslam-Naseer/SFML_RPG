@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Player.h"
+#include "Gui.h"
 
 class PlayerGui
 {
@@ -8,17 +9,11 @@ private:
 	const Player* player;
 	sf::Font font;
 
-	// HP Bar
+	gui::ProgressBar* hpBar;
 	std::string hpBarString;
-	sf::Text hpBarText;
-	sf::RectangleShape hpBarMax;
-	sf::RectangleShape hpBarMain;
 
-	// EXP Bar
+	gui::ProgressBar* expBar;
 	std::string expBarString;
-	sf::Text expBarText;
-	sf::RectangleShape expBarMax;
-	sf::RectangleShape expBarMain;
 	sf::Text levelText;
 
 	void initFont();
@@ -29,12 +24,7 @@ public:
 	PlayerGui(Player* player);
 	~PlayerGui();
 
-	void updateHpBar();
-	void updateExpBar();
 	void update(const float& dt);
-
-	void renderHpBar(sf::RenderTarget& target);
-	void renderExpBar(sf::RenderTarget& target);
 	void render(sf::RenderTarget& target);
 };
 

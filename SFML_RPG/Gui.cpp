@@ -318,3 +318,49 @@ void gui::TextureSelector::render(sf::RenderTarget& target)
 	target.draw(selector);
 
 }
+
+
+// PROGRESS BAR ===================================================================
+
+gui::ProgressBar::ProgressBar(float x, float y, float width, float height,
+	float maxValue, const sf::Color& barColor,
+	sf::Font* font, unsigned fontSize):
+	text(*font), maxValue(maxValue)
+{
+	barMax.setSize({ width, height });
+	barMax.setFillColor(sf::Color(50, 50, 50, 200));
+	barMax.setPosition({ x, y });
+	barMax.setOutlineThickness(5.f);
+	barMax.setOutlineColor(sf::Color(150, 150, 150, 255));
+
+	barMain.setSize({ width, height });
+	barMain.setFillColor(barColor);
+	barMain.setPosition({ x, y });
+
+	text.setCharacterSize(fontSize);
+	text.setPosition({ x + width / 15.f, y + height / 2.f - fontSize / 2.f });
+
+	showText = (font != nullptr && fontSize > 0);
+}
+
+gui::ProgressBar::~ProgressBar()
+{
+}
+
+void gui::ProgressBar::update(float curVal, float maxVal, std::string string)
+{
+	if (maxVal != -1 && maxVal != maxValue)
+		maxValue = maxVal;
+
+	barMain.setSize({ std::floor(curVal / maxValue * barMax.getSize().x), barMain.getSize().y });
+	text.setString(string);
+}
+
+void gui::ProgressBar::render(sf::RenderTarget& target)
+{
+	target.draw(barMax);
+	target.draw(barMain);
+
+	if (showText)
+		target.draw(text);
+}
