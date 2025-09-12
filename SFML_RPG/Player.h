@@ -29,7 +29,7 @@ public:
     void loseExp(int exp);
 
 	void updateAnimations(const float& dt);
-    void update(const float& dt, const sf::Vector2f& mousePosView);
-    void render(sf::RenderTarget& target, sf::Shader* shader = nullptr, bool showHitbox = false);
+    void update(const float& dt, const sf::Vector2f& mousePosView) override;
+    void render(sf::RenderTarget& target, sf::Shader* shader = nullptr, bool showHitbox = false) override;
 };
 

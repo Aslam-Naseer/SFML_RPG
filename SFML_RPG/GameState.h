@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "TileMap.h"
 #include "PlayerGui.h"
+#include "Enemy.h"
 
 class GameState :
     public State
@@ -14,6 +15,8 @@ private:
 	PauseMenu pmenu;
 	TileMap tileMap;
 	PlayerGui* playerGui;
+
+	Enemy* testEnemy;
 
 	sf::View view;
 	sf::Sprite renderSprite;
