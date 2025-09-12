@@ -99,7 +99,7 @@ void GameState::updatePlayerInput(const float& dt)
 		player->move(dt, 0, 1);
 	}
 
-	player->update(dt);
+	player->update(dt, mousePosView);
 
 	sf::Vector2f correctedPosition = tileMap.resolveCollision(player, dt);
 
@@ -165,7 +165,7 @@ void GameState::updateInput(const float& dt)
 void GameState::update(const float& dt)
 {
 	keyTime.update(dt);
-	updateMousePositions();
+	updateMousePositions(&view);
 	updateInput(dt); 
 
 	if (!paused)
@@ -207,5 +207,21 @@ void GameState::render(sf::RenderTarget* target)
 
 	renderTexture.display();
 	target->draw(renderSprite);
+
+	//DEBUG: REMOVE LATER
+	sf::Font font;
+	if (!font.openFromFile("Fonts/Dosis-Light.ttf"))
+	{
+		std::cout << "ERROR::GAMESTATE::RENDER::CANNOT_RENDER_MOUSETEXT" << "\n";
+	}
+
+	sf::Text mouseText(font, "", 15);
+	mouseText.setPosition({ mousePosWindow.x + 20.f, mousePosWindow.y - 20.f });
+	std::stringstream st;
+	st << mousePosView.x << " " << mousePosView.y <<
+		"\n" << mousePosWindow.x << " " << mousePosWindow.y;
+	mouseText.setString(st.str());
+
+	target->draw(mouseText);
 
 }

@@ -37,7 +37,7 @@ public:
 	virtual void stopMovement(bool dir_x = true, bool dir_y = true);
 	virtual void move(const float& dt, int dir_x, int dir_y);
 
-	virtual void update(const float& dt) = 0;
+	virtual void update(const float& dt, const sf::Vector2f& mousePosView = { -1,-1 }) = 0;
 	virtual void render(sf::RenderTarget& target, sf::Shader* shader = nullptr, bool showHitbox = false) = 0;
 };
 

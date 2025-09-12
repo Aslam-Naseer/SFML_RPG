@@ -31,12 +31,15 @@
     <Filter Include="Tile">
       <UniqueIdentifier>{cb1551d3-e112-4f0c-804e-f94c7fb396b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Items">
+      <UniqueIdentifier>{491a93ba-3dec-4876-8ffc-503dd7bc159a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items\Weapons">
+      <UniqueIdentifier>{d111abea-6379-450e-9573-b029176d2dc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="State.cpp">
@@ -98,6 +101,24 @@
     </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Bow.cpp">
+      <Filter>Items\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeWeapon.cpp">
+      <Filter>Items\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RangedWeapon.cpp">
+      <Filter>Items\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Items\Weapons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +184,21 @@
     </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="RangedWeapon.h">
+      <Filter>Items\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeWeapon.h">
+      <Filter>Items\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Items\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Bow.h">
+      <Filter>Items\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

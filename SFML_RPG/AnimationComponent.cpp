@@ -53,7 +53,17 @@ AnimationComponent::~AnimationComponent()
 	animations.clear();
 }
 
-void AnimationComponent::addAnimation(std::string key, 
+bool AnimationComponent::isPriority(const std::string& key) const
+{
+	return priorityAnimationKey == key;
+}
+
+bool AnimationComponent::isPlaying(const std::string& key) const
+{
+	return priorityAnimationKey == key || (priorityAnimationKey.empty() && currentAnimationKey == key);
+}
+
+void AnimationComponent::addAnimation(std::string key,
 	int width, int height, int max_frames, int y_level, float max_time)
 {
 	if (animations.find(key) == animations.end())
@@ -90,7 +100,7 @@ void AnimationComponent::play(std::string key, const bool priority)
 void AnimationComponent::update(const float& dt)
 {
 
-	if (priorityAnimationKey != "" && animations.find(priorityAnimationKey) != animations.end()) {
+	if (!priorityAnimationKey.empty() && animations.find(priorityAnimationKey) != animations.end()) {
 		animations[priorityAnimationKey]->update(sprite, dt);
 		if (animations[priorityAnimationKey]->isDone())
 			priorityAnimationKey = "";

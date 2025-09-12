@@ -10,6 +10,8 @@ void Player::initComponents()
 Player::Player(float x, float y, sf::Texture& texture)
 	: Entity(texture)
 {
+	sprite.setTextureRect({ { 0,0 }, {64,64} });
+
 	//initComponents();
 	createMovementComponent(400.f, 1500.f, 700.f);
 	createAnimationComponent(texture);
@@ -104,7 +106,7 @@ void Player::updateAnimations(const float& dt)
 
 }
 
-void Player::update(const float& dt)
+void Player::update(const float& dt, const sf::Vector2f& mousePosView)
 {
 	movementComponent->update(dt);
 
@@ -114,12 +116,23 @@ void Player::update(const float& dt)
 	//}
 
 	updateAnimations(dt);
+	sword.update(mousePosView, getCenter(), movementComponent->getVelocity());
 	hitboxComponent->update();
 }
 
 void Player::render(sf::RenderTarget& target, sf::Shader* shader, bool showHitbox)
 {
-	target.draw(sprite, shader);
+	if (animationComponent->isPlaying("WALK_UP"))
+	{
+		sword.render(target, shader);
+		target.draw(sprite, shader);
+	}
+	else
+	{
+		target.draw(sprite, shader);
+		sword.render(target, shader);
+	}
+
 
 	if(showHitbox)
 		hitboxComponent->render(target);

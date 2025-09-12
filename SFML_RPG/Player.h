@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Entity.h"
+#include "Sword.h"
+#include "Bow.h"
+
 
 class Player :
     public Entity
@@ -8,6 +11,8 @@ class Player :
 private:
 	bool attacking = false;
     bool facingRight = false;
+
+    Sword sword;
 
     void initComponents();
 
@@ -23,7 +28,7 @@ public:
     void loseExp(int exp);
 
 	void updateAnimations(const float& dt);
-    void update(const float& dt);
+    void update(const float& dt, const sf::Vector2f& mousePosView);
     void render(sf::RenderTarget& target, sf::Shader* shader = nullptr, bool showHitbox = false);
 };
 
