@@ -120,6 +120,9 @@
     <ClCompile Include="Sword.cpp">
       <Filter>Items\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="SkillComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="Bow.h">
       <Filter>Items\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

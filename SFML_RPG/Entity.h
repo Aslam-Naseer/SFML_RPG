@@ -4,6 +4,7 @@
 #include "AnimationComponent.h"
 #include "HitboxComponent.h"
 #include "AttributeComponent.h"
+#include "SkillComponent.h"
 
 class Entity
 {
@@ -17,6 +18,7 @@ protected:
 	AnimationComponent* animationComponent;
 	HitboxComponent* hitboxComponent;
 	AttributeComponent* attributeComponent;
+	SkillComponent* skillComponent;
 
 public:
 	Entity(sf::Texture &texture);
@@ -26,6 +28,7 @@ public:
 	void createAnimationComponent(sf::Texture& texture);
 	void createHitboxComponent(float offsetX, float offsetY, float width, float height);
 	void createAttributeComponent(unsigned level);
+	void createSkillComponent();
 
 	virtual const sf::FloatRect getGlobalBounds() const;
 	virtual const sf::FloatRect getNextPosBounds(const float& dt) const;

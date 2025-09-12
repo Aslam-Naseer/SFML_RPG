@@ -3,8 +3,23 @@
 
 // Constructors and Destructors
 
-void Player::initComponents()
+void Player::initComponents(sf::Texture& texture)
 {
+	createMovementComponent(400.f, 1500.f, 700.f);
+	createAnimationComponent(texture);
+	createHitboxComponent(10.f, 2.f, 44.f, 60.f);
+	createAttributeComponent(1);
+	createSkillComponent();
+}
+
+void Player::initAnimations()
+{
+	animationComponent->addAnimation("WALK_DOWN", 64, 64, 4, 0, .5f);
+	animationComponent->addAnimation("WALK_LEFT", 64, 64, 4, 1, .5f);
+	animationComponent->addAnimation("WALK_RIGHT", 64, 64, 4, 2, .5f);
+	animationComponent->addAnimation("WALK_UP", 64, 64, 4, 3, .5f);
+	animationComponent->addAnimation("IDLE", 64, 64, 9, 4, .5f);
+	//animationComponent->addAnimation("ATTACK", 192 * 2, 192, 14, 2, .7f);
 }
 
 Player::Player(float x, float y, sf::Texture& texture)
@@ -12,21 +27,9 @@ Player::Player(float x, float y, sf::Texture& texture)
 {
 	sprite.setTextureRect({ { 0,0 }, {64,64} });
 
-	//initComponents();
-	createMovementComponent(400.f, 1500.f, 700.f);
-	createAnimationComponent(texture);
-	createHitboxComponent(10.f, 2.f, 44.f, 60.f);
-	createAttributeComponent(1);
-
+	initComponents(texture);
 	setPosition(x, y);
-
-	animationComponent->addAnimation("WALK_DOWN", 64, 64, 4, 0, .5f);
-	animationComponent->addAnimation("WALK_LEFT", 64, 64, 4, 1, .5f);
-	animationComponent->addAnimation("WALK_RIGHT", 64, 64, 4, 2, .5f);
-	animationComponent->addAnimation("WALK_UP", 64, 64, 4, 3, .5f);
-	animationComponent->addAnimation("IDLE", 64, 64, 9, 4, .5f);
-	//animationComponent->addAnimation("ATTACK", 192 * 2, 192, 14, 2, .7f);
-
+	initAnimations();
 }
 
 Player::~Player()
@@ -62,7 +65,6 @@ void Player::loseExp(int exp)
 
 void Player::updateAnimations(const float& dt)
 {
-	
 
 	// Play animations
 	//if (attacking)

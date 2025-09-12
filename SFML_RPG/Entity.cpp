@@ -9,6 +9,7 @@ void Entity::initVariables()
 	animationComponent = NULL;
 	hitboxComponent = NULL;
 	attributeComponent = NULL;
+	skillComponent = NULL;
 }
 
 
@@ -24,6 +25,7 @@ Entity::~Entity()
 	delete animationComponent;
 	delete hitboxComponent;
 	delete attributeComponent;
+	delete skillComponent;
 }
 
 void Entity::createMovementComponent(float maxVelocity, float acceleration, float deceleration)
@@ -45,6 +47,12 @@ void Entity::createAttributeComponent(unsigned level)
 {
 	attributeComponent = new AttributeComponent(level);
 }
+
+void Entity::createSkillComponent()
+{
+	skillComponent = new SkillComponent();
+}
+
 
 // Functions
 
@@ -108,4 +116,9 @@ void Entity::move(const float& dt, int dir_x, int dir_y)
 		return;
 
 	movementComponent->move(dt, dir_x, dir_y);
+
+	if (skillComponent)
+		skillComponent->gainExp(SkillComponent::Skills::Endurance, 10);
+	
+	//std::cout << skillComponent->getSkill(SkillComponent::Skills::Endurance) << " ";
 }

@@ -14,7 +14,8 @@ private:
 
     Sword sword;
 
-    void initComponents();
+    void initComponents(sf::Texture& texture);
+    void initAnimations();
 
 public:
     Player(float x, float y, sf::Texture& texture);
