@@ -48,7 +48,7 @@ public:
 	void pauseState();
 	void unpauseState();
 
-	void updateMousePositions(sf::View* view = NULL);
+	void updateMousePositions(sf::View* view = nullptr);
 
 	virtual void updateInput(const float& dt) = 0;
 	virtual void update(const float &dt) = 0;

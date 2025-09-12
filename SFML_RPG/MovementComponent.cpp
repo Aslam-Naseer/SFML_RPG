@@ -17,19 +17,19 @@ const sf::Vector2f& MovementComponent::getVelocity() const
 }
 
 
-const bool MovementComponent::getState(const movement_state state) const
+const bool MovementComponent::getState(const MovementState state) const
 {
 	switch (state)
 	{
-	case movement_state::IDLE:
+	case MovementState::Idle:
 		return velocity.x == 0.f && velocity.y == 0.f;
-	case movement_state::WALK_LEFT:
+	case MovementState::WalkLeft:
 		return velocity.x < 0.f && std::abs(velocity.x) >= std::abs(velocity.y);
-	case movement_state::WALK_RIGHT:
+	case MovementState::WalkRight:
 		return velocity.x > 0.f && std::abs(velocity.x) >= std::abs(velocity.y);
-	case movement_state::WALK_UP:
+	case MovementState::WalkUp:
 		return velocity.y < 0.f && std::abs(velocity.x) <= std::abs(velocity.y);
-	case movement_state::WALK_DOWN:
+	case MovementState::WalkDown:
 		return velocity.y > 0.f && std::abs(velocity.x) <= std::abs(velocity.y);
 	default:
 		return false;

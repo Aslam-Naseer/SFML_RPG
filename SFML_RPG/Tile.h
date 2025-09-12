@@ -2,7 +2,7 @@
 
 class Tile
 {
-private:
+public:
 	enum class Type : short {
 		Default = 0,
 		Floating = 1

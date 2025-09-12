@@ -200,7 +200,7 @@ void EditorState::render(sf::RenderTarget* target)
 	// Render everything in view
 	window->setView(view);
 	tileMap.render(*target, nullptr, mousePosGrid, true);
-	tileMap.renderDeferred(*target, nullptr);
+	tileMap.renderDeferred(*target, nullptr, true);
 	if(!textureSelector->isActive())
 		target->draw(selectorRect);
 

@@ -209,9 +209,8 @@ void TileMap::addTile(int x, int y, int layer, short type, bool collision, const
 	if (x < 0 || y < 0 || layer < 0 || x >= mapSize.x || y >= mapSize.y || layer >= layers) 
 		return;
 
-
-	Tile::Type tileType = (type == 1 || type == 2) ?
-		Tile::Type::Floating : Tile::Type::Default;
+	if (type == 2) type--;
+	Tile::Type tileType = static_cast<Tile::Type>(type);
 
 	auto& tileLayer = map[x][y][layer];
 	if (!tileLayer.empty() && tileLayer.back()->shape.getTextureRect() == textureRect)
@@ -307,11 +306,19 @@ void TileMap::update()
 {
 }
 
-void TileMap::renderDeferred(sf::RenderTarget& target, sf::Shader* shader)
+void TileMap::renderDeferred(sf::RenderTarget& target, sf::Shader* shader, bool showCollision)
 {
 	while (!deferredRenderStack.empty())
 	{
-		deferredRenderStack.top()->render(target, shader);
+		auto& tile = deferredRenderStack.top();
+
+		tile->render(target, shader);
+		if (showCollision && tile->collision)
+		{
+			collisionBox.setPosition(tile->shape.getPosition());
+			target.draw(collisionBox);
+		}
+
 		deferredRenderStack.pop();
 	}
 

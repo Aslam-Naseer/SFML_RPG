@@ -70,23 +70,23 @@ void Player::updateAnimations(const float& dt)
 	//if (attacking)
 	//	animationComponent->play("ATTACK", true);
 
-	if (movementComponent->getState(MovementComponent::movement_state::IDLE))
+	if (movementComponent->getState(MovementComponent::MovementState::Idle))
 	{
 		animationComponent->play("IDLE");
 	}
-	else if (movementComponent->getState(MovementComponent::movement_state::WALK_UP))
+	else if (movementComponent->getState(MovementComponent::MovementState::WalkUp))
 	{
 		animationComponent->play("WALK_UP");
 	}
-	else if (movementComponent->getState(MovementComponent::movement_state::WALK_DOWN))
+	else if (movementComponent->getState(MovementComponent::MovementState::WalkDown))
 	{
 		animationComponent->play("WALK_DOWN");
 	}
-	else if (movementComponent->getState(MovementComponent::movement_state::WALK_LEFT))
+	else if (movementComponent->getState(MovementComponent::MovementState::WalkLeft))
 	{
 		animationComponent->play("WALK_LEFT");
 	}
-	else if (movementComponent->getState(MovementComponent::movement_state::WALK_RIGHT))
+	else if (movementComponent->getState(MovementComponent::MovementState::WalkRight))
 	{
 		animationComponent->play("WALK_RIGHT");
 	}

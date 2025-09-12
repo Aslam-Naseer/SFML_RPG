@@ -5,11 +5,11 @@
 
 void Entity::initVariables()
 {
-	movementComponent = NULL;
-	animationComponent = NULL;
-	hitboxComponent = NULL;
-	attributeComponent = NULL;
-	skillComponent = NULL;
+	movementComponent = nullptr;
+	animationComponent = nullptr;
+	hitboxComponent = nullptr;
+	attributeComponent = nullptr;
+	skillComponent = nullptr;
 }
 
 

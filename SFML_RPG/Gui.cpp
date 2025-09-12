@@ -34,7 +34,7 @@ gui::Button::Button(
 		shape.getPosition().y + shape.getSize().y / 2.f
 		});
 
-	buttonState = ButtonState::IDLE;
+	buttonState = ButtonState::Idle;
 }
 
 gui::Button::~Button()
@@ -65,7 +65,7 @@ void gui::Button::setText(const std::string text)
 
 bool gui::Button::isPressed() const
 {
-	return buttonState == ButtonState::ACTIVE;
+	return buttonState == ButtonState::Active;
 }
 
 short unsigned gui::Button::getId() const
@@ -82,31 +82,31 @@ const std::string gui::Button::getText() const
 
 void gui::Button::update(const sf::Vector2i& mousePos)
 {
-	buttonState = ButtonState::IDLE;
+	buttonState = ButtonState::Idle;
 
 	if (shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos)))
 	{
-		buttonState = ButtonState::HOVER;
+		buttonState = ButtonState::Hover;
 
 		if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 		{
-			buttonState = ButtonState::ACTIVE;
+			buttonState = ButtonState::Active;
 		}
 	}
 
 	switch (buttonState)
 	{
-	case ButtonState::IDLE:
+	case ButtonState::Idle:
 		shape.setFillColor(idleColor);
 		text.setFillColor(textIdleColor);
 		shape.setOutlineColor(outlineIdleColor);
 		break;
-	case ButtonState::HOVER:
+	case ButtonState::Hover:
 		shape.setFillColor(hoverColor);
 		text.setFillColor(textHoverColor);
 		shape.setOutlineColor(outlineHoverColor);
 		break;
-	case ButtonState::ACTIVE:
+	case ButtonState::Active:
 		shape.setFillColor(activeColor);
 		text.setFillColor(textActiveColor);
 		shape.setOutlineColor(outlineActiveColor);

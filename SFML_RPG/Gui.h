@@ -2,17 +2,18 @@
 
 #include "KeyTime.h"
 
-enum class ButtonState
-{
-	IDLE = 0,
-	HOVER,
-	ACTIVE
-};
-
 namespace gui
 {
 	class Button
 	{
+	public:
+		enum class ButtonState
+		{
+			Idle,
+			Hover,
+			Active
+		};
+
 	private:
 		sf::RectangleShape shape;
 		sf::Font& font;
