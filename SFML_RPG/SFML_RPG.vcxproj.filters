@@ -34,11 +34,11 @@
     <Filter Include="Items\Weapons">
       <UniqueIdentifier>{d111abea-6379-450e-9573-b029176d2dc2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Map\Tile">
-      <UniqueIdentifier>{cb1551d3-e112-4f0c-804e-f94c7fb396b8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EditorModes">
       <UniqueIdentifier>{0ddb11c7-51d0-4003-881b-7e96fd4481a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Tiles">
+      <UniqueIdentifier>{cb1551d3-e112-4f0c-804e-f94c7fb396b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -79,7 +79,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
-      <Filter>Map\Tile</Filter>
+      <Filter>Map\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>Map</Filter>
@@ -130,12 +130,15 @@
       <Filter>Entities</Filter>
     </ClCompile>
     <ClCompile Include="EnemySpawner.cpp">
-      <Filter>Map\Tile</Filter>
+      <Filter>Map\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="EditorMode.cpp">
       <Filter>EditorModes</Filter>
     </ClCompile>
     <ClCompile Include="DefaultEditorMode.cpp">
+      <Filter>EditorModes</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyEditorMode.cpp">
       <Filter>EditorModes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -180,7 +183,7 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>Map\Tile</Filter>
+      <Filter>Map\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsSettings.h">
       <Filter>Resource Files</Filter>
@@ -225,12 +228,15 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="EnemySpawner.h">
-      <Filter>Map\Tile</Filter>
+      <Filter>Map\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="EditorMode.h">
       <Filter>EditorModes</Filter>
     </ClInclude>
     <ClInclude Include="DefaultEditorMode.h">
+      <Filter>EditorModes</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyEditorMode.h">
       <Filter>EditorModes</Filter>
     </ClInclude>
   </ItemGroup>

@@ -53,9 +53,27 @@ void TileMap::clearMap()
 	}
 	map.clear();
 
+
+	for(auto& [pos, layerMap] : spawners)
+	{
+		for(auto& [layer, spawner] : layerMap)
+		{
+			delete spawner;
+		}
+		layerMap.clear();
+	}
+
+
 	mapSize = { 0, 0 };
 	layers = 0;
 }
+
+bool TileMap::isValidCoordinate(int x, int y, int layer) const 
+{
+	return x >= 0 && y >= 0 && layer >= 0 &&
+		x < mapSize.x && y < mapSize.y && layer < layers;
+}
+
 
 TileMap::TileMap()
 {
@@ -87,7 +105,7 @@ const sf::Vector2f TileMap::getMapSize() const
 
 const int TileMap::getLayerSize(const int x, const int y, const int layer) const
 {
-	if (x < 0 || y < 0 || layer < 0 || x >= static_cast<int>(mapSize.x) || y >= static_cast<int>(mapSize.y) || layer >= static_cast<int>(layers))
+	if (!isValidCoordinate(x, y, layer))
 		return -1;
 
 	return static_cast<int>(map[x][y][layer].size());
@@ -206,7 +224,7 @@ sf::Vector2f TileMap::resolveCollision(const Entity* entity, const float& dt) co
 
 void TileMap::addTile(int x, int y, int layer, short type, bool collision, const sf::IntRect& textureRect)
 {
-	if (x < 0 || y < 0 || layer < 0 || x >= mapSize.x || y >= mapSize.y || layer >= layers) 
+	if (!isValidCoordinate(x, y, layer))
 		return;
 
 	Tile::Type tileType = static_cast<Tile::Type>(type);
@@ -216,13 +234,31 @@ void TileMap::addTile(int x, int y, int layer, short type, bool collision, const
 		return;
 
 	tileLayer.push_back(
-		new Tile(x * gridSize, y * gridSize, gridSize, tileSheet, textureRect, tileType, collision)
+		new Tile(x * gridSize, y * gridSize, tileSheet, textureRect, tileType, collision)
+	);
+}
+
+void TileMap::addSpawner(int x, int y, int layer, int enemyType, int spawnCount, float spawnDelay, float spawnRange)
+{
+	if (!isValidCoordinate(x, y, layer))
+		return;
+
+	sf::Vector2i pos = { x, y };
+	if (spawners.find(pos) != spawners.end())
+	{
+		if (spawners[pos].count(layer) > 0)
+			return;
+	}
+
+	spawners[pos][layer] = new EnemySpawner(
+		x * gridSize, y * gridSize, gridSize,
+		enemyType, spawnCount, spawnDelay, spawnRange
 	);
 }
 
 void TileMap::removeTile(int x, int y, int layer)
 {
-	if (x < 0 || y < 0 || layer < 0 || x >= mapSize.x || y >= mapSize.y || layer >= layers)
+	if (!isValidCoordinate(x, y, layer))
 		return;
 
 	if (!map[x][y][layer].empty())
@@ -231,6 +267,23 @@ void TileMap::removeTile(int x, int y, int layer)
 		map[x][y][layer].pop_back();
 	}
 }
+
+void TileMap::removeSpawner(int x, int y, int layer)
+{
+	if(!isValidCoordinate(x, y, layer))
+		return;
+
+	sf::Vector2i pos = { x, y };
+	if (spawners.count(pos) == 0 || spawners[pos].count(layer) == 0)
+			return;
+
+	delete spawners[pos][layer];
+	spawners[pos].erase(layer);
+
+	if(spawners[pos].empty())
+		spawners.erase(pos);
+}
+
 
 void TileMap::saveToFile(const std::string file_name)
 {
@@ -362,6 +415,15 @@ void TileMap::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vec
 			}
 
 		}
+	}
+
+	for(auto & [pos, layerMap] : spawners)
+	{
+		if (pos.x < start_x || pos.x >= end_x || pos.y < start_y || pos.y >= end_y)
+			continue;
+
+		for(auto& [layer, spawner] : layerMap)
+			spawner->render(target);
 	}
 }
 

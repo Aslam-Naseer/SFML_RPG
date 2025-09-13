@@ -6,8 +6,7 @@ public:
 	enum class Type : short {
 		Default = 0,
 		Damaging,
-		Floating,
-		Spawner
+		Floating
 	};
 
 protected:
@@ -16,7 +15,7 @@ protected:
 	Type type;
 
 public:
-	Tile(float x, float y, float gridSize, const sf::Texture& tileSheet,
+	Tile(float x, float y, const sf::Texture& tileSheet,
 		const sf::IntRect& textureRect, Type type = Type::Default, bool collision = false);
 	virtual ~Tile();
 

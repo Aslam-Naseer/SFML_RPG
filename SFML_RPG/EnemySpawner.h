@@ -2,18 +2,22 @@
 
 #include "Tile.h"
 
-class EnemySpawner:
-	public Tile
+class EnemySpawner
 {
 private:
+	sf::RectangleShape shape;
+
 	int enemyType;
 	int spawnCount;
 	float spawnDelay;
 	float spawnRange;
+
 public:
-	EnemySpawner(float x, float y, float gridSize, 
-		const sf::Texture& tileSheet, const sf::IntRect& textureRect,
+	EnemySpawner(float x, float y, float gridSize,
 		int enemyType, int spawnCount, float spawnDelay, float spawnRange);
 	virtual ~EnemySpawner();
+
+	void update(const float& dt);
+	void render(sf::RenderTarget& target);
 };
 

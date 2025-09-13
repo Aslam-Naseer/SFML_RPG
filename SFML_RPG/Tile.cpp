@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Tile.h"
 
-Tile::Tile(float x, float y, float gridSize, const sf::Texture& tileSheet, 
+Tile::Tile(float x, float y, const sf::Texture& tileSheet, 
 	const sf::IntRect& textureRect, Type type, bool collision):
 	shape(tileSheet)
 {
