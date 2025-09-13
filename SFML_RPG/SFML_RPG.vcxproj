@@ -158,6 +158,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerGui.cpp" />
     <ClCompile Include="RangedWeapon.cpp" />
+    <ClCompile Include="Rat.cpp" />
     <ClCompile Include="SettingsState.cpp" />
     <ClCompile Include="SkillComponent.cpp" />
     <ClCompile Include="State.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerGui.h" />
     <ClInclude Include="RangedWeapon.h" />
+    <ClInclude Include="Rat.h" />
     <ClInclude Include="SettingsState.h" />
     <ClInclude Include="SkillComponent.h" />
     <ClInclude Include="State.h" />

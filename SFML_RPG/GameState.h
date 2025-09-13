@@ -5,7 +5,7 @@
 #include "Player.h"
 #include "TileMap.h"
 #include "PlayerGui.h"
-#include "Enemy.h"
+#include "Rat.h"
 
 class GameState :
     public State
@@ -20,6 +20,8 @@ private:
 	sf::Sprite renderSprite;
 	sf::RenderTexture renderTexture;
 	sf::Shader coreShader;
+
+	std::vector<Enemy*> activeEnemies;
 
 	void initDeferredRender();
 	void initView();

@@ -36,6 +36,11 @@ void GameState::initTextures()
 	{
 		std::cout << "ERROR::GAMESTATE::INITTEXTURES::Could not load texture PLAYER_SHEET" << std::endl;
 	}
+
+	if (!textures["RAT_SHEET"].loadFromFile("Resources/Sprites/Enemy/RAT.png"))
+	{
+		std::cout << "ERROR::GAMESTATE::INITTEXTURES::Could not load texture RAT_SHEET" << std::endl;
+	}
 }
 
 void GameState::initGui()
@@ -53,6 +58,12 @@ void GameState::initGui()
 	pmenu.addButton("QUIT", utils::p2pY(70.f), "Quit");
 
 
+	// Enemies
+	activeEnemies.push_back(new Rat(100, 100, textures["RAT_SHEET"]));
+	activeEnemies.push_back(new Rat(200, 100, textures["RAT_SHEET"]));
+	activeEnemies.push_back(new Rat(200, 300, textures["RAT_SHEET"]));
+	activeEnemies.push_back(new Rat(500, 500, textures["RAT_SHEET"]));
+	activeEnemies.push_back(new Rat(500, 100, textures["RAT_SHEET"]));
 }
 
 void GameState::initShader()
@@ -78,6 +89,9 @@ GameState::~GameState()
 {
 	delete playerGui;
 	delete player;
+
+	for (auto& i : activeEnemies)
+		delete i;
 }
 
 void GameState::updatePlayerInput(const float& dt)
@@ -150,6 +164,14 @@ void GameState::updateTestControls(const float& dt)
 		player->loseHp(1);
 
 	// ----------------------------------------------------------------
+
+	for (auto& enemy : activeEnemies)
+	{
+		//if (activeEnemies[0] == enemy || activeEnemies[3] == enemy)
+		//	enemy->move(dt, 1, 0);
+
+		enemy->update(dt);
+	}
 }
 
 void GameState::updateInput(const float& dt)
@@ -194,6 +216,10 @@ void GameState::render(sf::RenderTarget* target)
 	// Currrent View 
 	renderTexture.setView(view);
 	tileMap.render(renderTexture, &coreShader, player->getGridPosition(static_cast<int>(stateData.gridSize)));
+
+	for (auto& enemy : activeEnemies)
+		enemy->render(renderTexture, &coreShader, true);
+
 	player->render(renderTexture, &coreShader, false);
 	tileMap.renderDeferred(renderTexture, &coreShader);
 
