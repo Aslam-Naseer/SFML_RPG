@@ -8,7 +8,7 @@ class State;
 class StateData
 {
 public:
-	StateData();
+	StateData() = default;
 
 	float gridSize;
 	sf::RenderWindow* window;

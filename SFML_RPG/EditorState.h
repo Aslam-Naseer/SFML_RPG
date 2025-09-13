@@ -4,6 +4,8 @@
 #include "PauseMenu.h"
 #include "TileMap.h"
 #include "Gui.h"
+#include "EditorMode.h"
+#include "DefaultEditorMode.h"
 
 class EditorState :
 	public State
@@ -11,29 +13,25 @@ class EditorState :
 private:
 	PauseMenu pmenu;
 	TileMap tileMap;
-	gui::TextureSelector* textureSelector;
 	
 	float gridSize;
+	sf::Font& font;
 	float viewSpeed;
 	sf::View view;
-	sf::RectangleShape selectorRect;
-	sf::RectangleShape sidebar;
 
-	short type;
-	bool collision;
-	sf::IntRect textureRect;
-	sf::Font& font;
+	EditorData editorData;
+	std::vector<EditorMode*> modes;
 
 	void initView();
 	void initKeybinds();
-	void initTextures();
+	void initEditorData();
+	void initModes();
 	void initGui();
 
 public:
 	EditorState(StateData& state_data, sf::Font& font);
 	virtual ~EditorState();
 
-	void updatePauseMenuButtons(const float& dt);
 	void updateGui(const float& dt);
 	void updateInput(const float& dt) override;
 

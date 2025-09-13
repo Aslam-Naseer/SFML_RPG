@@ -1,16 +1,6 @@
 #include "stdafx.h"
 #include "State.h"
 
-StateData::StateData()
-{
-	gridSize = 0;
-	window = nullptr;
-	supportedKeys = nullptr;
-	states = nullptr;
-	gfxSettings = nullptr;
-}
-
-
 State::State(StateData& state_data) :
 	stateData(state_data), states(*state_data.states), paused(false), quit(false)
 {
