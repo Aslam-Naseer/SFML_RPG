@@ -16,8 +16,6 @@ private:
 	TileMap tileMap;
 	PlayerGui* playerGui;
 
-	Enemy* testEnemy;
-
 	sf::View view;
 	sf::Sprite renderSprite;
 	sf::RenderTexture renderTexture;

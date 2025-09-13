@@ -209,7 +209,6 @@ void TileMap::addTile(int x, int y, int layer, short type, bool collision, const
 	if (x < 0 || y < 0 || layer < 0 || x >= mapSize.x || y >= mapSize.y || layer >= layers) 
 		return;
 
-	if (type == 2) type--;
 	Tile::Type tileType = static_cast<Tile::Type>(type);
 
 	auto& tileLayer = map[x][y][layer];

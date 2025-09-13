@@ -5,7 +5,9 @@ class Tile
 public:
 	enum class Type : short {
 		Default = 0,
-		Floating = 1
+		Damaging,
+		Floating,
+		Spawner
 	};
 
 protected:
@@ -22,8 +24,9 @@ public:
 	void setPosition(float x, float y);
 
 	bool intersects(const sf::FloatRect bounds) const;
-	void update();
-	void render(sf::RenderTarget& target, sf::Shader* shader = nullptr);
+	
+	virtual void update();
+	virtual void render(sf::RenderTarget& target, sf::Shader* shader = nullptr);
 
 	friend class TileMap;
 };

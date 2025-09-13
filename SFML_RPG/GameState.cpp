@@ -52,8 +52,6 @@ void GameState::initGui()
 	// Pause Menu
 	pmenu.addButton("QUIT", utils::p2pY(70.f), "Quit");
 
-	// Test GUI
-	testEnemy = new Enemy(220, 200, textures["PLAYER_SHEET"]);
 
 }
 
@@ -151,19 +149,6 @@ void GameState::updateTestControls(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down) && keyTime.isReady())
 		player->loseHp(1);
 
-
-	testEnemy->move(dt, 1, 0);
-	testEnemy->update(dt);
-
-	sf::Vector2f correctedPosition = tileMap.resolveCollision(testEnemy, dt);
-
-	if (testEnemy->getPosition().x != correctedPosition.x)
-		testEnemy->stopMovement(true, false);
-	if (testEnemy->getPosition().y != correctedPosition.y)
-		testEnemy->stopMovement(false, true);
-
-	testEnemy->setPosition(correctedPosition.x, correctedPosition.y);
-
 	// ----------------------------------------------------------------
 }
 
@@ -209,7 +194,6 @@ void GameState::render(sf::RenderTarget* target)
 	// Currrent View 
 	renderTexture.setView(view);
 	tileMap.render(renderTexture, &coreShader, player->getGridPosition(static_cast<int>(stateData.gridSize)));
-	testEnemy->render(renderTexture, &coreShader, true);
 	player->render(renderTexture, &coreShader, false);
 	tileMap.renderDeferred(renderTexture, &coreShader);
 

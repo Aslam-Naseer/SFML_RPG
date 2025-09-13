@@ -164,7 +164,7 @@ void EditorState::updateInput(const float& dt)
 
 	if (sf::Keyboard::isKeyPressed(keybinds["TYPE_UP"]) && keyTime.isReady())
 	{
-		if (type < 1) 
+		if (type < 3) 
 			type++;
 	}
 	else if (sf::Keyboard::isKeyPressed(keybinds["TYPE_DOWN"]) && keyTime.isReady())
