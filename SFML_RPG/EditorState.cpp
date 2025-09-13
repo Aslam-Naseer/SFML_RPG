@@ -34,6 +34,7 @@ void EditorState::initEditorData()
 void EditorState::initModes()
 {
 	modes.push_back(new DefaultEditorMode(stateData, editorData, tileMap));
+	modes.push_back(new EnemyEditorMode(stateData, editorData, tileMap));
 }
 
 void EditorState::initGui()
@@ -90,11 +91,19 @@ void EditorState::updateInput(const float& dt)
 		else
 			unpauseState();
 	}
+
 	if (paused)
 	{
 		view.setCenter(tileMap.checkViewBounds(view, {100, 50}));
 		return;
 	}
+
+	 //Switch Modes
+	if (sf::Keyboard::isKeyPressed(keybinds["PREV_MODE"]) && keyTime.isReady())
+		activeMode = activeMode == 0 ? modes.size() - 1 : activeMode - 1;
+
+	if (sf::Keyboard::isKeyPressed(keybinds["NEXT_MODE"]) && keyTime.isReady())
+		activeMode = activeMode == modes.size() - 1 ? 0 : activeMode + 1;
 
 
 	// Camera movement
@@ -113,6 +122,7 @@ void EditorState::updateInput(const float& dt)
 		view.move(movement);
 		view.setCenter(tileMap.checkViewBounds(view, {100, 50}));
 	}
+
 }
 
 void EditorState::update(const float& dt)
@@ -123,7 +133,7 @@ void EditorState::update(const float& dt)
 	updateGui(dt);
 
 	if(!paused)
-		modes[0]->update(dt);
+		modes[activeMode]->update(dt);
 }
 
 void EditorState::render(sf::RenderTarget* target)
@@ -132,7 +142,7 @@ void EditorState::render(sf::RenderTarget* target)
 		target = window;
 
 	// render Mode
-	modes[0]->render(*target);
+	modes[activeMode]->render(*target);
 
 	if (paused)
 	{

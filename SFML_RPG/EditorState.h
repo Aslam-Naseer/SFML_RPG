@@ -6,6 +6,7 @@
 #include "Gui.h"
 #include "EditorMode.h"
 #include "DefaultEditorMode.h"
+#include "EnemyEditorMode.h"
 
 class EditorState :
 	public State
@@ -21,6 +22,7 @@ private:
 
 	EditorData editorData;
 	std::vector<EditorMode*> modes;
+	size_t activeMode = 0;
 
 	void initView();
 	void initKeybinds();

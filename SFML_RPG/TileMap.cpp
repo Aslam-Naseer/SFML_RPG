@@ -358,6 +358,18 @@ void TileMap::update()
 {
 }
 
+void TileMap::renderSpawners(sf::RenderTarget& target, sf::Shader* shader)
+{
+	for (auto& [pos, layerMap] : spawners)
+	{
+		//if (pos.x < start_x || pos.x >= end_x || pos.y < start_y || pos.y >= end_y)
+		//	continue;
+
+		for (auto& [layer, spawner] : layerMap)
+			spawner->render(target);
+	}
+}
+
 void TileMap::renderDeferred(sf::RenderTarget& target, sf::Shader* shader, bool showCollision)
 {
 	while (!deferredRenderStack.empty())
@@ -415,15 +427,6 @@ void TileMap::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vec
 			}
 
 		}
-	}
-
-	for(auto & [pos, layerMap] : spawners)
-	{
-		if (pos.x < start_x || pos.x >= end_x || pos.y < start_y || pos.y >= end_y)
-			continue;
-
-		for(auto& [layer, spawner] : layerMap)
-			spawner->render(target);
 	}
 }
 
