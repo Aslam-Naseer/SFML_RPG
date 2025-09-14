@@ -23,6 +23,7 @@ public:
 	void setPosition(float x, float y);
 
 	bool intersects(const sf::FloatRect bounds) const;
+	bool resolveCollision(const sf::FloatRect& bounds, sf::Vector2f& currentPosition) const;
 	
 	virtual void update();
 	virtual void render(sf::RenderTarget& target, sf::Shader* shader = nullptr);

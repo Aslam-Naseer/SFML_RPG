@@ -155,69 +155,19 @@ sf::Vector2f TileMap::resolveCollision(const Entity* entity, const float& dt) co
 	int endY = std::clamp(gridPos.y + cullSize.y / 2 + 1, 0, static_cast<int>(mapSize.y));
 
 	int layer = 0;
-	sf::FloatRect entityBounds = entity->getGlobalBounds();
 	sf::FloatRect nextBounds = entity->getNextPosBounds(dt);
-
-	bool resolveX = false, resolveY = false;
-	float correctedX = resolvedPos.x, correctedY = resolvedPos.y;
+	sf::Vector2f currentPosition = {resolvedPos.x, resolvedPos.y};
 
 	for (int x = startX; x < endX; x++) {
 		for (int y = startY; y < endY; y++) {
 			for (int k = 0; k < map[x][y][layer].size(); k++)
 			{
-				if (!map[x][y][layer][k] || !map[x][y][layer][k]->collision)
-					continue;
-
-				if (!map[x][y][layer][k]->intersects(nextBounds))
-					continue;
-
-				sf::FloatRect tileBounds = map[x][y][layer][k]->shape.getGlobalBounds();
-
-				float nextLeft = nextBounds.position.x;
-				float nextRight = nextBounds.position.x + nextBounds.size.x;
-				float nextTop = nextBounds.position.y;
-				float nextBot = nextBounds.position.y + nextBounds.size.y;
-
-				float tileLeft = tileBounds.position.x;
-				float tileRight = tileBounds.position.x + tileBounds.size.x;
-				float tileTop = tileBounds.position.y;
-				float tileBot = tileBounds.position.y + tileBounds.size.y;
-
-				float overlapLeft = nextRight - tileLeft;
-				float overlapRight = tileRight - nextLeft;
-				float overlapTop = nextBot - tileTop;
-				float overlapBottom = tileBot - nextTop;
-
-				float minOverlapX = std::min(overlapLeft, overlapRight);
-				float minOverlapY = std::min(overlapTop, overlapBottom);
-
-				if (minOverlapX < minOverlapY)
-				{
-					if (overlapLeft < overlapRight)
-						correctedX = tileLeft - entityWidth;
-					else
-						correctedX = tileRight;
-
-					resolveX = true;
-				}
-				else
-				{
-					if (overlapTop < overlapBottom)
-						correctedY = tileTop - entityHeight;
-					else
-						correctedY = tileBot;
-
-					resolveY = true;
-				}
+				if(map[x][y][layer][k] && 
+					map[x][y][layer][k]->resolveCollision(nextBounds, currentPosition))
+					return currentPosition;
 			}
-			
 		}
 	}
-
-	if (resolveX)
-		resolvedPos.x = correctedX;
-	if (resolveY)
-		resolvedPos.y = correctedY;
 
 	return resolvedPos;
 }

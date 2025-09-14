@@ -18,7 +18,7 @@ HitboxComponent::~HitboxComponent()
 }
 
 
-const sf::FloatRect& HitboxComponent::getNextPosition(sf::Vector2f velocity)
+const sf::FloatRect& HitboxComponent::getNextPositionBounds(sf::Vector2f velocity)
 {
 	nextPosition.position.x = hitbox.getPosition().x + velocity.x;
 	nextPosition.position.y = hitbox.getPosition().y + velocity.y;

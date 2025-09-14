@@ -37,14 +37,35 @@ void EnemyEditorMode::updateInput(const float& dt)
 	//if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("COLLISION")) && editorData.keyTime->isReady())
 	//	;
 
-	//if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("TYPE_UP")) && editorData.keyTime->isReady())
-	//{
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("TYPE_UP")) && editorData.keyTime->isReady())
+		enemyType == 100 ? enemyType = 0 : enemyType++;
 
-	//}
-	//if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("TYPE_DOWN")) && editorData.keyTime->isReady())
-	//{
-	//
-	//}
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("TYPE_DOWN")) && editorData.keyTime->isReady())
+		enemyType == 0 ? enemyType = 100 : enemyType--;
+
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("SPAWN_COUNT_UP")) && editorData.keyTime->isReady())
+	{
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
+			spawnCount == 0 ? spawnCount = 100 : spawnCount--;
+		else
+			spawnCount == 100 ? spawnCount = 0 : spawnCount++;
+	}
+
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("SPAWN_DELAY_UP")) && editorData.keyTime->isReady())
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
+			spawnDelay -= .5f;
+		else
+			spawnDelay += .5f;
+	}
+
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("SPAWN_RANGE_UP")) && editorData.keyTime->isReady())
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
+			spawnRange -= .5f;
+		else
+			spawnRange += .5f;
+	}
 }
 
 void EnemyEditorMode::updateGui(const float& dt)
@@ -97,9 +118,10 @@ void EnemyEditorMode::render(sf::RenderTarget& target)
 	sf::Text mouseText(*editorData.font, "", 15);
 	mouseText.setPosition({ editorData.mousePosWindow->x + 20.f, editorData.mousePosWindow->y - 20.f });
 	std::stringstream st;
-	st << "\n" << "Collision: "
-		<< "\n" << "Type: "
-		<< "\n" << "Layers: ";
+	st << "\n" << "Type: " << enemyType
+		<< "\n" << "Count: " << spawnCount
+		<< "\n" << "Delay: " << spawnDelay
+		<< "\n" << "Range: " << spawnRange;
 	mouseText.setString(st.str());
 
 	target.draw(mouseText);
