@@ -40,7 +40,7 @@
     <Filter Include="Map\Tiles">
       <UniqueIdentifier>{cb1551d3-e112-4f0c-804e-f94c7fb396b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Enemies">
+    <Filter Include="Entities\Enemies">
       <UniqueIdentifier>{e850090c-d3d0-4d5c-be5f-3aa941f63c20}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -142,13 +142,16 @@
       <Filter>EditorModes</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Enemies</Filter>
+      <Filter>Entities\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Rat.cpp">
-      <Filter>Enemies</Filter>
+      <Filter>Entities\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="EnemySystem.cpp">
-      <Filter>Enemies</Filter>
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,13 +249,16 @@
       <Filter>EditorModes</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Enemies</Filter>
+      <Filter>Entities\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Rat.h">
-      <Filter>Enemies</Filter>
+      <Filter>Entities\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="EnemySystem.h">
-      <Filter>Enemies</Filter>
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

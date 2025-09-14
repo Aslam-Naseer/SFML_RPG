@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Sword.h"
 
-Sword::Sword()
+Sword::Sword():
+	MeleeWeapon(150)
 {
 	if (!texture.loadFromFile("Resources/Sprites/Player/sword.png"))
 	{
@@ -16,6 +17,12 @@ Sword::Sword()
 Sword::~Sword()
 {
 }
+
+Sword* Sword::clone()
+{
+	return new Sword(*this);
+}
+
 
 void Sword::update(const sf::Vector2f& mousePosView, const sf::Vector2f center, const sf::Vector2f velocity)
 {

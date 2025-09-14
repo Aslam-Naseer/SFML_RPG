@@ -8,7 +8,9 @@ class RangedWeapon :
 private:
 
 public:
-    RangedWeapon();
+    RangedWeapon(int val);
     virtual ~RangedWeapon();
+
+    virtual RangedWeapon* clone() = 0;
 };
 

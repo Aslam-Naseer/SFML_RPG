@@ -10,5 +10,7 @@ private:
 public:
     Bow();
     virtual ~Bow();
+
+    Bow* clone() override;
 };
 

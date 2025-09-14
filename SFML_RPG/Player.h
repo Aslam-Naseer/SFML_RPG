@@ -3,7 +3,7 @@
 #include "Entity.h"
 #include "Sword.h"
 #include "Bow.h"
-
+#include "Inventory.h"
 
 class Player :
     public Entity
@@ -12,6 +12,7 @@ private:
 	bool attacking = false;
     bool facingRight = false;
 
+    Inventory inventory;
     Sword sword;
 
     void initComponents(sf::Texture& texture);

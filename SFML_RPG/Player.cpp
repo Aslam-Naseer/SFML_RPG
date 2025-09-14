@@ -23,7 +23,7 @@ void Player::initAnimations()
 }
 
 Player::Player(float x, float y, sf::Texture& texture)
-	: Entity(texture)
+	: Entity(texture), inventory(10)
 {
 	sprite.setTextureRect({ { 0,0 }, {64,64} });
 
