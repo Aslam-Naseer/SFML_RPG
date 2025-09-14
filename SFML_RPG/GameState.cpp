@@ -58,12 +58,9 @@ void GameState::initGui()
 	pmenu.addButton("QUIT", utils::p2pY(70.f), "Quit");
 
 
-	// Enemies
-	activeEnemies.push_back(new Rat(100, 100, textures["RAT_SHEET"]));
-	activeEnemies.push_back(new Rat(200, 100, textures["RAT_SHEET"]));
-	activeEnemies.push_back(new Rat(200, 300, textures["RAT_SHEET"]));
-	activeEnemies.push_back(new Rat(500, 500, textures["RAT_SHEET"]));
-	activeEnemies.push_back(new Rat(500, 100, textures["RAT_SHEET"]));
+	//// Enemies
+	const std::vector<EnemySpawner*>& spawners = tileMap.getSpawners();
+	enemySystem.setSpawners(spawners);
 }
 
 void GameState::initShader()
@@ -75,7 +72,7 @@ void GameState::initShader()
 }
 
 GameState::GameState(StateData& state_data, sf::Font& font):
-	State(state_data), pmenu(font), renderSprite(renderTexture.getTexture())
+	State(state_data), pmenu(font), renderSprite(renderTexture.getTexture()), enemySystem(textures)
 {
 	initDeferredRender();
 	initView();
@@ -89,9 +86,6 @@ GameState::~GameState()
 {
 	delete playerGui;
 	delete player;
-
-	for (auto& i : activeEnemies)
-		delete i;
 }
 
 void GameState::updatePlayerInput(const float& dt)
@@ -138,6 +132,7 @@ void GameState::updatePlayerInput(const float& dt)
 void GameState::updateGui(const float& dt)
 {
 	playerGui->update(dt);
+	enemySystem.update(dt, player->getCenter());
 }
 
 void GameState::updatePauseMenuButtons(const float& dt)
@@ -165,13 +160,6 @@ void GameState::updateTestControls(const float& dt)
 
 	// ----------------------------------------------------------------
 
-	for (auto& enemy : activeEnemies)
-	{
-		//if (activeEnemies[0] == enemy || activeEnemies[3] == enemy)
-		//	enemy->move(dt, 1, 0);
-
-		enemy->update(dt);
-	}
 }
 
 void GameState::updateInput(const float& dt)
@@ -217,8 +205,8 @@ void GameState::render(sf::RenderTarget* target)
 	renderTexture.setView(view);
 	tileMap.render(renderTexture, &coreShader, player->getGridPosition(static_cast<int>(stateData.gridSize)));
 
-	for (auto& enemy : activeEnemies)
-		enemy->render(renderTexture, &coreShader, true);
+	tileMap.renderSpawners(renderTexture, &coreShader);
+	enemySystem.render(renderTexture, &coreShader);
 
 	player->render(renderTexture, &coreShader, false);
 	tileMap.renderDeferred(renderTexture, &coreShader);

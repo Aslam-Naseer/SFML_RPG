@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EditorMode.h"
+#include "EnemySystem.h"
 #include "Gui.h"
 
 class EnemyEditorMode :

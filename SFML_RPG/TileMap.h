@@ -41,6 +41,7 @@ public:
 	const sf::Texture& getTileSheet() const;
 	const sf::Vector2f getMapSize() const;
 	const int getLayerSize(const int x, const int y, const int layer) const;
+	const std::vector<EnemySpawner*> getSpawners() const;
 
 	sf::Vector2f checkViewBounds(const sf::View& view, sf::Vector2f padding = {0,0}) const;
 	sf::Vector2f resolveCollision(const Entity* entity, const float& dt) const;

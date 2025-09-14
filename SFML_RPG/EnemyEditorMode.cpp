@@ -82,7 +82,7 @@ void EnemyEditorMode::updateGui(const float& dt)
 	{
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && editorData.keyTime->isReady())
-			tileMap.addSpawner(editorData.mousePosGrid->x, editorData.mousePosGrid->y, 0, 0, 10, 10.f, 10.f);
+			tileMap.addSpawner(editorData.mousePosGrid->x, editorData.mousePosGrid->y, 0, 0, spawnCount, spawnDelay, spawnRange);
 
 		else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && editorData.keyTime->isReady())
 			tileMap.removeSpawner(editorData.mousePosGrid->x, editorData.mousePosGrid->y, 0);

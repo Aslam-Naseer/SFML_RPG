@@ -111,6 +111,20 @@ const int TileMap::getLayerSize(const int x, const int y, const int layer) const
 	return static_cast<int>(map[x][y][layer].size());
 }
 
+const std::vector<EnemySpawner*> TileMap::getSpawners() const
+{
+	// Saves and sends all layers spawners. Change it to single layer if needed.
+
+	std::vector<EnemySpawner*> result;
+	for (const auto& [pos, layerMap] : spawners) {
+		for (const auto& [layer, spawner] : layerMap) {
+			result.push_back(spawner);
+		}
+	}
+
+	return result;
+}
+
 sf::Vector2f TileMap::checkViewBounds(const sf::View& view, sf::Vector2f padding) const
 {
 	sf::Vector2f viewSize = view.getSize();

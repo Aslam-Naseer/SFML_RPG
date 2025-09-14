@@ -21,5 +21,7 @@ public:
 
 	void update(const float& dt);
 	void render(sf::RenderTarget& target);
+
+	friend class EnemySystem;
 };
 

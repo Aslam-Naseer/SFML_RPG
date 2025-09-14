@@ -40,7 +40,7 @@
     <Filter Include="Map\Tiles">
       <UniqueIdentifier>{cb1551d3-e112-4f0c-804e-f94c7fb396b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entities\Enemies">
+    <Filter Include="Enemies">
       <UniqueIdentifier>{e850090c-d3d0-4d5c-be5f-3aa941f63c20}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -142,10 +142,13 @@
       <Filter>EditorModes</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Entities\Enemies</Filter>
+      <Filter>Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Rat.cpp">
-      <Filter>Entities\Enemies</Filter>
+      <Filter>Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySystem.cpp">
+      <Filter>Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -243,10 +246,13 @@
       <Filter>EditorModes</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Entities\Enemies</Filter>
+      <Filter>Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Rat.h">
-      <Filter>Entities\Enemies</Filter>
+      <Filter>Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySystem.h">
+      <Filter>Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
