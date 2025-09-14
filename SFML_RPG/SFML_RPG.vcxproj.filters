@@ -145,7 +145,7 @@
       <Filter>Entities\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Rat.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Entities\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,7 +246,7 @@
       <Filter>Entities\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Rat.h">
-      <Filter>Header Files</Filter>
+      <Filter>Entities\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

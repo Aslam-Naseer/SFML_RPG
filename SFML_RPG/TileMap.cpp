@@ -302,6 +302,8 @@ void TileMap::saveToFile(const std::string file_name)
 		<< layers << "\n"
 		<< textureFile << "\n";
 
+	// Tile saving
+
 	for (size_t x = 0; x < mapSize.x; x++)
 	{
 		for (size_t y = 0; y < mapSize.y; y++)
@@ -312,10 +314,22 @@ void TileMap::saveToFile(const std::string file_name)
 				{
 					for (auto& tile : map[x][y][z])
 					{
-						ofs << x << " " << y << " " << z << " " << tile->toString() << "\n";
+						ofs << x << " " << y << " " << z << " " << tile->toString() << "\t";
 					}
 				}
 			}
+		}
+	}
+
+	// Spawner saving
+
+	ofs << "\n" << "SPAWNERS" << "\n";
+
+	for (auto& [pos, layerMap] : spawners)
+	{
+		for (auto& [layer, spawner] : layerMap)
+		{
+			ofs << pos.x << " " << pos.y << " " << layer << " " << spawner->toString() << "\t";
 		}
 	}
 
@@ -336,6 +350,8 @@ void TileMap::loadFromFile(const std::string file_name)
 
 	clearMap();
 
+	// Tile loading
+
 	float grid_size;
 	unsigned map_size_x, map_size_y, layers;
 	std::string texture_file;
@@ -350,6 +366,26 @@ void TileMap::loadFromFile(const std::string file_name)
 	
 	while (ifs >> x >> y >> z >> temp_rect.position.x >> temp_rect.position.y >> type >> collisoin)
 		addTile(x, y, z, type, collisoin, temp_rect);
+
+
+	// Spawner loading
+
+	ifs.clear();
+	std::string marker;
+	ifs >> marker;
+
+	if (marker != "SPAWNERS")
+	{
+		ifs.close();
+		return;
+	}
+
+	int enemyType, spawnCount;
+	float spawnDelay, spawnRange;
+
+	while (ifs >> x >> y >> z >> enemyType >> spawnCount >> spawnDelay >> spawnRange)
+		addSpawner(x, y, z, enemyType, spawnCount, spawnDelay, spawnRange);
+
 
 	ifs.close();
 }

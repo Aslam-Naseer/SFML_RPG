@@ -16,6 +16,14 @@ EnemySpawner::~EnemySpawner()
 {
 }
 
+std::string EnemySpawner::toString()
+{
+	std::stringstream ss;
+	ss << enemyType << " " << spawnCount << " " 
+		<< spawnDelay << " " << spawnRange << " ";
+
+	return ss.str();
+}
 
 void EnemySpawner::update(const float& dt)
 {

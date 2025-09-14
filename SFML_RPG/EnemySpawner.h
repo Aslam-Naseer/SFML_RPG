@@ -17,6 +17,8 @@ public:
 		int enemyType, int spawnCount, float spawnDelay, float spawnRange);
 	virtual ~EnemySpawner();
 
+	std::string toString();
+
 	void update(const float& dt);
 	void render(sf::RenderTarget& target);
 };
