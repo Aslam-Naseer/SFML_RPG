@@ -132,10 +132,28 @@ void GameState::updatePlayerInput(const float& dt)
 	
 }
 
+void GameState::updateCombat(const float& dt)
+{
+	if (player->isAttacking() && player->getWeapon()->isAttackReady()) {
+		auto& enemies = enemySystem.getEnemies();
+
+		for (auto* enemy : enemies) {
+			if (utils::distance(player->getCenter(), enemy->getCenter()) < player->getWeapon()->getRange()) {
+				int dmg = player->getWeapon()->getDamage();
+				enemy->loseHp(dmg);
+				if (enemy->isDead()) {
+					player->gainExp(enemy->getExpGain());
+				}
+			}
+		}
+	}
+
+	enemySystem.update(dt, player->getCenter());
+}
+
 void GameState::updateGui(const float& dt)
 {
 	playerGui->update(dt);
-	enemySystem.update(dt, *player);
 }
 
 void GameState::updatePauseMenuButtons(const float& dt)
@@ -185,6 +203,7 @@ void GameState::update(const float& dt)
 	if (!paused)
 	{
 		updatePlayerInput(dt);
+		updateCombat(dt);
 		updateGui(dt);
 		updateTestControls(dt);
 	}

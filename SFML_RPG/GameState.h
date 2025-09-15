@@ -35,6 +35,7 @@ public:
 	virtual ~GameState();
 
 	void updatePlayerInput(const float& dt);
+	void updateCombat(const float& dt);
 	void updateGui(const float& dt);
 	void updatePauseMenuButtons(const float& dt);
 	void updateTestControls(const float& dt);

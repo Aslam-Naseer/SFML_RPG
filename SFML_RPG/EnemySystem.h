@@ -23,12 +23,16 @@ public:
 	EnemySystem(std::map<std::string, sf::Texture>& textures, TileMap& tilemap);
 	virtual ~EnemySystem();
 
+	const std::vector<Enemy*> getEnemies() const;
 	void setSpawners(const std::vector<EnemySpawner*>& spawners);
 
 	void createEnemy(Type type, float x, float y);
 	void removeEnemy(int index);
 
-	void update(const float& dt, const Player& player);
+	void updateSpawners(sf::Vector2f& playerPosition);
+	void updateEnemies(const float& dt);
+
+	void update(const float& dt, sf::Vector2f playerPosition);
 	void render(sf::RenderTarget& target, sf::Shader* shader = nullptr);
 
 };

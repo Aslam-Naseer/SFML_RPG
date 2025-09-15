@@ -12,7 +12,7 @@ Enemy::~Enemy()
 
 int Enemy::getExpGain() const
 {
-	return 0;
+	return expGain;
 }
 
 bool Enemy::isDead() const
