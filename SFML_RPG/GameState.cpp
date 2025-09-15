@@ -72,7 +72,7 @@ void GameState::initShader()
 }
 
 GameState::GameState(StateData& state_data, sf::Font& font):
-	State(state_data), pmenu(font), renderSprite(renderTexture.getTexture()), enemySystem(textures)
+	State(state_data), pmenu(font), renderSprite(renderTexture.getTexture()), enemySystem(textures, tileMap)
 {
 	initDeferredRender();
 	initView();
@@ -90,6 +90,9 @@ GameState::~GameState()
 
 void GameState::updatePlayerInput(const float& dt)
 {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+		player->attack();
+
 
 	if(sf::Keyboard::isKeyPressed(keybinds["MOVE_LEFT"]))
 	{
@@ -132,7 +135,7 @@ void GameState::updatePlayerInput(const float& dt)
 void GameState::updateGui(const float& dt)
 {
 	playerGui->update(dt);
-	enemySystem.update(dt, player->getCenter());
+	enemySystem.update(dt, *player);
 }
 
 void GameState::updatePauseMenuButtons(const float& dt)

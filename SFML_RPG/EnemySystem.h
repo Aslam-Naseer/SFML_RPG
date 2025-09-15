@@ -2,6 +2,8 @@
 
 #include "Rat.h"
 #include "EnemySpawner.h"
+#include "TileMap.h"
+#include "Player.h"
 
 class EnemySystem
 {
@@ -15,9 +17,10 @@ private:
 	std::map<std::string, sf::Texture>& textures;
 	std::vector<EnemySpawner*> spawners;
 	std::vector<Enemy*> enemies;
+	TileMap& tileMap;
 
 public:
-	EnemySystem(std::map<std::string, sf::Texture>& textures);
+	EnemySystem(std::map<std::string, sf::Texture>& textures, TileMap& tilemap);
 	virtual ~EnemySystem();
 
 	void setSpawners(const std::vector<EnemySpawner*>& spawners);
@@ -25,7 +28,7 @@ public:
 	void createEnemy(Type type, float x, float y);
 	void removeEnemy(int index);
 
-	void update(const float& dt, const sf::Vector2f playerPosition);
+	void update(const float& dt, const Player& player);
 	void render(sf::RenderTarget& target, sf::Shader* shader = nullptr);
 
 };

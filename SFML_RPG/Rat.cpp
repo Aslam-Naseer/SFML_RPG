@@ -7,6 +7,7 @@ void Rat::initComponents(sf::Texture& texture)
 	createMovementComponent(150.f, 1500.f, 700.f);
 	createAnimationComponent(texture);
 	createHitboxComponent(13.f, 39.f, 30.f, 30.f);
+	createAttributeComponent(5);
 }
 
 void Rat::initAnimations()

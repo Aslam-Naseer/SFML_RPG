@@ -13,7 +13,7 @@ protected:
 	int maxDamage;
 	int range;
 
-	sf::Clock attackTimer;
+	mutable sf::Clock attackTimer;
 	sf::Time attackCooldown;
 
 public:
@@ -22,7 +22,7 @@ public:
 
 	int getDamage() const;
 	int getRange() const;
-	bool isAttackReady();
+	bool isAttackReady() const;
 
 	virtual Weapon* clone() = 0;
 	virtual void update(const sf::Vector2f& mousePosView, const sf::Vector2f center, const sf::Vector2f velocity = { 0,0 }) = 0;

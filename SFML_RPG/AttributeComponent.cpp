@@ -29,6 +29,11 @@ std::string AttributeComponent::debugPrint() const
     return ss.str();
 }
 
+bool AttributeComponent::isDead() const
+{
+    return (hp <= 0);
+}
+
 void AttributeComponent::gainExp(const int expGain)
 {
     exp += expGain;

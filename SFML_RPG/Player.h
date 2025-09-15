@@ -4,6 +4,7 @@
 #include "Sword.h"
 #include "Bow.h"
 #include "Inventory.h"
+#include "KeyTime.h"
 
 class Player :
     public Entity
@@ -15,6 +16,8 @@ private:
     Inventory inventory;
     Sword sword;
 
+    KeyTime timer;
+
     void initComponents(sf::Texture& texture);
     void initAnimations();
 
@@ -23,11 +26,15 @@ public:
     virtual ~Player();
 
     const AttributeComponent* getAttributeComponent() const;
+    const Weapon* getWeapon() const;
+    bool isAttacking() const;
 
     void gainHp(int hp);
     void loseHp(int hp);
     void gainExp(int exp);
     void loseExp(int exp);
+
+    void attack();
 
 	void updateAnimations(const float& dt);
     void update(const float& dt, const sf::Vector2f& mousePosView) override;

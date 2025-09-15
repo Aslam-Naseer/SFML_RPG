@@ -29,6 +29,8 @@ public:
 	~AttributeComponent();
 
 	std::string debugPrint() const;
+	bool isDead() const;
+
 	void gainExp(const int expGain);
 	void loseExp(const int expLose);
 	void gainHp(const int hpGain);

@@ -15,6 +15,7 @@ Weapon::~Weapon()
 
 int Weapon::getDamage() const
 {
+	return 5;
 	return minDamage + rand()%(maxDamage - minDamage + 1);
 }
 
@@ -23,7 +24,7 @@ int Weapon::getRange() const
 	return range;
 }
 
-bool Weapon::isAttackReady()
+bool Weapon::isAttackReady() const
 {
 	if (attackTimer.getElapsedTime() < attackCooldown)
 		return false;

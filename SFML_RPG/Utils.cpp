@@ -17,4 +17,9 @@ namespace utils {
 		return static_cast<unsigned>((gfxSettings->resolution.size.x + gfxSettings->resolution.size.y) * size / 120);
 
 	}
+
+	float distance(sf::Vector2f pos1, sf::Vector2f pos2)
+	{
+		return sqrt(pow((pos1.x - pos2.x), 2) + pow((pos1.y - pos2.y),2));
+	}
 }

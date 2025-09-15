@@ -42,6 +42,17 @@ const AttributeComponent* Player::getAttributeComponent() const
 	return attributeComponent ? attributeComponent : nullptr;
 }
 
+const Weapon* Player::getWeapon() const
+{
+
+	return &sword;
+}
+
+bool Player::isAttacking() const
+{
+	return attacking;
+}
+
 void Player::gainHp(int hp)
 {
 	attributeComponent->gainHp(hp);
@@ -60,6 +71,11 @@ void Player::gainExp(int exp)
 void Player::loseExp(int exp)
 {
 	attributeComponent->loseExp(exp);
+}
+
+void Player::attack()
+{
+	attacking = true;
 }
 
 
@@ -95,20 +111,17 @@ void Player::updateAnimations(const float& dt)
 	
 	// Animate
 	animationComponent->update(dt);
-	if (!animationComponent->isPriority("ATTACK"))
-		attacking = false;
 
 }
 
 void Player::update(const float& dt, const sf::Vector2f& mousePosView)
 {
+	timer.update(dt);
+
+	if (attacking && timer.isReady())
+		attacking = false;
+
 	movementComponent->update(dt);
-
-	//if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
-	//{
-	//	attacking = true;
-	//}
-
 	updateAnimations(dt);
 	sword.update(mousePosView, getCenter(), movementComponent->getVelocity());
 	hitboxComponent->update();
