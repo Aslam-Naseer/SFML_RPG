@@ -2,7 +2,7 @@
 #include "Sword.h"
 
 Sword::Sword():
-	MeleeWeapon(150)
+	MeleeWeapon(150, 1, 100, 50)
 {
 	if (!texture.loadFromFile("Resources/Sprites/Player/sword.png"))
 	{
@@ -39,12 +39,16 @@ void Sword::update(const sf::Vector2f& mousePosView, const sf::Vector2f center, 
 	if (velocity.y > 0)
 		dy = std::abs(dy);  
 	else if (velocity.y < 0)
-		dy = std::abs(dy) * -1;  */  
+		dy = std::abs(dy) * -1;  */
 
 	const float PI = 3.14159265f;
 	float deg = atan2(dy, dx) * 180 / PI;
 
 	sprite.setRotation(sf::degrees(deg + 90));
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && isAttackReady()) {
+		std::cout << "attack ";
+	}
 }
 
 void Sword::render(sf::RenderTarget& target, sf::Shader* shader)

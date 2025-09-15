@@ -150,8 +150,11 @@
     <ClCompile Include="EnemySystem.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Items\Weapons</Filter>
+    </ClCompile>
     <ClCompile Include="Inventory.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -257,8 +260,11 @@
     <ClInclude Include="EnemySystem.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Items\Weapons</Filter>
+    </ClInclude>
     <ClInclude Include="Inventory.h">
-      <Filter>Header Files</Filter>
+      <Filter>Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

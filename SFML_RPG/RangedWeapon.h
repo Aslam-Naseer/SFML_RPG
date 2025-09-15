@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Item.h"
+#include "Weapon.h"
 
 class RangedWeapon :
-    public Item
+    public Weapon
 {
 private:
 
 public:
-    RangedWeapon(int val);
+    RangedWeapon(int val, int minDmg, int maxDmg, int range);
     virtual ~RangedWeapon();
 
     virtual RangedWeapon* clone() = 0;

@@ -1,19 +1,12 @@
 #pragma once
 
-#include "Item.h"
+#include "Weapon.h"
 
 class MeleeWeapon :
-    public Item
+    public Weapon
 {
-protected:
-	sf::Texture texture;
-	sf::Sprite sprite;
-
-	int minDamage = 1;
-	int maxDamage = 10;
-
 public:
-    MeleeWeapon(int val);
+    MeleeWeapon(int val, int minDmg, int maxDmg, int range);
     virtual ~MeleeWeapon();
 
 	virtual MeleeWeapon* clone() = 0;
