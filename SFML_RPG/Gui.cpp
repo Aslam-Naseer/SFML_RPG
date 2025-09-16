@@ -169,7 +169,6 @@ short unsigned gui::DropDownList::getActiveId()
 
 void gui::DropDownList::update(const sf::Vector2i& mousePos, const float& dt)
 {
-	keyTime.update(dt);
 	activeElement->update(mousePos);
 
 	if (activeElement->isPressed() && keyTime.isReady())
@@ -288,8 +287,6 @@ void gui::TextureSelector::updateSelector(const sf::Vector2i& mousePosWindow)
 
 void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const float& dt)
 {
-	keyTime.update(dt);
-
 	toggleBtn->update(mousePosWindow);
 	if (toggleBtn->isPressed() && keyTime.isReady())
 		hide = !hide;
@@ -327,10 +324,13 @@ gui::ProgressBar::ProgressBar(float x, float y, float width, float height,
 	sf::Font* font, unsigned fontSize):
 	text(*font), maxValue(maxValue)
 {
+	float outlineThickness = std::min(width / 5.f, height / 5.f);
+	outlineThickness = std::min(5.f, outlineThickness);
+
 	barMax.setSize({ width, height });
 	barMax.setFillColor(sf::Color(50, 50, 50, 200));
 	barMax.setPosition({ x, y });
-	barMax.setOutlineThickness(5.f);
+	barMax.setOutlineThickness(outlineThickness);
 	barMax.setOutlineColor(sf::Color(150, 150, 150, 255));
 
 	barMain.setSize({ width, height });
@@ -339,6 +339,8 @@ gui::ProgressBar::ProgressBar(float x, float y, float width, float height,
 
 	text.setCharacterSize(fontSize);
 	text.setPosition({ x + width / 15.f, y + height / 2.f - fontSize / 2.f });
+	text.setFillColor(utils::getTextColor(barColor));
+	if (fontSize > 15) text.setStyle(sf::Text::Bold);
 
 	showText = (font != nullptr && fontSize > 0);
 }
@@ -347,13 +349,29 @@ gui::ProgressBar::~ProgressBar()
 {
 }
 
-void gui::ProgressBar::update(float curVal, float maxVal, std::string string)
+void gui::ProgressBar::setPosition(sf::Vector2f position)
+{
+	barMax.setPosition({ position.x, position.y });
+	barMain.setPosition({ position.x, position.y });
+
+	if (!showText)
+		return;
+
+	auto [width, height] = barMax.getSize();
+	unsigned fontSize = text.getCharacterSize();
+
+	text.setPosition({ (position.x + width / 15.f), (position.y + height / 2.f - fontSize / 2.f) });
+}
+
+void gui::ProgressBar::setProgress(float curVal, float maxVal, std::string string)
 {
 	if (maxVal != -1 && maxVal != maxValue)
 		maxValue = maxVal;
 
 	barMain.setSize({ std::floor(curVal / maxValue * barMax.getSize().x), barMain.getSize().y });
-	text.setString(string);
+	
+	if(showText)
+		text.setString(string);
 }
 
 void gui::ProgressBar::render(sf::RenderTarget& target)

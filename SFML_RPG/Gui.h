@@ -129,7 +129,9 @@ namespace gui
 			sf::Font* font = nullptr, unsigned fontSize = 0);
 		~ProgressBar();
 
-		void update(float curVal, float maxVal = -1, std::string string = "");
+		void setPosition(sf::Vector2f position);
+		void setProgress(float curVal, float maxVal = -1, std::string string = "");
+
 		void render(sf::RenderTarget& target);
 	};
 }

@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "KeyTime.h"
 
-KeyTime::KeyTime(float max_key_time)
+KeyTime::KeyTime(float max)
 {
-	keyTime = 0.f;
-	maxKeyTime = max_key_time;
+	maxTime = sf::seconds(max);
+	timer.restart();
 }
 
 KeyTime::~KeyTime()
@@ -13,19 +13,16 @@ KeyTime::~KeyTime()
 
 const bool KeyTime::isReady() const
 {
-	if (keyTime >= maxKeyTime)
+	if (timer.getElapsedTime() >= maxTime)
 	{
-		keyTime = 0.f;
+		timer.restart();
 		return true;
 	}
 
 	return false;
 }
 
-void KeyTime::update(const float& dt)
+void KeyTime::restart()
 {
-	if (keyTime < maxKeyTime)
-	{
-		keyTime += 10.f * dt;
-	}
+	timer.restart();
 }

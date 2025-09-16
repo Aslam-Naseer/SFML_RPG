@@ -20,6 +20,15 @@ namespace utils {
 
 	float distance(sf::Vector2f pos1, sf::Vector2f pos2)
 	{
-		return sqrt(pow((pos1.x - pos2.x), 2) + pow((pos1.y - pos2.y),2));
+		return static_cast<float>(sqrt(pow((pos1.x - pos2.x), 2) + pow((pos1.y - pos2.y),2)));
+	}
+
+	sf::Color getTextColor(const sf::Color& backgroundColor)
+	{
+		float luminance = (0.299f * backgroundColor.r +
+			0.587f * backgroundColor.g +
+			0.114f * backgroundColor.b) / 255.0f;
+
+		return (luminance > 0.5f) ? sf::Color::Black : sf::Color::White;
 	}
 }

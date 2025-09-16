@@ -23,4 +23,5 @@ namespace utils {
 
 	const unsigned calcCharSize(float size);
 	float distance(sf::Vector2f pos1, sf::Vector2f pos2);
+	sf::Color getTextColor(const sf::Color& backgroundColor);
 }

@@ -127,7 +127,6 @@ void EditorState::updateInput(const float& dt)
 
 void EditorState::update(const float& dt)
 {
-	keyTime.update(dt);
 	updateMousePositions(&view);
 	updateInput(dt);
 	updateGui(dt);

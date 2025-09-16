@@ -116,7 +116,6 @@ void Player::updateAnimations(const float& dt)
 
 void Player::update(const float& dt, const sf::Vector2f& mousePosView)
 {
-	timer.update(dt);
 
 	if (attacking && timer.isReady())
 		attacking = false;

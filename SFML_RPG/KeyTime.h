@@ -3,14 +3,14 @@
 class KeyTime
 {
 private:
-	mutable float keyTime;
-	float maxKeyTime;
+	mutable sf::Clock timer;
+	sf::Time maxTime;
 
 public:
-		KeyTime(float max_key_time = 1.5f);
+		KeyTime(float max = .25f);
 		virtual ~KeyTime();
 
 		const bool isReady() const;
-		void update(const float& dt);
+		void restart();
 };
 

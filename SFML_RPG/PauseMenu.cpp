@@ -55,7 +55,6 @@ void PauseMenu::addButton(const std::string key, const float y, const std::strin
 
 void PauseMenu::update(const sf::Vector2i& mousePos, const float& dt)
 {
-	keyTime.update(dt);
 	for(auto &i: buttons)
 	{
 		i.second->update(mousePos);

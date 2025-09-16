@@ -204,7 +204,6 @@ void GameState::updateInput(const float& dt)
 
 void GameState::update(const float& dt)
 {
-	keyTime.update(dt);
 	updateMousePositions(&view);
 	updateInput(dt); 
 
@@ -235,7 +234,6 @@ void GameState::render(sf::RenderTarget* target)
 	renderTexture.setView(view);
 	tileMap.render(renderTexture, &coreShader, player->getGridPosition(static_cast<int>(stateData.gridSize)));
 
-	tileMap.renderSpawners(renderTexture, &coreShader);
 	enemySystem.render(renderTexture, &coreShader);
 
 	player->render(renderTexture, &coreShader, false);
