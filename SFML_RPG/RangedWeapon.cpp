@@ -1,12 +1,25 @@
 #include "stdafx.h"
 #include "RangedWeapon.h"
 
-RangedWeapon::RangedWeapon(int val, int minDmg, int maxDmg, int range):
-	Weapon(val, minDmg, maxDmg, range)
+void RangedWeapon::generateStats()
+{
+}
+
+RangedWeapon::RangedWeapon(unsigned lvl):
+	Weapon(lvl)
 {
 	type = Type::RangedWeapon;
 }
 
 RangedWeapon::~RangedWeapon()
 {
+}
+
+void RangedWeapon::generateRandom(unsigned levelMin, unsigned levelMax)
+{
+	if (levelMin > levelMax)
+		std::swap(levelMin, levelMax);
+
+	level = levelMin + rand() % (levelMax - levelMin + 1);
+	generateStats();
 }

@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Bow.h"
 
-Bow::Bow() :
-	RangedWeapon(150, 1, 3, 500)
+Bow::Bow(unsigned lvl) :
+	RangedWeapon(lvl)
 {
 	if (!texture.loadFromFile("Resources/Sprites/Player/bow.png"))
 	{

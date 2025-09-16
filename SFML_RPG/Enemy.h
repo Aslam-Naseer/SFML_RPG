@@ -7,11 +7,14 @@ class Enemy :
     public Entity
 {
 protected:
-    int expGain = 100;
+    int expGain = 10;
     gui::ProgressBar* hpBar = nullptr;
 
     virtual void initAnimations() = 0;
     virtual void initHpBar(float maxHp, sf::Vector2f pos = {0,0});
+
+    void calculateExpGain(int level);
+
 public:
     Enemy(sf::Texture& texture);
     virtual ~Enemy();

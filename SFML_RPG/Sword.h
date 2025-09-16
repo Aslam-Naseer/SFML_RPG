@@ -8,7 +8,7 @@ class Sword :
 private:
 
 public:
-    Sword();
+    Sword(unsigned lvl = 1);
 	virtual ~Sword();
 
     Sword* clone() override;

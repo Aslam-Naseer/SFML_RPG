@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Sword.h"
 
-Sword::Sword():
-	MeleeWeapon(150, 2,5, 55)
+Sword::Sword(unsigned lvl):
+	MeleeWeapon(lvl)
 {
 	if (!texture.loadFromFile("Resources/Sprites/Player/sword.png"))
 	{
@@ -12,6 +12,7 @@ Sword::Sword():
 
 	sprite.setTextureRect({ {0,0}, {static_cast<int>(texture.getSize().x), static_cast<int>(texture.getSize().y)} });
 	sprite.setOrigin({ texture.getSize().x / 2.f,  static_cast<float>(texture.getSize().y) });
+
 }
 
 Sword::~Sword()

@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Item.h"
 
-Item::Item(int val):
-	value(val)
+Item::Item(unsigned lvl, int val):
+	level(lvl), value(val)
 {
 	type = Type::Default;
 }

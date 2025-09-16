@@ -8,7 +8,7 @@ class Bow :
 private:
 
 public:
-    Bow();
+    Bow(unsigned lvl = 1);
     virtual ~Bow();
 
     Bow* clone() override;

@@ -19,16 +19,18 @@ void Rat::initAnimations()
 	animationComponent->addAnimation("IDLE", 60, 64, 4, 0, .5f);
 }
 
+
 Rat::Rat(float x, float y, sf::Texture& texture):
 	Enemy(texture)
 {
-	sprite.setTextureRect({ { 0,0 }, {64,64} });
+	sprite.setTextureRect({ {0, 0}, {64, 64} });
+	setPosition(x, y);
 
 	initComponents(texture);
-	setPosition(x, y);
 	initAnimations();
-
 	initHpBar(static_cast<float>(attributeComponent->hpMax));
+
+	calculateExpGain(attributeComponent->level);
 }
 
 Rat::~Rat()

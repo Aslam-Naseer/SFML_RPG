@@ -11,10 +11,11 @@ public:
 
 protected:
 	Type type;
+	unsigned level;
 	int value;
 
 public:
-	Item(int val);
+	Item(unsigned lvl, int val);
 	virtual ~Item();
 
 	virtual Item* clone() = 0;

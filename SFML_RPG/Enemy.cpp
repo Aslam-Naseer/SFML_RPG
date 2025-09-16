@@ -6,6 +6,11 @@ void Enemy::initHpBar(float maxHp, sf::Vector2f pos)
 	hpBar = new gui::ProgressBar(pos.x, pos.y, 55.f, 5.f, maxHp, sf::Color(248, 56, 0));
 }
 
+void Enemy::calculateExpGain(int level)
+{
+	expGain = (25 * level) + rand() % (10 * level);
+}
+
 Enemy::Enemy(sf::Texture& texture)
 	: Entity(texture)
 {

@@ -148,6 +148,7 @@ void GameState::updateCombat(const float& dt)
 				
 				if (enemy->isDead()) {
 					player->gainExp(enemy->getExpGain());
+
 					tagSystem.addTextTag(TextTagSystem::TagType::ExperienceTag,
 						player->getCenter().x, player->getCenter().y - 10, enemy->getExpGain(), "+", "EXP");
 				}

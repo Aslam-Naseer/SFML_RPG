@@ -2,9 +2,8 @@
 #include "Weapon.h"
 
 
-Weapon::Weapon(int val, int minDmg, int maxDmg, int range):
-	Item(val), sprite(texture), minDamage(minDmg), maxDamage(maxDmg),
-	range(range), timer(.35f)
+Weapon::Weapon(unsigned lvl):
+	Item(lvl, 0), sprite(texture), timer(.35f)
 {
 }
 
