@@ -18,6 +18,9 @@ public:
 	Item(unsigned lvl, int val);
 	virtual ~Item();
 
+	unsigned getLevel() const;
+	int getValue() const;
+
 	virtual Item* clone() = 0;
 };
 

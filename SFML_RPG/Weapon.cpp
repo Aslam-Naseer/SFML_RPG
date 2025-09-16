@@ -21,6 +21,16 @@ int Weapon::getRange() const
 	return range;
 }
 
+int Weapon::getDamageMin() const
+{
+	return minDamage;
+}
+
+int Weapon::getDamageMax() const
+{
+	return maxDamage;
+}
+
 bool Weapon::isAttackReady() const
 {
 	if (!timer.isReady())

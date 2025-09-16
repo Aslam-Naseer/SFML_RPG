@@ -10,3 +10,13 @@ Item::Item(unsigned lvl, int val):
 Item::~Item()
 {
 }
+
+unsigned Item::getLevel() const
+{
+	return level;
+}
+
+int Item::getValue() const
+{
+	return value;
+}

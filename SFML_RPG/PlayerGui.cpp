@@ -10,7 +10,7 @@ void PlayerGui::initFont()
 
 void PlayerGui::initHpBar()
 {
-	float x = utils::p2pX(2.f), y = utils::p2pY(4.f);
+	float x = utils::p2pX(78.f), y = utils::p2pY(4.f);
 	float width = utils::p2pX(20.f), height = utils::p2pY(3.9f);
 	unsigned fontSize = utils::calcCharSize(1.f);
 
@@ -19,7 +19,7 @@ void PlayerGui::initHpBar()
 
 void PlayerGui::initExpBar()
 {
-	float x = utils::p2pX(2.f), y = utils::p2pY(10.f);
+	float x = utils::p2pX(78.f), y = utils::p2pY(10.f);
 	float width = utils::p2pX(20.f), height = utils::p2pY(3.6f);
 	unsigned fontSize = utils::calcCharSize(0.75f);
 
@@ -29,8 +29,8 @@ void PlayerGui::initExpBar()
 	levelText.setPosition({ x + (width * 0.75f) , y + height / 2.f - fontSize / 2.f });
 }
 
-PlayerGui::PlayerGui(Player* player):
-	player(player), levelText(font)
+PlayerGui::PlayerGui(const Player* player):
+	player(player), levelText(font), playerTab(player, font)
 {
 	initFont();
 	initHpBar();
@@ -44,6 +44,11 @@ PlayerGui::~PlayerGui()
 }
 
 
+void PlayerGui::toggleTab()
+{
+	playerTab.toggleTab();
+}
+
 void PlayerGui::update(const float& dt)
 {
 	const AttributeComponent* ac = player->getAttributeComponent();
@@ -55,12 +60,14 @@ void PlayerGui::update(const float& dt)
 	expBar->setProgress(static_cast<float>(ac->exp), static_cast<float>(ac->expNext), expBarString);
 
 	levelText.setString("Level: " + std::to_string(ac->level));
+	playerTab.update(dt);
 }
 
 void PlayerGui::render(sf::RenderTarget& target)
 {
 	hpBar->render(target);
 	expBar->render(target);
+	playerTab.render(target);
 
 	target.draw(levelText);
 }

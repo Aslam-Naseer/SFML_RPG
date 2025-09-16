@@ -26,10 +26,12 @@ Player::Player(float x, float y, sf::Texture& texture)
 	: Entity(texture), inventory(10)
 {
 	sprite.setTextureRect({ { 0,0 }, {64,64} });
+	setPosition(x, y);
 
 	initComponents(texture);
-	setPosition(x, y);
 	initAnimations();
+
+	refreshStats();
 }
 
 Player::~Player()
@@ -40,6 +42,11 @@ Player::~Player()
 const AttributeComponent* Player::getAttributeComponent() const
 {
 	return attributeComponent ? attributeComponent : nullptr;
+}
+
+const std::string Player::getStats() const
+{
+	return stats;
 }
 
 const Weapon* Player::getWeapon() const
@@ -56,21 +63,45 @@ bool Player::isAttacking() const
 void Player::gainHp(int hp)
 {
 	attributeComponent->gainHp(hp);
+	refreshStats();
 }
 
 void Player::loseHp(int hp)
 {
 	attributeComponent->loseHp(hp);
+	refreshStats();
 }
 
 void Player::gainExp(int exp)
 {
 	attributeComponent->gainExp(exp);
+	refreshStats();
 }
 
 void Player::loseExp(int exp)
 {
 	attributeComponent->loseExp(exp);
+	refreshStats();
+}
+
+
+void Player::refreshStats()
+{
+	std::ostringstream ss;
+	const AttributeComponent* ac = attributeComponent;
+	const Weapon* w = &sword;
+
+	ss << "Level: " << ac->level << "\n"
+		<< "Exp: " << ac->exp << "\n"
+		<< "Exp next: " << ac->expNext << "\n"
+		<<"\n"
+		<< "Weapon Level: " << w->getLevel() << "\n"
+		<< "Weapon Type: " << "Sword" << "\n"
+		<< "Weapon Value: " << w->getValue() << " G\n"
+		<< "Weapon Range: " << w->getRange() << "\n"
+		<< "Weapon Damage : " << "[ " << w->getDamageMin() << " - " << w->getDamageMax() << " ]\n";
+
+	stats = ss.str();
 }
 
 void Player::attack()

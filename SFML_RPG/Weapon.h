@@ -24,8 +24,10 @@ public:
 
 	int getDamage() const;
 	int getRange() const;
+	int getDamageMin() const;
+	int getDamageMax() const;
 	bool isAttackReady() const;
-
+	
 	virtual Weapon* clone() = 0;
 	virtual void generateRandom(unsigned levelMin, unsigned levelMax) = 0;
 

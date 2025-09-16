@@ -17,6 +17,7 @@ private:
     Sword sword;
 
     KeyTime timer;
+    std::string stats;
 
     void initComponents(sf::Texture& texture);
     void initAnimations();
@@ -26,6 +27,7 @@ public:
     virtual ~Player();
 
     const AttributeComponent* getAttributeComponent() const;
+	const std::string getStats() const;
     const Weapon* getWeapon() const;
     bool isAttacking() const;
 
@@ -34,6 +36,7 @@ public:
     void gainExp(int exp);
     void loseExp(int exp);
 
+    void refreshStats();
     void attack();
 
 	void updateAnimations(const float& dt);

@@ -163,6 +163,9 @@ void GameState::updateGui(const float& dt)
 {
 	playerGui->update(dt);
 	tagSystem.update(dt);
+
+	if (sf::Keyboard::isKeyPressed(keybinds["TOGGLE_TAB"]))
+		playerGui->toggleTab();
 }
 
 void GameState::updatePauseMenuButtons(const float& dt)
