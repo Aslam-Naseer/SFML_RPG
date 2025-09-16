@@ -2,7 +2,7 @@
 #include "Sword.h"
 
 Sword::Sword():
-	MeleeWeapon(150, 1, 3, 50)
+	MeleeWeapon(150, 2,5, 55)
 {
 	if (!texture.loadFromFile("Resources/Sprites/Player/sword.png"))
 	{

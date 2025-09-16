@@ -71,8 +71,9 @@ void GameState::initShader()
 	}
 }
 
-GameState::GameState(StateData& state_data, sf::Font& font):
-	State(state_data), pmenu(font), renderSprite(renderTexture.getTexture()), enemySystem(textures, tileMap)
+GameState::GameState(StateData& state_data, std::map<std::string, sf::Font>& fonts):
+	State(state_data), pmenu(fonts["DEFAULT"]), renderSprite(renderTexture.getTexture()),
+	enemySystem(textures, tileMap), tagSystem(fonts["TEXTTAG"])
 {
 	initDeferredRender();
 	initView();
@@ -140,9 +141,15 @@ void GameState::updateCombat(const float& dt)
 		for (auto* enemy : enemies) {
 			if (utils::distance(player->getCenter(), enemy->getCenter()) < player->getWeapon()->getRange()) {
 				int dmg = player->getWeapon()->getDamage();
+
 				enemy->loseHp(dmg);
+				tagSystem.addTextTag(TextTagSystem::TagType::NegativeTag,
+					enemy->getCenter().x, enemy->getCenter().y - 10, dmg, "-", "HP");
+				
 				if (enemy->isDead()) {
 					player->gainExp(enemy->getExpGain());
+					tagSystem.addTextTag(TextTagSystem::TagType::ExperienceTag,
+						player->getCenter().x, player->getCenter().y - 10, enemy->getExpGain(), "+", "EXP");
 				}
 			}
 		}
@@ -154,6 +161,7 @@ void GameState::updateCombat(const float& dt)
 void GameState::updateGui(const float& dt)
 {
 	playerGui->update(dt);
+	tagSystem.update(dt);
 }
 
 void GameState::updatePauseMenuButtons(const float& dt)
@@ -232,6 +240,7 @@ void GameState::render(sf::RenderTarget* target)
 
 	player->render(renderTexture, &coreShader, false);
 	tileMap.renderDeferred(renderTexture, &coreShader);
+	tagSystem.render(renderTexture);
 
 	// Window View
 	renderTexture.setView(renderTexture.getDefaultView());

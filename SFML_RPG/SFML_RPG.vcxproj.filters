@@ -43,6 +43,9 @@
     <Filter Include="Entities\Enemies">
       <UniqueIdentifier>{e850090c-d3d0-4d5c-be5f-3aa941f63c20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{9ef6014e-1c3f-45da-b1fc-6c81d9c6cd1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -147,14 +150,17 @@
     <ClCompile Include="Rat.cpp">
       <Filter>Entities\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="EnemySystem.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Items\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="TextTagSystem.cpp">
+      <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -257,14 +263,17 @@
     <ClInclude Include="Rat.h">
       <Filter>Entities\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="EnemySystem.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Items\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="TextTagSystem.h">
+      <Filter>Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

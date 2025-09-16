@@ -13,7 +13,7 @@ class MainMenuState :
 private:
     sf::RectangleShape background;
     sf::Texture bgTexture;
-    sf::Font font;
+    std::map<std::string, sf::Font> fonts;
     std::map<std::string, gui::Button*> buttons;
 
     void initKeybinds();

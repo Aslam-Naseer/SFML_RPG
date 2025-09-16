@@ -6,6 +6,7 @@
 #include "TileMap.h"
 #include "PlayerGui.h"
 #include "EnemySystem.h"
+#include "TextTagSystem.h"
 
 class GameState :
     public State
@@ -22,6 +23,7 @@ private:
 	sf::Shader coreShader;
 
 	EnemySystem enemySystem;
+	TextTagSystem tagSystem;
 
 	void initDeferredRender();
 	void initView();
@@ -31,7 +33,7 @@ private:
 	void initShader();
 
 public:
-	GameState(StateData& state_data, sf::Font& font);
+	GameState(StateData& state_data, std::map<std::string, sf::Font>& fonts);
 	virtual ~GameState();
 
 	void updatePlayerInput(const float& dt);

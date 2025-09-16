@@ -5,7 +5,7 @@
 Weapon::Weapon(int val, int minDmg, int maxDmg, int range):
 	Item(val), sprite(texture), minDamage(minDmg), maxDamage(maxDmg), range(range)
 {
-	attackCooldown = sf::seconds(1.f);
+	attackCooldown = sf::seconds(.35f);
 	attackTimer.restart();
 }
 
@@ -15,7 +15,6 @@ Weapon::~Weapon()
 
 int Weapon::getDamage() const
 {
-	return 5;
 	return minDamage + rand()%(maxDamage - minDamage + 1);
 }
 

@@ -7,7 +7,11 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initFonts()
 {
-	if (!font.openFromFile("Fonts/Dosis-Light.ttf")) {
+	if (!fonts["DEFAULT"].openFromFile("Fonts/Dosis-Light.ttf")) {
+		throw std::runtime_error("ERROR::GAME::FONT_DOSIS_NOT_AVAILABLE");
+	}
+
+	if (!fonts["TEXTTAG"].openFromFile("Fonts/PixellettersFull.ttf")) {
 		throw std::runtime_error("ERROR::GAME::FONT_NOT_AVAILABLE");
 	}
 }
@@ -28,28 +32,28 @@ void MainMenuState::initGui()
 
 	buttons["GAME_STATE"] = new gui::Button(
 		utils::p2pX(12.f), utils::p2pY(30.7f), utils::p2pX(14.f), utils::p2pY(9.3f),
-		"New Game", font, utils::calcCharSize(2),
+		"New Game", fonts["DEFAULT"], utils::calcCharSize(2),
 		sf::Color(150, 150, 150, 255), sf::Color(255, 255, 255, 255), sf::Color(200, 200, 200, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 
 	buttons["SETTINGS_STATE"] = new gui::Button(
 		utils::p2pX(12.f), utils::p2pY(40.9f), utils::p2pX(14.f), utils::p2pY(9.3f),
-		"Settings", font, utils::calcCharSize(2),
+		"Settings", fonts["DEFAULT"], utils::calcCharSize(2),
 		sf::Color(150, 150, 150, 255), sf::Color(255, 255, 255, 255), sf::Color(200, 200, 200, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 
 	buttons["EDITOR_STATE"] = new gui::Button(
 		utils::p2pX(12.f), utils::p2pY(51.1f), utils::p2pX(14.f), utils::p2pY(9.3f),
-		"Editor", font, utils::calcCharSize(2),
+		"Editor", fonts["DEFAULT"], utils::calcCharSize(2),
 		sf::Color(150, 150, 150, 255), sf::Color(255, 255, 255, 255), sf::Color(200, 200, 200, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
 
 	buttons["EXIT"] = new gui::Button(
 		utils::p2pX(12.f), utils::p2pY(68.7f), utils::p2pX(14.f), utils::p2pY(9.3f),
-		"Exit", font, utils::calcCharSize(2),
+		"Exit", fonts["DEFAULT"], utils::calcCharSize(2),
 		sf::Color(150, 150, 150, 255), sf::Color(255, 255, 255, 255), sf::Color(200, 200, 200, 200),
 		sf::Color(70, 70, 70, 0), sf::Color(200, 200, 200, 0), sf::Color(20, 20, 20, 0)
 	);
@@ -91,17 +95,17 @@ void MainMenuState::updateButtons()
 
 	if (buttons["GAME_STATE"]->isPressed())
 	{
-		states.push(new GameState(stateData, font));
+		states.push(new GameState(stateData, fonts));
 	}
 
 	if(buttons["SETTINGS_STATE"]->isPressed())
 	{
-		states.push(new SettingsState(stateData, font));
+		states.push(new SettingsState(stateData, fonts["DEFAULT"]));
 	}
 
 	if (buttons["EDITOR_STATE"]->isPressed())
 	{
-		states.push(new EditorState(stateData, font));
+		states.push(new EditorState(stateData, fonts["DEFAULT"]));
 	}
 
 	if (buttons["EXIT"]->isPressed())
