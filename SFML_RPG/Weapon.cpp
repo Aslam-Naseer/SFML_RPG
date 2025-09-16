@@ -3,10 +3,9 @@
 
 
 Weapon::Weapon(int val, int minDmg, int maxDmg, int range):
-	Item(val), sprite(texture), minDamage(minDmg), maxDamage(maxDmg), range(range)
+	Item(val), sprite(texture), minDamage(minDmg), maxDamage(maxDmg),
+	range(range), timer(.35f)
 {
-	attackCooldown = sf::seconds(.35f);
-	attackTimer.restart();
 }
 
 Weapon::~Weapon()
@@ -25,9 +24,8 @@ int Weapon::getRange() const
 
 bool Weapon::isAttackReady() const
 {
-	if (attackTimer.getElapsedTime() < attackCooldown)
+	if (!timer.isReady())
 		return false;
 
-	attackTimer.restart();
 	return true;
 }

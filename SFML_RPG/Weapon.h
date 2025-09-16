@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Item.h"
+#include "KeyTime.h"
 
 class Weapon :
     public Item
@@ -13,8 +14,7 @@ protected:
 	int maxDamage;
 	int range;
 
-	mutable sf::Clock attackTimer;
-	sf::Time attackCooldown;
+	KeyTime timer;
 
 public:
 	Weapon(int val, int minDmg, int maxDmg, int rng);

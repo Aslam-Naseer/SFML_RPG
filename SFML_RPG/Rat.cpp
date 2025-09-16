@@ -27,6 +27,8 @@ Rat::Rat(float x, float y, sf::Texture& texture):
 	initComponents(texture);
 	setPosition(x, y);
 	initAnimations();
+
+	initHpBar(static_cast<float>(attributeComponent->hpMax));
 }
 
 Rat::~Rat()
@@ -64,15 +66,17 @@ void Rat::updateAnimations(const float& dt)
 void Rat::update(const float& dt, const sf::Vector2f& mousePosView)
 {
 	movementComponent->update(dt);
-
 	updateAnimations(dt);
 	hitboxComponent->update();
+
+	hpBar->setPosition({ sprite.getPosition().x, sprite.getPosition().y + 20.f});
 }
 
 void Rat::render(sf::RenderTarget& target, sf::Shader* shader, bool showHitbox)
 {
 
 	target.draw(sprite, shader);
+	hpBar->render(target);
 
 	if (showHitbox)
 		hitboxComponent->render(target);

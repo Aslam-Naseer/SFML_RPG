@@ -45,7 +45,7 @@ void TextTagSystem::createTextTag(TagType type, float x, float y, std::string st
 
 	case TagType::NegativeTag:
 		color = sf::Color(250, 50, 50, 200);
-		charSize = utils::calcCharSize(1.1);
+		charSize = utils::calcCharSize(1.1f);
 		direction = sf::Vector2f(0.f, -1.f);
 		lifetime = 1.f;
 		speed = 50.f;
@@ -68,7 +68,7 @@ void TextTagSystem::createTextTag(TagType type, float x, float y, std::string st
 		break;
 
 	default:
-		color = sf::Color::White;
+		color = sf::Color::Yellow;
 		charSize = utils::calcCharSize(1.2f);
 		direction = sf::Vector2f(0.f, -1.f);
 		lifetime = 1.f;

@@ -1,15 +1,17 @@
 #pragma once
 
 #include "Entity.h"
+#include "Gui.h"
 
 class Enemy :
     public Entity
 {
-private:
+protected:
     int expGain = 100;
+    gui::ProgressBar* hpBar = nullptr;
 
     virtual void initAnimations() = 0;
-
+    virtual void initHpBar(float maxHp, sf::Vector2f pos = {0,0});
 public:
     Enemy(sf::Texture& texture);
     virtual ~Enemy();
