@@ -20,9 +20,11 @@ void Rat::initAnimations()
 }
 
 
-Rat::Rat(float x, float y, sf::Texture& texture):
-	Enemy(texture)
+Rat::Rat(sf::Texture& texture, EnemySpawner& spawner):
+	Enemy(texture, spawner)
 {
+	auto [x, y] = spawner.getPosition();
+
 	sprite.setTextureRect({ {0, 0}, {64, 64} });
 	setPosition(x, y);
 

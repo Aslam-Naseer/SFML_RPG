@@ -11,8 +11,8 @@ void Enemy::calculateExpGain(int level)
 	expGain = (25 * level) + rand() % (10 * level);
 }
 
-Enemy::Enemy(sf::Texture& texture)
-	: Entity(texture)
+Enemy::Enemy(sf::Texture& texture, EnemySpawner& spawner)
+	: Entity(texture), spawner(spawner)
 {
 }
 
@@ -23,6 +23,11 @@ Enemy::~Enemy()
 int Enemy::getExpGain() const
 {
 	return expGain;
+}
+
+EnemySpawner& Enemy::getSpawner()
+{
+	return spawner;
 }
 
 bool Enemy::isDead() const

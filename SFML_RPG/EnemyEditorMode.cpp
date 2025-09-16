@@ -46,25 +46,25 @@ void EnemyEditorMode::updateInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("SPAWN_COUNT_UP")) && editorData.keyTime->isReady())
 	{
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
-			spawnCount == 0 ? spawnCount = 100 : spawnCount--;
+			maxSpawns == 0 ? maxSpawns = 100 : maxSpawns--;
 		else
-			spawnCount == 100 ? spawnCount = 0 : spawnCount++;
+			maxSpawns == 100 ? maxSpawns = 0 : maxSpawns++;
 	}
 
 	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("SPAWN_DELAY_UP")) && editorData.keyTime->isReady())
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
-			spawnDelay -= .5f;
+			spawnDelay == 0.f ? spawnDelay = 60.f : spawnDelay -= 0.5f;
 		else
-			spawnDelay += .5f;
+			spawnDelay == 60.f ? spawnDelay = 0.f : spawnDelay += 0.5f;
 	}
 
 	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("SPAWN_RANGE_UP")) && editorData.keyTime->isReady())
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
-			spawnRange -= .5f;
+			spawnRange == 0.f ? spawnRange = 750.f : spawnRange -= 50.f;
 		else
-			spawnRange += .5f;
+			spawnRange == 750.f ? spawnRange = 0.f : spawnRange += 50.f;
 	}
 }
 
@@ -82,7 +82,7 @@ void EnemyEditorMode::updateGui(const float& dt)
 	{
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && editorData.keyTime->isReady())
-			tileMap.addSpawner(editorData.mousePosGrid->x, editorData.mousePosGrid->y, 0, 0, spawnCount, spawnDelay, spawnRange);
+			tileMap.addSpawner(editorData.mousePosGrid->x, editorData.mousePosGrid->y, 0, 0, maxSpawns, spawnDelay, spawnRange);
 
 		else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && editorData.keyTime->isReady())
 			tileMap.removeSpawner(editorData.mousePosGrid->x, editorData.mousePosGrid->y, 0);
@@ -119,7 +119,7 @@ void EnemyEditorMode::render(sf::RenderTarget& target)
 	mouseText.setPosition({ editorData.mousePosWindow->x + 20.f, editorData.mousePosWindow->y - 20.f });
 	std::stringstream st;
 	st << "\n" << "Type: " << enemyType
-		<< "\n" << "Count: " << spawnCount
+		<< "\n" << "Count: " << maxSpawns
 		<< "\n" << "Delay: " << spawnDelay
 		<< "\n" << "Range: " << spawnRange;
 	mouseText.setString(st.str());

@@ -202,7 +202,7 @@ void TileMap::addTile(int x, int y, int layer, short type, bool collision, const
 	);
 }
 
-void TileMap::addSpawner(int x, int y, int layer, int enemyType, int spawnCount, float spawnDelay, float spawnRange)
+void TileMap::addSpawner(int x, int y, int layer, int enemyType, int maxSpawns, float spawnDelay, float spawnRange)
 {
 	if (!isValidCoordinate(x, y, layer))
 		return;
@@ -216,7 +216,7 @@ void TileMap::addSpawner(int x, int y, int layer, int enemyType, int spawnCount,
 
 	spawners[pos][layer] = new EnemySpawner(
 		x * gridSize, y * gridSize, gridSize,
-		enemyType, spawnCount, spawnDelay, spawnRange
+		enemyType, maxSpawns, spawnDelay, spawnRange
 	);
 }
 
@@ -344,11 +344,11 @@ void TileMap::loadFromFile(const std::string file_name)
 		return;
 	}
 
-	int enemyType, spawnCount;
+	int enemyType, maxSpawns;
 	float spawnDelay, spawnRange;
 
-	while (ifs >> x >> y >> z >> enemyType >> spawnCount >> spawnDelay >> spawnRange)
-		addSpawner(x, y, z, enemyType, spawnCount, spawnDelay, spawnRange);
+	while (ifs >> x >> y >> z >> enemyType >> maxSpawns >> spawnDelay >> spawnRange)
+		addSpawner(x, y, z, enemyType, maxSpawns, spawnDelay, spawnRange);
 
 
 	ifs.close();

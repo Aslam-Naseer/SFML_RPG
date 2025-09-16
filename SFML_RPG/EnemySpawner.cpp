@@ -2,8 +2,9 @@
 #include "EnemySpawner.h"
 
 EnemySpawner::EnemySpawner(float x, float y, float gridSize,
-	int enemyType, int spawnCount, float spawnDelay, float spawnRange):
-	enemyType(enemyType), spawnCount(spawnCount), spawnDelay(spawnDelay), spawnRange(spawnRange)
+	int enemyType, int maxSpawns, float spawnDelay, float spawnRange):
+	enemyType(enemyType), maxSpawns(maxSpawns), spawnDelay(spawnDelay),
+	spawnRange(spawnRange), timer(spawnDelay)
 {
 	shape.setPosition({ x, y });
 	shape.setSize({ gridSize, gridSize });
@@ -16,13 +17,38 @@ EnemySpawner::~EnemySpawner()
 {
 }
 
-std::string EnemySpawner::toString()
+
+sf::Vector2f EnemySpawner::getPosition() const
+{
+	return shape.getPosition();
+}
+
+
+std::string EnemySpawner::toString() const
 {
 	std::stringstream ss;
-	ss << enemyType << " " << spawnCount << " " 
+	ss << enemyType << " " << maxSpawns << " " 
 		<< spawnDelay << " " << spawnRange << " ";
 
 	return ss.str();
+}
+
+bool EnemySpawner::canSpawn() const
+{
+	return (activeSpawns < maxSpawns) && timer.isReady();
+}
+
+void EnemySpawner::increaseSpawnCount()
+{
+	activeSpawns++;
+}
+
+void EnemySpawner::decreaseSpawnCount()
+{
+	if (activeSpawns > 0)
+		activeSpawns--;
+
+	timer.restart();
 }
 
 void EnemySpawner::update(const float& dt)

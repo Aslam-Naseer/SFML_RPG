@@ -24,20 +24,24 @@ void EnemySystem::setSpawners(const std::vector<EnemySpawner*>& spawners)
 	this->spawners = spawners;
 }
 
-void EnemySystem::createEnemy(Type type, float x, float y)
+void EnemySystem::createEnemy(Type type, EnemySpawner& spawner)
 {
 	switch (type)
 	{
 	case EnemySystem::Type::Rat:
-		enemies.push_back(new Rat(x, y, this->textures.at("RAT_SHEET")));
+		enemies.push_back(new Rat(this->textures.at("RAT_SHEET"), spawner));
 		break;
 	}
+
+	spawner.increaseSpawnCount();
 }
 
 void EnemySystem::removeEnemy(int index)
 {
 	if(index < 0 || index >= static_cast<int>(enemies.size()))
 		return;
+
+	enemies[index]->getSpawner().decreaseSpawnCount();
 
 	delete enemies[index];
 	enemies.erase(enemies.begin() + index);
@@ -47,15 +51,15 @@ void EnemySystem::updateSpawners(sf::Vector2f& playerPosition)
 {
 	for (auto& spawner : spawners)
 	{
-		if (spawner->spawnCount < 3 && utils::distance(playerPosition, spawner->shape.getPosition()) < 200)
+		if (utils::distance(playerPosition, spawner->shape.getPosition()) < spawner->spawnRange 
+			&& spawner->canSpawn())
 		{
-			createEnemy(Type::Rat, spawner->shape.getPosition().x, spawner->shape.getPosition().y);
-			spawner->spawnCount++;
+			createEnemy(Type::Rat, *spawner);
 		}
 	}
 }
 
-void EnemySystem::updateEnemies(const float& dt)
+void EnemySystem::updateEnemies(const float& dt, sf::Vector2f playerPosition)
 {
 	int index = 0;
 	for (auto& enemy : enemies)
@@ -63,11 +67,16 @@ void EnemySystem::updateEnemies(const float& dt)
 
 		if (enemy->isDead())
 		{
-			enemies.erase(enemies.begin() + index);
+			removeEnemy(index);
 			continue;
 		}
 		
-		//enemy->move(dt, -1, 0);
+		sf::Vector2f enemyMove = playerPosition - enemy->getPosition();
+		enemy->move(dt, 
+			(enemyMove.x < 0) ? -1 : (enemyMove.x > 0) ? 1 : 0,
+			(enemyMove.y < 0) ? -1 : (enemyMove.y > 0) ? 1 : 0);
+
+
 		enemy->update(dt);
 
 		sf::Vector2f resolvedPos = tileMap.resolveCollision(enemy, dt);
@@ -80,7 +89,7 @@ void EnemySystem::updateEnemies(const float& dt)
 void EnemySystem::update(const float& dt, sf::Vector2f playerPosition)
 {
 	updateSpawners(playerPosition);
-	updateEnemies(dt);
+	updateEnemies(dt, playerPosition);
 }
 
 void EnemySystem::render(sf::RenderTarget& target, sf::Shader* shader)

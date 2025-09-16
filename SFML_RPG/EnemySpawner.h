@@ -1,23 +1,31 @@
 #pragma once
 
 #include "Tile.h"
+#include "KeyTime.h"
 
 class EnemySpawner
 {
 private:
-	sf::RectangleShape shape;
-
 	int enemyType;
-	int spawnCount;
+	int maxSpawns;
 	float spawnDelay;
 	float spawnRange;
 
+	sf::RectangleShape shape;
+	int activeSpawns = 0;
+	KeyTime timer;
+
 public:
 	EnemySpawner(float x, float y, float gridSize,
-		int enemyType, int spawnCount, float spawnDelay, float spawnRange);
+		int enemyType, int maxSpawns, float spawnDelay, float spawnRange);
 	virtual ~EnemySpawner();
 
-	std::string toString();
+	sf::Vector2f getPosition() const;
+	std::string toString() const;
+	bool canSpawn() const;
+	
+	void increaseSpawnCount();
+	void decreaseSpawnCount();
 
 	void update(const float& dt);
 	void render(sf::RenderTarget& target);

@@ -236,7 +236,7 @@ void GameState::render(sf::RenderTarget* target)
 	tileMap.render(renderTexture, &coreShader, player->getGridPosition(static_cast<int>(stateData.gridSize)));
 
 	enemySystem.render(renderTexture, &coreShader);
-
+	tileMap.renderSpawners(renderTexture, &coreShader);
 	player->render(renderTexture, &coreShader, false);
 	tileMap.renderDeferred(renderTexture, &coreShader);
 	tagSystem.render(renderTexture);

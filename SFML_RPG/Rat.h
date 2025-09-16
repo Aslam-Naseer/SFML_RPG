@@ -10,7 +10,7 @@ private:
 	void initAnimations() override;
 
 public:
-    Rat(float x, float y, sf::Texture& texture);
+    Rat(sf::Texture& texture, EnemySpawner& spawner);
     ~Rat();
 
     void updateAnimations(const float& dt) override;

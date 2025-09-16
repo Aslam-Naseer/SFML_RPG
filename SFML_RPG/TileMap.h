@@ -47,7 +47,7 @@ public:
 	sf::Vector2f resolveCollision(const Entity* entity, const float& dt) const;
 
 	void addTile(int x, int y, int layer, short type, bool collision, const sf::IntRect& textureRect);
-	void addSpawner(int x, int y, int layer, int enemyType, int spawnCount, float spawnDelay, float spawnRange);
+	void addSpawner(int x, int y, int layer, int enemyType, int maxSpawns, float spawnDelay, float spawnRange);
 	void removeTile(int x, int y, int layer);
 	void removeSpawner(int x, int y, int layer);
 

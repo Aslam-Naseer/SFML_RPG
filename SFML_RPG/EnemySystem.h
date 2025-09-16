@@ -26,11 +26,11 @@ public:
 	const std::vector<Enemy*> getEnemies() const;
 	void setSpawners(const std::vector<EnemySpawner*>& spawners);
 
-	void createEnemy(Type type, float x, float y);
+	void createEnemy(Type type, EnemySpawner& spawner);
 	void removeEnemy(int index);
 
 	void updateSpawners(sf::Vector2f& playerPosition);
-	void updateEnemies(const float& dt);
+	void updateEnemies(const float& dt, sf::Vector2f playerPosition);
 
 	void update(const float& dt, sf::Vector2f playerPosition);
 	void render(sf::RenderTarget& target, sf::Shader* shader = nullptr);

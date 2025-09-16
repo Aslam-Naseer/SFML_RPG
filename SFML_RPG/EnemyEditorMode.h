@@ -12,9 +12,9 @@ private:
 	sf::RectangleShape sidebar;
 
 	int enemyType = 0;
-	int spawnCount = 10;
-	float spawnDelay = 60.f;
-	float spawnRange = 25.f;
+	int maxSpawns = 10;
+	float spawnDelay = 2.5f;
+	float spawnRange = 250.f;
 
 	void initGui();
 
