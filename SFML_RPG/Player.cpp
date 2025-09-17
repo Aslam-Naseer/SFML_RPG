@@ -5,9 +5,9 @@
 
 void Player::initComponents(sf::Texture& texture)
 {
-	createMovementComponent(400.f, 1500.f, 700.f);
+	createMovementComponent(250.f, 1500.f, 700.f);
 	createAnimationComponent(texture);
-	createHitboxComponent(10.f, 2.f, 44.f, 60.f);
+	createHitboxComponent(16.f, 26.f, 32.f, 38.f);
 	createAttributeComponent(1);
 	createSkillComponent();
 }

@@ -12,8 +12,10 @@ protected:
     gui::ProgressBar* hpBar = nullptr;
 
     EnemySpawner& spawner;
+    KeyTime despawnTimer;
     KeyTime flashTimer;
 
+    bool despawning = false;
     bool damaged = false;
 
     float trackRange = 700.f;
@@ -32,9 +34,14 @@ public:
     int getExpGain() const;
     float getTrackRange() const;
     float getAttackRange() const;
-    EnemySpawner& getSpawner();
 
-    virtual bool isDead() const;
+    void startDespawn();
+    void stopDespawn();
+
+    bool isDead() const;
+    bool isDespawned() const;
+
+    virtual void despawn();
     virtual void loseHp(int hp);
     virtual void attack(sf::Vector2f target) const;
 

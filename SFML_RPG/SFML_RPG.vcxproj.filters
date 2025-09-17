@@ -37,9 +37,6 @@
     <Filter Include="EditorModes">
       <UniqueIdentifier>{0ddb11c7-51d0-4003-881b-7e96fd4481a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Map\Tiles">
-      <UniqueIdentifier>{cb1551d3-e112-4f0c-804e-f94c7fb396b8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Entities\Enemies">
       <UniqueIdentifier>{e850090c-d3d0-4d5c-be5f-3aa941f63c20}</UniqueIdentifier>
     </Filter>
@@ -83,9 +80,6 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Map\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>Map</Filter>
@@ -132,9 +126,6 @@
     <ClCompile Include="SkillComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="EnemySpawner.cpp">
-      <Filter>Map\Tiles</Filter>
-    </ClCompile>
     <ClCompile Include="EditorMode.cpp">
       <Filter>EditorModes</Filter>
     </ClCompile>
@@ -164,6 +155,12 @@
     </ClCompile>
     <ClCompile Include="PlayerTab.cpp">
       <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,9 +203,6 @@
     <ClInclude Include="TileMap.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Map\Tiles</Filter>
-    </ClInclude>
     <ClInclude Include="GraphicsSettings.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
@@ -248,9 +242,6 @@
     <ClInclude Include="SkillComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="EnemySpawner.h">
-      <Filter>Map\Tiles</Filter>
-    </ClInclude>
     <ClInclude Include="EditorMode.h">
       <Filter>EditorModes</Filter>
     </ClInclude>
@@ -280,6 +271,12 @@
     </ClInclude>
     <ClInclude Include="PlayerTab.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

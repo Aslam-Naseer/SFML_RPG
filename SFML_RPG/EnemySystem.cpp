@@ -54,7 +54,7 @@ void EnemySystem::removeEnemy(int index)
 	if(index < 0 || index >= static_cast<int>(enemies.size()))
 		return;
 
-	enemies[index]->getSpawner().decreaseSpawnCount();
+	enemies[index]->despawn();
 
 	delete enemies[index];
 	enemies.erase(enemies.begin() + index);
@@ -78,7 +78,7 @@ void EnemySystem::updateEnemies(const float& dt, sf::Vector2f playerPosition)
 	for (auto& enemy : enemies)
 	{
 
-		if (enemy->isDead())
+		if (enemy->isDead() || enemy->isDespawned())
 		{
 			removeEnemy(index);
 			continue;
@@ -89,7 +89,10 @@ void EnemySystem::updateEnemies(const float& dt, sf::Vector2f playerPosition)
 		sf::Vector2f resolvedPos = tileMap.resolveCollision(enemy, dt);
 		enemy->setPosition(resolvedPos.x, resolvedPos.y);
 
-		
+		if (dist > despawnRange)
+			enemy->startDespawn();
+		else
+			enemy->stopDespawn();
 
 		enemy->update(dt);
 
@@ -101,6 +104,8 @@ void EnemySystem::update(const float& dt, sf::Vector2f playerPosition)
 {
 	updateSpawners(playerPosition);
 	updateEnemies(dt, playerPosition);
+
+	std::cout << "enemyCount = " << enemies.size() << "\n";
 }
 
 void EnemySystem::render(sf::RenderTarget& target, sf::Shader* shader)

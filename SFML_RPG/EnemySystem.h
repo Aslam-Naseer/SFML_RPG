@@ -17,7 +17,9 @@ private:
 	std::map<std::string, sf::Texture>& textures;
 	std::vector<EnemySpawner*> spawners;
 	std::vector<Enemy*> enemies;
+	
 	const TileMap& tileMap;
+	float despawnRange = 1500.f;
 
 	float trackPlayer(Enemy* enemy, sf::Vector2f& playerPosition, const float& dt) const;
 

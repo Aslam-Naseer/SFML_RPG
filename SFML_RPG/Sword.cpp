@@ -46,7 +46,7 @@ void Sword::update(const sf::Vector2f& mousePosView, const sf::Vector2f center, 
 
 	sprite.setRotation(sf::degrees(deg + 90));
 
-	sf::Vector2f offset = { 0.f, 10.f };
+	sf::Vector2f offset = { 0.f, -10.f };
 
 	if (canAnimate())
 	{

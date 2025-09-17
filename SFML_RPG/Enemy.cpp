@@ -19,7 +19,7 @@ void Enemy::updateDamageFlash()
 
 
 Enemy::Enemy(sf::Texture& texture, EnemySpawner& spawner)
-	: Entity(texture), spawner(spawner)
+	: Entity(texture), spawner(spawner), despawnTimer(10.f)
 {
 }
 
@@ -42,9 +42,29 @@ float Enemy::getAttackRange() const
 	return attackRange;
 }
 
-EnemySpawner& Enemy::getSpawner()
+void Enemy::startDespawn()
 {
-	return spawner;
+	if (despawning)
+		return;
+
+	despawning = true;
+	despawnTimer.restart();
+}
+
+void Enemy::stopDespawn()
+{
+	despawning = false;
+}
+
+bool Enemy::isDespawned() const
+{
+	return despawning && despawnTimer.isReady();
+}
+
+
+void Enemy::despawn()
+{
+	spawner.decreaseSpawnCount();
 }
 
 bool Enemy::isDead() const

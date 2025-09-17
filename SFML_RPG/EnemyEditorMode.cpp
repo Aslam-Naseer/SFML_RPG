@@ -99,9 +99,8 @@ void EnemyEditorMode::renderGui(sf::RenderTarget& target)
 {
 	// Render everything in view
 	stateData.window->setView(*editorData.view);
-	tileMap.render(target, nullptr, *editorData.mousePosGrid, true);
+	tileMap.render(target, nullptr, *editorData.mousePosGrid, true, true);
 	tileMap.renderDeferred(target, nullptr, true);
-	tileMap.renderSpawners(target, nullptr);
 	target.draw(selectorRect);
 
 	// Reset to default view for GUI

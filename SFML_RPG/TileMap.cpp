@@ -358,17 +358,17 @@ void TileMap::update()
 {
 }
 
-void TileMap::renderSpawners(sf::RenderTarget& target, sf::Shader* shader)
-{
-	for (auto& [pos, layerMap] : spawners)
-	{
-		//if (pos.x < start_x || pos.x >= end_x || pos.y < start_y || pos.y >= end_y)
-		//	continue;
-
-		for (auto& [layer, spawner] : layerMap)
-			spawner->render(target);
-	}
-}
+//void TileMap::renderSpawners(sf::RenderTarget& target, sf::Shader* shader)
+//{
+//	for (auto& [pos, layerMap] : spawners)
+//	{
+//		//if (pos.x < start_x || pos.x >= end_x || pos.y < start_y || pos.y >= end_y)
+//		//	continue;
+//
+//		for (auto& [layer, spawner] : layerMap)
+//			spawner->render(target);
+//	}
+//}
 
 void TileMap::renderDeferred(sf::RenderTarget& target, sf::Shader* shader, bool showCollision)
 {
@@ -390,7 +390,7 @@ void TileMap::renderDeferred(sf::RenderTarget& target, sf::Shader* shader, bool 
 
 }
 
-void TileMap::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2i& gridPosition, bool showCollision)
+void TileMap::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2i& gridPosition, bool showCollision, bool showSpawners)
 {
 
 	sf::View currentView = target.getView();
@@ -409,6 +409,8 @@ void TileMap::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vec
 	int layer = 0;
 	for (int x = start_x; x < end_x; x++) {
 		for (int y = start_y; y < end_y; y++) {
+
+			// Tile
 			for (auto& tile : map[x][y][layer])
 			{
 				if(tile->type == Tile::Type::Floating)
@@ -424,6 +426,15 @@ void TileMap::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vec
 						target.draw(collisionBox);
 					}
 				}
+			}
+
+			// Spawner
+			if(showSpawners && spawners.find({x,y}) != spawners.end())
+			{
+				auto&  layerMap = spawners[{x, y}];
+
+				if (layerMap.find(layer) != layerMap.end())
+					layerMap[layer]->render(target);
 			}
 
 		}
