@@ -52,15 +52,12 @@ void GameState::initGui()
 
 	// Tile Map
 	tileMap.loadFromFile("../tilemap.txt");
+	enemySystem.loadSpawners();
 
 
 	// Pause Menu
 	pmenu.addButton("QUIT", utils::p2pY(70.f), "Quit");
 
-
-	//// Enemies
-	const std::vector<EnemySpawner*>& spawners = tileMap.getSpawners();
-	enemySystem.setSpawners(spawners);
 }
 
 void GameState::initShader()

@@ -1,6 +1,19 @@
 #include "stdafx.h"
 #include "EnemySystem.h"
 
+float EnemySystem::trackPlayer(Enemy* enemy, sf::Vector2f& playerPosition, const float& dt) const
+{
+	sf::Vector2f enemyMove = playerPosition - enemy->getCenter();
+	float dist = utils::length(enemyMove);
+
+	if(dist >= enemy->getAttackRange() && dist <= enemy->getTrackRange())
+		enemy->move(dt, 
+			(enemyMove.x < 0) ? -1 : (enemyMove.x > 0) ? 1 : 0,
+			(enemyMove.y < 0) ? -1 : (enemyMove.y > 0) ? 1 : 0);
+
+	return dist;
+}
+
 EnemySystem::EnemySystem(std::map<std::string, sf::Texture>& textures, TileMap& tileMap):
 	textures(textures), tileMap(tileMap)
 {
@@ -19,9 +32,9 @@ const std::vector<Enemy*> EnemySystem::getEnemies() const
 	return enemies;
 }
 
-void EnemySystem::setSpawners(const std::vector<EnemySpawner*>& spawners)
+void EnemySystem::loadSpawners()
 {
-	this->spawners = spawners;
+	spawners = tileMap.getSpawners();
 }
 
 void EnemySystem::createEnemy(Type type, EnemySpawner& spawner)
@@ -71,16 +84,14 @@ void EnemySystem::updateEnemies(const float& dt, sf::Vector2f playerPosition)
 			continue;
 		}
 		
-		sf::Vector2f enemyMove = playerPosition - enemy->getPosition();
-		enemy->move(dt, 
-			(enemyMove.x < 0) ? -1 : (enemyMove.x > 0) ? 1 : 0,
-			(enemyMove.y < 0) ? -1 : (enemyMove.y > 0) ? 1 : 0);
-
-
-		enemy->update(dt);
+		float dist = trackPlayer(enemy, playerPosition, dt);
 
 		sf::Vector2f resolvedPos = tileMap.resolveCollision(enemy, dt);
 		enemy->setPosition(resolvedPos.x, resolvedPos.y);
+
+		
+
+		enemy->update(dt);
 
 		index++;
 	}

@@ -117,8 +117,8 @@ void Entity::move(const float& dt, int dir_x, int dir_y)
 
 	movementComponent->move(dt, dir_x, dir_y);
 
-	if (skillComponent)
-		skillComponent->gainExp(SkillComponent::Skills::Endurance, 10);
+	//if (skillComponent)
+	//	skillComponent->gainExp(SkillComponent::Skills::Endurance, 10);
 	
 	//std::cout << skillComponent->getSkill(SkillComponent::Skills::Endurance) << " ";
 }

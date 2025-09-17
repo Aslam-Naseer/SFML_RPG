@@ -17,14 +17,16 @@ private:
 	std::map<std::string, sf::Texture>& textures;
 	std::vector<EnemySpawner*> spawners;
 	std::vector<Enemy*> enemies;
-	TileMap& tileMap;
+	const TileMap& tileMap;
+
+	float trackPlayer(Enemy* enemy, sf::Vector2f& playerPosition, const float& dt) const;
 
 public:
 	EnemySystem(std::map<std::string, sf::Texture>& textures, TileMap& tilemap);
 	virtual ~EnemySystem();
 
 	const std::vector<Enemy*> getEnemies() const;
-	void setSpawners(const std::vector<EnemySpawner*>& spawners);
+	void loadSpawners();
 
 	void createEnemy(Type type, EnemySpawner& spawner);
 	void removeEnemy(int index);

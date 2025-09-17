@@ -25,6 +25,16 @@ int Enemy::getExpGain() const
 	return expGain;
 }
 
+float Enemy::getTrackRange() const
+{
+	return trackRange;
+}
+
+float Enemy::getAttackRange() const
+{
+	return attackRange;
+}
+
 EnemySpawner& Enemy::getSpawner()
 {
 	return spawner;
@@ -52,4 +62,9 @@ void Enemy::loseHp(int hp)
 			static_cast<float>(attributeComponent->hpMax)
 		);
 	}
+}
+
+void Enemy::attack(sf::Vector2f target) const
+{
+
 }
