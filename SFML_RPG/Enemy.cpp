@@ -11,6 +11,13 @@ void Enemy::calculateExpGain(int level)
 	expGain = (25 * level) + rand() % (10 * level);
 }
 
+void Enemy::updateDamageFlash()
+{
+	if (damaged && flashTimer.consume())
+		sprite.setColor(sf::Color::White);
+}
+
+
 Enemy::Enemy(sf::Texture& texture, EnemySpawner& spawner)
 	: Entity(texture), spawner(spawner)
 {
@@ -62,6 +69,11 @@ void Enemy::loseHp(int hp)
 			static_cast<float>(attributeComponent->hpMax)
 		);
 	}
+
+	damaged = true;
+	sprite.setColor(sf::Color::Red);
+	flashTimer.restart();
+
 }
 
 void Enemy::attack(sf::Vector2f target) const

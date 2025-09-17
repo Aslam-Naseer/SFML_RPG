@@ -84,7 +84,7 @@ void EditorState::updateGui(const float& dt)
 
 void EditorState::updateInput(const float& dt)
 {
-	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]) && keyTime.isReady())
+	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]) && keyTime.consume())
 	{
 		if (!paused)
 			pauseState();
@@ -99,10 +99,10 @@ void EditorState::updateInput(const float& dt)
 	}
 
 	 //Switch Modes
-	if (sf::Keyboard::isKeyPressed(keybinds["PREV_MODE"]) && keyTime.isReady())
+	if (sf::Keyboard::isKeyPressed(keybinds["PREV_MODE"]) && keyTime.consume())
 		activeMode = activeMode == 0 ? modes.size() - 1 : activeMode - 1;
 
-	if (sf::Keyboard::isKeyPressed(keybinds["NEXT_MODE"]) && keyTime.isReady())
+	if (sf::Keyboard::isKeyPressed(keybinds["NEXT_MODE"]) && keyTime.consume())
 		activeMode = activeMode == modes.size() - 1 ? 0 : activeMode + 1;
 
 

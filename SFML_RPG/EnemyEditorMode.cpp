@@ -34,16 +34,16 @@ EnemyEditorMode::~EnemyEditorMode()
 void EnemyEditorMode::updateInput(const float& dt)
 {
 
-	//if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("COLLISION")) && editorData.keyTime->isReady())
+	//if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("COLLISION")) && editorData.keyTime->consume())
 	//	;
 
-	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("TYPE_UP")) && editorData.keyTime->isReady())
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("TYPE_UP")) && editorData.keyTime->consume())
 		enemyType == 100 ? enemyType = 0 : enemyType++;
 
-	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("TYPE_DOWN")) && editorData.keyTime->isReady())
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("TYPE_DOWN")) && editorData.keyTime->consume())
 		enemyType == 0 ? enemyType = 100 : enemyType--;
 
-	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("SPAWN_COUNT_UP")) && editorData.keyTime->isReady())
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("SPAWN_COUNT_UP")) && editorData.keyTime->consume())
 	{
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
 			maxSpawns == 0 ? maxSpawns = 100 : maxSpawns--;
@@ -51,7 +51,7 @@ void EnemyEditorMode::updateInput(const float& dt)
 			maxSpawns == 100 ? maxSpawns = 0 : maxSpawns++;
 	}
 
-	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("SPAWN_DELAY_UP")) && editorData.keyTime->isReady())
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("SPAWN_DELAY_UP")) && editorData.keyTime->consume())
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
 			spawnDelay == 0.f ? spawnDelay = 60.f : spawnDelay -= 0.5f;
@@ -59,7 +59,7 @@ void EnemyEditorMode::updateInput(const float& dt)
 			spawnDelay == 60.f ? spawnDelay = 0.f : spawnDelay += 0.5f;
 	}
 
-	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("SPAWN_RANGE_UP")) && editorData.keyTime->isReady())
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("SPAWN_RANGE_UP")) && editorData.keyTime->consume())
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LShift))
 			spawnRange == 0.f ? spawnRange = 750.f : spawnRange -= 50.f;
@@ -81,10 +81,10 @@ void EnemyEditorMode::updateGui(const float& dt)
 	if (!sidebar.getGlobalBounds().contains(static_cast<sf::Vector2f>(*editorData.mousePosWindow)))
 	{
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && editorData.keyTime->isReady())
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && editorData.keyTime->consume())
 			tileMap.addSpawner(editorData.mousePosGrid->x, editorData.mousePosGrid->y, 0, 0, maxSpawns, spawnDelay, spawnRange);
 
-		else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && editorData.keyTime->isReady())
+		else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && editorData.keyTime->consume())
 			tileMap.removeSpawner(editorData.mousePosGrid->x, editorData.mousePosGrid->y, 0);
 	}
 }

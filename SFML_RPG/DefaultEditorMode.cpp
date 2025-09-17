@@ -46,15 +46,15 @@ DefaultEditorMode::~DefaultEditorMode()
 void DefaultEditorMode::updateInput(const float& dt)
 {
 
-	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("COLLISION")) && editorData.keyTime->isReady())
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("COLLISION")) && editorData.keyTime->consume())
 		collision = !collision;
 
-	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("TYPE_UP")) && editorData.keyTime->isReady())
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("TYPE_UP")) && editorData.keyTime->consume())
 	{
 		if (type < 3)
 			type++;
 	}
-	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("TYPE_DOWN")) && editorData.keyTime->isReady())
+	if (sf::Keyboard::isKeyPressed(editorData.keybinds->at("TYPE_DOWN")) && editorData.keyTime->consume())
 	{
 		if (type > 0)
 			type--;
@@ -77,7 +77,7 @@ void DefaultEditorMode::updateGui(const float& dt)
 	if (!sidebar.getGlobalBounds().contains(static_cast<sf::Vector2f>(*editorData.mousePosWindow)))
 	{
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && editorData.keyTime->isReady()) {
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && editorData.keyTime->consume()) {
 			if (!textureSelector->isActive())
 			{
 				tileMap.addTile(editorData.mousePosGrid->x, editorData.mousePosGrid->y, 0, type, collision, textureRect);
@@ -88,7 +88,7 @@ void DefaultEditorMode::updateGui(const float& dt)
 				textureRect.position.y = textureSelector->getTextureRect().position.y;
 			}
 		}
-		else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && editorData.keyTime->isReady()) {
+		else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right) && editorData.keyTime->consume()) {
 			if (!textureSelector->isActive())
 				tileMap.removeTile(editorData.mousePosGrid->x, editorData.mousePosGrid->y, 0);
 

@@ -15,8 +15,10 @@ protected:
 	int range = 50;
 
 	KeyTime timer;
+	KeyTime animationTimer;
 
 	virtual void generateStats() = 0;
+	bool canAnimate() const;
 
 public:
 	Weapon(unsigned lvl);

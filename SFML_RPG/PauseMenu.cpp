@@ -35,7 +35,7 @@ bool PauseMenu::isButtonPressed(std::string key) const
 {
     auto it = buttons.find(key);
     if (it != buttons.end() && it->second)
-        return it->second->isPressed() && keyTime.isReady();
+        return it->second->isPressed() && keyTime.consume();
     return false;
 }
 

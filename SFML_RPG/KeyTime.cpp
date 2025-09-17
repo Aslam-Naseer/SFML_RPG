@@ -11,7 +11,7 @@ KeyTime::~KeyTime()
 {
 }
 
-const bool KeyTime::isReady() const
+bool KeyTime::consume() const
 {
 	if (timer.getElapsedTime() >= maxTime)
 	{
@@ -22,7 +22,12 @@ const bool KeyTime::isReady() const
 	return false;
 }
 
-void KeyTime::restart()
+bool KeyTime::isReady() const
+{
+	return timer.getElapsedTime() >= maxTime;
+}
+
+void KeyTime::restart() const
 {
 	timer.restart();
 }

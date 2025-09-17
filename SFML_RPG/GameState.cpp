@@ -16,7 +16,7 @@ void GameState::initDeferredRender()
 
 void GameState::initView()
 {
-	view.setSize(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size));
+	view.setSize(static_cast<sf::Vector2f>(stateData.gfxSettings->resolution.size) / 1.7f);
 }
 
 void GameState::initKeybinds()
@@ -176,16 +176,16 @@ void GameState::updateTestControls(const float& dt)
 {
 	// Test updates : Remove later -----------------------------------
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::E) && keyTime.isReady())
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::E) && keyTime.consume())
 		player->gainExp(20);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Q) && keyTime.isReady())
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Q) && keyTime.consume())
 		player->loseExp(20);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up) && keyTime.isReady())
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Up) && keyTime.consume())
 		player->gainHp(1);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down) && keyTime.isReady())
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down) && keyTime.consume())
 		player->loseHp(1);
 
 	// ----------------------------------------------------------------
@@ -194,7 +194,7 @@ void GameState::updateTestControls(const float& dt)
 
 void GameState::updateInput(const float& dt)
 {
-	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]) && keyTime.isReady())
+	if (sf::Keyboard::isKeyPressed(keybinds["CLOSE"]) && keyTime.consume())
 	{
 		if (!paused)
 			pauseState();

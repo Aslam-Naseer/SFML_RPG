@@ -171,7 +171,7 @@ void gui::DropDownList::update(const sf::Vector2i& mousePos, const float& dt)
 {
 	activeElement->update(mousePos);
 
-	if (activeElement->isPressed() && keyTime.isReady())
+	if (activeElement->isPressed() && keyTime.consume())
 	{
 		showList = !showList;
 	}
@@ -181,7 +181,7 @@ void gui::DropDownList::update(const sf::Vector2i& mousePos, const float& dt)
 		for (auto& i : list)
 		{
 			i->update(mousePos);
-			if(i->isPressed() && keyTime.isReady())
+			if(i->isPressed() && keyTime.consume())
 			{
 				showList = false;
 				activeElement->setText(i->getText());
@@ -288,7 +288,7 @@ void gui::TextureSelector::updateSelector(const sf::Vector2i& mousePosWindow)
 void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const float& dt)
 {
 	toggleBtn->update(mousePosWindow);
-	if (toggleBtn->isPressed() && keyTime.isReady())
+	if (toggleBtn->isPressed() && keyTime.consume())
 		hide = !hide;
 
 	if (hide)

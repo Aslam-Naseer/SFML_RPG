@@ -35,7 +35,7 @@ std::string EnemySpawner::toString() const
 
 bool EnemySpawner::canSpawn() const
 {
-	return (activeSpawns < maxSpawns) && timer.isReady();
+	return (activeSpawns < maxSpawns) && timer.consume();
 }
 
 void EnemySpawner::increaseSpawnCount()

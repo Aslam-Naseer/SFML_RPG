@@ -12,6 +12,9 @@ protected:
     gui::ProgressBar* hpBar = nullptr;
 
     EnemySpawner& spawner;
+    KeyTime flashTimer;
+
+    bool damaged = false;
 
     float trackRange = 700.f;
     float attackRange = 50.f;
@@ -20,6 +23,7 @@ protected:
     virtual void initHpBar(float maxHp, sf::Vector2f pos = {0,0});
 
     void calculateExpGain(int level);
+    void updateDamageFlash();
 
 public:
     Enemy(sf::Texture& texture, EnemySpawner& spawner);

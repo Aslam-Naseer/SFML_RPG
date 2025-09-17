@@ -2,8 +2,13 @@
 #include "Weapon.h"
 
 
+bool Weapon::canAnimate() const
+{
+	return !timer.isReady() && !animationTimer.isReady();
+}
+
 Weapon::Weapon(unsigned lvl):
-	Item(lvl, 0), sprite(texture), timer(.35f)
+	Item(lvl, 0), sprite(texture), timer(.35f), animationTimer(.1f)
 {
 }
 
@@ -33,8 +38,9 @@ int Weapon::getDamageMax() const
 
 bool Weapon::isAttackReady() const
 {
-	if (!timer.isReady())
+	if (!timer.consume())
 		return false;
 
+	animationTimer.restart();
 	return true;
 }

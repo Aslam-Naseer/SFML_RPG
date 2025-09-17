@@ -27,12 +27,11 @@ Sword* Sword::clone()
 
 void Sword::update(const sf::Vector2f& mousePosView, const sf::Vector2f center, const sf::Vector2f velocity)
 {
-	sprite.setPosition({center.x, center.y + 10.f});
 
 	float dx = mousePosView.x - center.x;
 	float dy = mousePosView.y - center.y;
 
-/*	if (velocity.x > 0)
+	/*if (velocity.x > 0)
 		dx = std::abs(dx);  
 	else if (velocity.x < 0)
 		dx = std::abs(dx) * -1;
@@ -46,6 +45,16 @@ void Sword::update(const sf::Vector2f& mousePosView, const sf::Vector2f center, 
 	float deg = atan2(dy, dx) * 180 / PI;
 
 	sprite.setRotation(sf::degrees(deg + 90));
+
+	sf::Vector2f offset = { 0.f, 10.f };
+
+	if (canAnimate())
+	{
+		float len = utils::length({ dx, dy });
+		offset += sf::Vector2f(dx, dy) * 10.f / len;
+	}
+
+	sprite.setPosition(center + offset);
 }
 
 void Sword::render(sf::RenderTarget& target, sf::Shader* shader)

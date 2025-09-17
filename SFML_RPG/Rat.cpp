@@ -4,7 +4,7 @@
 
 void Rat::initComponents(sf::Texture& texture)
 {
-	createMovementComponent(120.f, 900.f, 300.f);
+	createMovementComponent(120.f, 1200.f, 400.f);
 	createAnimationComponent(texture);
 	createHitboxComponent(13.f, 39.f, 30.f, 30.f);
 	createAttributeComponent(5);
@@ -71,9 +71,11 @@ void Rat::update(const float& dt, const sf::Vector2f& mousePosView)
 {
 	movementComponent->update(dt);
 	updateAnimations(dt);
+	updateDamageFlash();
 	hitboxComponent->update();
 
 	hpBar->setPosition({ sprite.getPosition().x, sprite.getPosition().y + 20.f});
+
 }
 
 void Rat::render(sf::RenderTarget& target, sf::Shader* shader, bool showHitbox)

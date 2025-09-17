@@ -7,10 +7,11 @@ private:
 	sf::Time maxTime;
 
 public:
-		KeyTime(float max = .25f);
-		virtual ~KeyTime();
+	KeyTime(float max = .25f);
+	virtual ~KeyTime();
 
-		const bool isReady() const;
-		void restart();
+	bool consume() const;
+	void restart() const;
+	bool isReady() const;
 };
 
