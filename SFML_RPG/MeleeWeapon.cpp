@@ -31,6 +31,12 @@ MeleeWeapon::~MeleeWeapon()
 {
 }
 
+void MeleeWeapon::levelUp(int lvl)
+{
+	level = lvl == -1 ? level + 1 : lvl;
+	generateStats();
+}
+
 void MeleeWeapon::generateRandom(unsigned levelMin, unsigned levelMax)
 {
 	if (levelMin > levelMax)

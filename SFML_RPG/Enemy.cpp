@@ -96,10 +96,13 @@ void Enemy::loseHp(int hp)
 
 }
 
-float Enemy::attack() const
+int Enemy::attack() const
 {
-	if (attackTimer.consume())
-		return 1;
+	if (!attributeComponent || !attackTimer.consume())
+		return 0;
 
-	return 0;
+	int dmgMin = attributeComponent->damageMin;
+	int dmgMax = attributeComponent->damageMax;
+
+	return dmgMin + rand() % (dmgMax - dmgMin + 1);
 }

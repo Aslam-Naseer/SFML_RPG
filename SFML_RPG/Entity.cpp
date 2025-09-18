@@ -43,9 +43,9 @@ void Entity::createHitboxComponent(float offsetX, float offsetY, float width, fl
 	hitboxComponent = new HitboxComponent(sprite, offsetX, offsetY, width, height);
 }
 
-void Entity::createAttributeComponent(unsigned level)
+void Entity::createAttributeComponent(unsigned level, int multiplier)
 {
-	attributeComponent = new AttributeComponent(level);
+	attributeComponent = new AttributeComponent(level, multiplier);
 }
 
 void Entity::createSkillComponent()
@@ -118,7 +118,7 @@ void Entity::stopMovement(bool dir_x, bool dir_y)
 		movementComponent->stopMovement(dir_x, dir_y);
 }
 
-void Entity::move(const float& dt, int dir_x, int dir_y, bool stats)
+void Entity::move(const float& dt, float dir_x, float dir_y, bool stats)
 {
 	if (!movementComponent)
 		return;

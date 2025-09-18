@@ -13,6 +13,7 @@ public:
     virtual ~RangedWeapon();
 
     virtual RangedWeapon* clone() = 0;
+    virtual void levelUp(int lvl = -1);
     virtual void generateRandom(unsigned levelMin, unsigned levelMax);
 
     virtual void update(const sf::Vector2f& mousePosView, const sf::Vector2f center, const sf::Vector2f velocity = { 0,0 }) = 0;

@@ -140,7 +140,7 @@ void GameState::updateCombat(const float& dt)
 				int dmg = player->getWeapon()->getDamage();
 
 				enemy->loseHp(dmg);
-				tagSystem.addTextTag(TextTagSystem::TagType::NegativeTag,
+				tagSystem.addTextTag(TextTagSystem::TagType::PositiveTag,
 					enemy->getCenter().x, enemy->getCenter().y - 10, dmg, "-", "HP");
 				
 				if (enemy->isDead()) {
@@ -154,7 +154,15 @@ void GameState::updateCombat(const float& dt)
 	}
 
 	enemySystem.update(dt, player->getCenter());
-	player->loseHp(static_cast<int>(enemySystem.getTotalDamage()));
+	int totalDmg = enemySystem.getTotalDamage();
+
+	if (totalDmg > 0)
+	{
+		player->loseHp(totalDmg);
+		tagSystem.addTextTag(TextTagSystem::TagType::NegativeTag,
+			player->getCenter().x, player->getCenter().y - 10, totalDmg, "-", "HP");
+	}
+
 }
 
 void GameState::updateGui(const float& dt)

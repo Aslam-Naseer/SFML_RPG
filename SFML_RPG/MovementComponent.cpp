@@ -45,7 +45,7 @@ void MovementComponent::stopMovement(bool dir_x, bool dir_y)
 		velocity.y = 0;
 }
 
-void MovementComponent::move(const float& dt, const int dir_x, const int dir_y, bool stats)
+void MovementComponent::move(const float& dt, const float dir_x, const float dir_y, bool stats)
 {
 	float factor = utils::length({ 1.f * dir_x, 1.f * dir_y });
 	//if(dir_x != 0 && dir_y != 0)

@@ -4,10 +4,10 @@
 
 void Rat::initComponents(sf::Texture& texture)
 {
-	createMovementComponent(120.f, 1200.f, 400.f);
+	createMovementComponent(100.f, 1200.f, 400.f);
 	createAnimationComponent(texture);
 	createHitboxComponent(13.f, 39.f, 30.f, 30.f);
-	createAttributeComponent(5);
+	createAttributeComponent(2);
 }
 
 void Rat::initAnimations()

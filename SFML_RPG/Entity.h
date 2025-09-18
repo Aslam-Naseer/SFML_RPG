@@ -27,7 +27,7 @@ public:
 	void createMovementComponent(float maxVelocity, float acceleration, float deceleration);
 	void createAnimationComponent(sf::Texture& texture);
 	void createHitboxComponent(float offsetX, float offsetY, float width, float height);
-	void createAttributeComponent(unsigned level);
+	void createAttributeComponent(unsigned level, int multiplier = 5);
 	void createSkillComponent();
 
 	virtual const sf::FloatRect getGlobalBounds() const;
@@ -40,7 +40,7 @@ public:
 	virtual void setPosition(float x, float y);
 
 	virtual void stopMovement(bool dir_x = true, bool dir_y = true);
-	virtual void move(const float& dt, int dir_x, int dir_y, bool stats = false);
+	virtual void move(const float& dt, float dir_x, float dir_y, bool stats = false);
 
 	virtual void update(const float& dt, const sf::Vector2f& mousePosView = { -1,-1 }) = 0;
 	virtual void render(sf::RenderTarget& target, sf::Shader* shader = nullptr, bool showHitbox = false) = 0;

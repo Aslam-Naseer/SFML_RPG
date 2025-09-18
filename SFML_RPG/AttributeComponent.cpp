@@ -2,9 +2,10 @@
 #include "AttributeComponent.h"
 #include "Player.h"
 
-AttributeComponent::AttributeComponent(int startLevel)
+AttributeComponent::AttributeComponent(int startLevel, int multiplier)
 {
     level = startLevel;
+    hpMultiplier = multiplier;
     expNext = static_cast<int>(
         50.f * ((pow(level, 3) - 3 * pow(level, 2) + (level * 8)) / 3));
 
@@ -62,12 +63,17 @@ void AttributeComponent::loseHp(int hpLose)
 
 void AttributeComponent::updateStats(const bool reset)
 {
-    hpMax =     vitality * 7 + strength / 2 + intelligence / 5;
-    damageMin = strength * 2 + strength / 4 + intelligence / 5;
-    damageMax = strength * 2 + strength / 2 + intelligence / 5;
-    accuracy =  dexterity * 5 + dexterity / 2 + intelligence / 5;
-    defence =   agility * 2 + agility / 4 + intelligence / 5;
-    luck =      intelligence * 2 + intelligence / 5;
+    //hpMax =     vitality * 7 + strength / 2 + intelligence / 5;
+    //damageMin = strength * 2 + strength / 4 + intelligence / 5;
+    //damageMax = strength * 2 + strength / 2 + intelligence / 5;
+    //accuracy =  dexterity * 5 + dexterity / 2 + intelligence / 5;
+    //defence =   agility * 2 + agility / 4 + intelligence / 5;
+    //luck =      intelligence * 2 + intelligence / 5;
+
+    hpMax = level * hpMultiplier;
+    damageMin = level * 2;
+    damageMax = level * 3;
+
 
     if (reset) hp = hpMax;
 }
@@ -82,6 +88,8 @@ void AttributeComponent::updateLevel()
 
         expNext = static_cast<int>(
             50.f * ((pow(level, 3) - 3 * pow(level, 2) + (level * 8)) / 3));
+
+        updateStats(true);
     }
 }
 

@@ -46,9 +46,9 @@ const std::vector<Enemy*> EnemySystem::getEnemies() const
 	return enemies;
 }
 
-float EnemySystem::getTotalDamage()
+int EnemySystem::getTotalDamage()
 {
-	float temp = totalDamage;
+	int temp = totalDamage;
 	totalDamage = 0;
 	return temp;
 }

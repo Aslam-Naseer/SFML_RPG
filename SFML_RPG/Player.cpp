@@ -8,7 +8,7 @@ void Player::initComponents(sf::Texture& texture)
 	createMovementComponent(250.f, 1500.f, 700.f);
 	createAnimationComponent(texture);
 	createHitboxComponent(16.f, 26.f, 32.f, 38.f);
-	createAttributeComponent(1);
+	createAttributeComponent(1,50);
 	createSkillComponent();
 }
 
@@ -75,6 +75,10 @@ void Player::loseHp(int hp)
 void Player::gainExp(int exp)
 {
 	attributeComponent->gainExp(exp);
+	
+	if (sword.getLevel() != attributeComponent->level)
+		sword.levelUp();
+
 	refreshStats();
 }
 

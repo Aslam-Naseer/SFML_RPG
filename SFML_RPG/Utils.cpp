@@ -20,12 +20,12 @@ namespace utils {
 
 	float distance(sf::Vector2f pos1, sf::Vector2f pos2)
 	{
-		return sqrt(pow((pos1.x - pos2.x), 2) + pow((pos1.y - pos2.y),2));
+		return static_cast<float>(sqrt(pow((pos1.x - pos2.x), 2) + pow((pos1.y - pos2.y),2)));
 	}
 
 	float length(sf::Vector2f vec)
 	{
-		return sqrt(pow(vec.x,2) + pow(vec.y,2));
+		return static_cast<float>(sqrt(pow(vec.x,2) + pow(vec.y,2)));
 	}
 
 	sf::Color getTextColor(const sf::Color& backgroundColor)

@@ -15,6 +15,12 @@ RangedWeapon::~RangedWeapon()
 {
 }
 
+void RangedWeapon::levelUp(int lvl)
+{
+	level = lvl == -1 ? level + 1 : lvl;
+	generateStats();
+}
+
 void RangedWeapon::generateRandom(unsigned levelMin, unsigned levelMax)
 {
 	if (levelMin > levelMax)

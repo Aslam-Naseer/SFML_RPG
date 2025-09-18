@@ -20,7 +20,7 @@ protected:
     bool damaged = false;
 
     float trackRange = 700.f;
-    float attackRange = 30.f;
+    float attackRange = 10.f;
 
     virtual void initAnimations() = 0;
     virtual void initHpBar(float maxHp, sf::Vector2f pos = {0,0});
@@ -44,7 +44,7 @@ public:
 
     virtual void despawn();
     virtual void loseHp(int hp);
-    virtual float attack() const;
+    virtual int attack() const;
 
     virtual void updateAnimations(const float& dt) = 0;
 };

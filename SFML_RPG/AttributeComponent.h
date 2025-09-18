@@ -21,11 +21,14 @@ public:
 	int hpMax = 0;
 	int damageMin = 0;
 	int damageMax = 0;
-	int accuracy = 0;
-	int defence = 0;
-	int luck = 0;
 
-	AttributeComponent(int startLevel);
+	int hpMultiplier;
+
+	//int accuracy = 0;
+	//int defence = 0;
+	//int luck = 0;
+
+	AttributeComponent(int startLevel, int multiplier);
 	~AttributeComponent();
 
 	std::string debugPrint() const;

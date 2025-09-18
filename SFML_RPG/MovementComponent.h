@@ -27,7 +27,7 @@ public:
 	const bool getState(const MovementState state) const;
 
 	void stopMovement(bool dir_x = true, bool dir_y = true);
-	void move(const float& dt, const int dir_x, const int dir_y, bool stats = false);
+	void move(const float& dt, const float dir_x, const float dir_y, bool stats = false);
 	void update(const float& dt);
 };
 

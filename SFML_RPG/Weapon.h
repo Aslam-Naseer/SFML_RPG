@@ -31,6 +31,7 @@ public:
 	bool isAttackReady() const;
 	
 	virtual Weapon* clone() = 0;
+	virtual void levelUp(int lvl = -1) = 0;
 	virtual void generateRandom(unsigned levelMin, unsigned levelMax) = 0;
 
 	virtual void update(const sf::Vector2f& mousePosView, const sf::Vector2f center, const sf::Vector2f velocity = { 0,0 }) = 0;
