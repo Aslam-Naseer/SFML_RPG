@@ -21,8 +21,17 @@ namespace utils {
 		return static_cast<T>(static_cast<float>(perc) / 100.f * static_cast<float>(gfxSettings->resolution.size.y));
 	}
 
+	template<typename T>
+	const T sigmoid(const T val) {
+		if (val == 0)
+			return 0;
+
+		return val > 0 ? 1 : -1;
+	}
+
 	const unsigned calcCharSize(float size);
 	float distance(sf::Vector2f pos1, sf::Vector2f pos2);
 	float length(sf::Vector2f vec);
 	sf::Color getTextColor(const sf::Color& backgroundColor);
+
 }

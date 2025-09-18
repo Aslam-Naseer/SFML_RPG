@@ -96,6 +96,14 @@ const sf::Vector2f Entity::getPosition() const
 	return sprite.getPosition();
 }
 
+const sf::Vector2f Entity::getVelocity() const
+{
+	if (movementComponent)
+		return movementComponent->getVelocity();
+
+	return { 0,0 };
+}
+
 void Entity::setPosition(float x, float y)
 {
 	if (hitboxComponent)
@@ -110,12 +118,12 @@ void Entity::stopMovement(bool dir_x, bool dir_y)
 		movementComponent->stopMovement(dir_x, dir_y);
 }
 
-void Entity::move(const float& dt, int dir_x, int dir_y)
+void Entity::move(const float& dt, int dir_x, int dir_y, bool stats)
 {
 	if (!movementComponent)
 		return;
 
-	movementComponent->move(dt, dir_x, dir_y);
+	movementComponent->move(dt, dir_x, dir_y, stats);
 
 	//if (skillComponent)
 	//	skillComponent->gainExp(SkillComponent::Skills::Endurance, 10);

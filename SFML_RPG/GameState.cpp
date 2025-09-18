@@ -154,6 +154,7 @@ void GameState::updateCombat(const float& dt)
 	}
 
 	enemySystem.update(dt, player->getCenter());
+	player->loseHp(static_cast<int>(enemySystem.getTotalDamage()));
 }
 
 void GameState::updateGui(const float& dt)

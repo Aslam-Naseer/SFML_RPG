@@ -14,12 +14,13 @@ protected:
     EnemySpawner& spawner;
     KeyTime despawnTimer;
     KeyTime flashTimer;
+    KeyTime attackTimer;
 
     bool despawning = false;
     bool damaged = false;
 
     float trackRange = 700.f;
-    float attackRange = 50.f;
+    float attackRange = 30.f;
 
     virtual void initAnimations() = 0;
     virtual void initHpBar(float maxHp, sf::Vector2f pos = {0,0});
@@ -43,7 +44,7 @@ public:
 
     virtual void despawn();
     virtual void loseHp(int hp);
-    virtual void attack(sf::Vector2f target) const;
+    virtual float attack() const;
 
     virtual void updateAnimations(const float& dt) = 0;
 };

@@ -96,7 +96,10 @@ void Enemy::loseHp(int hp)
 
 }
 
-void Enemy::attack(sf::Vector2f target) const
+float Enemy::attack() const
 {
+	if (attackTimer.consume())
+		return 1;
 
+	return 0;
 }

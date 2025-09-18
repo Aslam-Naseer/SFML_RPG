@@ -45,11 +45,11 @@ void MovementComponent::stopMovement(bool dir_x, bool dir_y)
 		velocity.y = 0;
 }
 
-void MovementComponent::move(const float& dt, const int dir_x, const int dir_y)
+void MovementComponent::move(const float& dt, const int dir_x, const int dir_y, bool stats)
 {
-	float factor = 1.f;
-	if(dir_x != 0 && dir_y != 0)
-		factor = std::sqrt(2.f);
+	float factor = utils::length({ 1.f * dir_x, 1.f * dir_y });
+	//if(dir_x != 0 && dir_y != 0)
+	//	factor = std::sqrt(2.f);
 
 	// Accelerate
 	velocity.x += acceleration * dir_x * dt / factor ;
@@ -57,6 +57,8 @@ void MovementComponent::move(const float& dt, const int dir_x, const int dir_y)
 
 	velocity.x = std::clamp(velocity.x, -maxVelocity, maxVelocity);
 	velocity.y = std::clamp(velocity.y, -maxVelocity, maxVelocity);
+
+	if (stats) std::cout << velocity.x << " " << velocity.y << " " << deceleration * dt <<"\n";
 }
 
 void MovementComponent::update(const float& dt)

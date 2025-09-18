@@ -20,6 +20,7 @@ private:
 	
 	const TileMap& tileMap;
 	float despawnRange = 1500.f;
+	float totalDamage = 0.f;
 
 	float trackPlayer(Enemy* enemy, sf::Vector2f& playerPosition, const float& dt) const;
 
@@ -28,6 +29,7 @@ public:
 	virtual ~EnemySystem();
 
 	const std::vector<Enemy*> getEnemies() const;
+	float getTotalDamage();
 	void loadSpawners();
 
 	void createEnemy(Type type, EnemySpawner& spawner);

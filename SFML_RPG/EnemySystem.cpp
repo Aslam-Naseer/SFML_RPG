@@ -6,10 +6,24 @@ float EnemySystem::trackPlayer(Enemy* enemy, sf::Vector2f& playerPosition, const
 	sf::Vector2f enemyMove = playerPosition - enemy->getCenter();
 	float dist = utils::length(enemyMove);
 
-	if(dist >= enemy->getAttackRange() && dist <= enemy->getTrackRange())
-		enemy->move(dt, 
-			(enemyMove.x < 0) ? -1 : (enemyMove.x > 0) ? 1 : 0,
-			(enemyMove.y < 0) ? -1 : (enemyMove.y > 0) ? 1 : 0);
+	if (dist > enemy->getTrackRange())
+		return dist;
+
+	if (dist > enemy->getAttackRange() + 20.f)
+	{
+		enemy->move(dt, enemyMove.x, enemyMove.y);
+	}
+
+	else if (dist > enemy->getAttackRange())
+	{
+		auto [vx, vy] = enemy->getVelocity();
+		enemy->move(dt, vx, vy );
+	}
+
+	else
+	{
+		enemy->move(dt, enemyMove.x * -1, enemyMove.y * -1);
+	}
 
 	return dist;
 }
@@ -30,6 +44,13 @@ EnemySystem::~EnemySystem()
 const std::vector<Enemy*> EnemySystem::getEnemies() const
 {
 	return enemies;
+}
+
+float EnemySystem::getTotalDamage()
+{
+	float temp = totalDamage;
+	totalDamage = 0;
+	return temp;
 }
 
 void EnemySystem::loadSpawners()
@@ -94,6 +115,10 @@ void EnemySystem::updateEnemies(const float& dt, sf::Vector2f playerPosition)
 		else
 			enemy->stopDespawn();
 
+		if (dist <= enemy->getAttackRange())
+			totalDamage += enemy->attack();
+		
+
 		enemy->update(dt);
 
 		index++;
@@ -104,8 +129,6 @@ void EnemySystem::update(const float& dt, sf::Vector2f playerPosition)
 {
 	updateSpawners(playerPosition);
 	updateEnemies(dt, playerPosition);
-
-	std::cout << "enemyCount = " << enemies.size() << "\n";
 }
 
 void EnemySystem::render(sf::RenderTarget& target, sf::Shader* shader)
